@@ -1,0 +1,15 @@
+<?php
+
+Route::group(['as' => "frontend.", 'namespace' => "Frontend", 'middleware' => ["web"]], function() {
+    Route::group(['prefix' => "", 'as' => "auth."], function(){
+        Route::group(['middleware' => "frontend.guest"], function(){
+            Route::get('/login', ['as' => "login", 'uses' => "AuthController@login"]);
+            //Route::post('/login/{uri?}', ['uses' => "AuthController@authenticate"]);
+            Route::get('/register', ['as' => "register", 'uses' => "AuthController@register"]);
+            //Route::post('register', ['uses' => "AuthenticationController@store"]);
+        });
+        //Route::get('logout', ['as' => "logout", 'uses' => "AuthController@logout"]);
+    });
+
+    Route::get('/', ['as' => "index", 'uses' => "MainController@index"]);
+});

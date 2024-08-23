@@ -1,0 +1,114 @@
+<ul class="navbar-nav bg-dark sidebar sidebar-dark accordion" id="accordionSidebar">
+    <a class="sidebar-brand d-flex align-items-center justify-content-center" href="{{route('portal.index')}}">
+        <div class="sidebar-brand-icon">
+            <i class="fab fa-phoenix-framework"></i>
+        </div>
+        <div class="sidebar-brand-text mx-3">Everlast</div>
+    </a>
+
+    <hr class="sidebar-divider">
+    <div class="sidebar-heading">
+        Quick Access
+    </div>
+    <li class="nav-item {{request()->segment(2) != "" ? "" : "active"}}">
+        <a class="nav-link" href="{{route('portal.index')}}">
+            <i class="fas fa-fw fa-tachometer-alt"></i>
+            <span>Dashboard</span>
+        </a>
+    </li>
+
+    <hr class="sidebar-divider">
+    <div class="sidebar-heading">
+        Menus
+    </div>
+    <li class="nav-item">
+        <a class="nav-link collapsed" href="#" data-toggle="collapse" data-target="#collapseRegistration" aria-expanded="true" aria-controls="collapseRegistration">
+            <i class="fas fa-fw fa-cog"></i>
+            <span>Registrations</span>
+        </a>
+        <div id="collapseRegistration" class="collapse" aria-labelledby="headingTwo" data-parent="#accordionSidebar">
+            <div class="bg-white py-2 collapse-inner rounded">
+                <a class="collapse-item" href="">Pending</a>
+                <a class="collapse-item" href="">Approved</a>
+                <a class="collapse-item" href="">Rejected</a>
+            </div>
+        </div>
+    </li>
+    @if($auth->canAny(['portal.users.index'], 'portal'))
+    <li class="nav-item {{request()->segment(2) == "users" ? "active" : ""}}">
+        <a class="nav-link" href="{{route('portal.users.index')}}">
+            <i class="fas fa-user-alt"></i>
+            <span>Account Management</span>
+        </a>
+    </li>
+    @endif
+    <li class="nav-item">
+        <a class="nav-link" href="">
+            <i class="fas fa-users"></i>
+            <span>Members</span>
+        </a>
+    </li>
+    <li class="nav-item">
+        <a class="nav-link" href="">
+            <i class="fas fa-calendar-alt"></i>
+            <span>Bookings</span>
+        </a>
+    </li>
+    @if($auth->canAny(['portal.events.index'], 'portal'))
+    <li class="nav-item {{request()->segment(2) == "events" ? "active" : ""}}">
+        <a class="nav-link" href="{{route('portal.events.index')}}">
+            <i class="fas fa-bell"></i>
+            <span>Events</span>
+        </a>
+    </li>
+    @endif
+    <li class="nav-item">
+        <a class="nav-link" href="">
+            <i class="fas fa-clipboard"></i>
+            <span>Transaction Report</span>
+        </a>
+    </li>
+
+    <hr class="sidebar-divider">
+    <div class="sidebar-heading">
+        System Settings
+    </div>
+    @if($auth->canAny(['portal.cms.permissions.index', 'portal.cms.roles.index', 'portal.cms.category.index', 'portal.cms.sponsors.index'], 'portal'))
+    <li class="nav-item {{request()->segment(2) == "cms" ? "active" : ""}}">
+        <a class="nav-link {{request()->segment(2) == "cms" ? "" : "collapsed"}}" href="#" data-toggle="collapse" data-target="#collapseCMS" aria-expanded="true" aria-controls="collapseCMS">
+            <i class="fas fa-book"></i>
+            <span>Content Management</span>
+        </a>
+        <div id="collapseCMS" class="collapse {{request()->segment(2) == "cms" ? "show" : ""}}" aria-labelledby="headingPages" data-parent="#accordionSidebar">
+            <div class="bg-white py-2 collapse-inner rounded">
+                @if($auth->canAny(['portal.cms.roles.index'], 'portal'))
+                <a class="collapse-item {{request()->segment(3) == "roles" ? "active" : ""}}" href="{{route('portal.cms.roles.index')}}">User Roles</a>
+                @endif
+                @if($auth->canAny(['portal.cms.permissions.index'], 'portal'))
+                <a class="collapse-item {{request()->segment(3) == "permissions" ? "active" : ""}}" href="{{route('portal.cms.permissions.index')}}">Permissions</a>
+                @endif
+                @if($auth->canAny(['portal.cms.category.index'], 'portal'))
+                <a class="collapse-item {{request()->segment(3) == "category" ? "active" : ""}}" href="{{route('portal.cms.category.index')}}">Category</a>
+                @endif
+                @if($auth->canAny(['portal.cms.sponsors.index'], 'portal'))
+                <a class="collapse-item {{request()->segment(3) == "sponsors" ? "active" : ""}}" href="{{route('portal.cms.sponsors.index')}}">Sponsors</a>
+                @endif
+                <a class="collapse-item" href="">News</a>
+                <a class="collapse-item" href="">Social Media</a>
+                <a class="collapse-item" href="">Setting</a>
+            </div>
+        </div>
+    </li>
+    @endif
+    <li class="nav-item">
+        <a class="nav-link" href="">
+            <i class="fas fa-clock"></i>
+            <span>Audit Trail</span>
+        </a>
+    </li>
+
+    <hr class="sidebar-divider d-none d-md-block">
+    <div class="text-center d-none d-md-inline">
+        <button class="rounded-circle border-0" id="sidebarToggle"></button>
+    </div>
+</ul>
