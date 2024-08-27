@@ -21,16 +21,16 @@
     <div class="sidebar-heading">
         Menus
     </div>
-    <li class="nav-item">
-        <a class="nav-link collapsed" href="#" data-toggle="collapse" data-target="#collapseRegistration" aria-expanded="true" aria-controls="collapseRegistration">
+    <li class="nav-item {{request()->segment(2) == "users-kyc" ? "active" : ""}}">
+        <a class="nav-link {{request()->segment(2) == "users-kyc" ? "" : "collapsed"}}" href="#" data-toggle="collapse" data-target="#collapseRegistration" aria-expanded="true" aria-controls="collapseRegistration">
             <i class="fas fa-fw fa-cog"></i>
             <span>Registrations</span>
         </a>
-        <div id="collapseRegistration" class="collapse" aria-labelledby="headingTwo" data-parent="#accordionSidebar">
+        <div id="collapseRegistration" class="collapse {{request()->segment(2) == "users-kyc" ? "show" : ""}}" aria-labelledby="headingTwo" data-parent="#accordionSidebar">
             <div class="bg-white py-2 collapse-inner rounded">
-                <a class="collapse-item" href="">Pending</a>
-                <a class="collapse-item" href="">Approved</a>
-                <a class="collapse-item" href="">Rejected</a>
+                <a class="collapse-item {{request()->segment(2) == "users-kyc" && request()->segment(3) == "" ? "active" : ""}}" href="{{route('portal.users_kyc.index')}}">Pending</a>
+                <a class="collapse-item {{request()->segment(2) == "users-kyc" && request()->segment(3) == "approved" ? "active" : ""}}" href="{{route('portal.users_kyc.approved')}}">Approved</a>
+                <a class="collapse-item {{request()->segment(2) == "users-kyc" && request()->segment(3) == "rejected" ? "active" : ""}}" href="{{route('portal.users_kyc.rejected')}}">Rejected</a>
             </div>
         </div>
     </li>

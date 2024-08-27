@@ -2,9 +2,10 @@
 
 namespace App\Laravel\Services;
 
-use App\Laravel\Models\User;
+use App\Laravel\Models\{User,UserKYC};
 use Illuminate\Validation\Validator;
-use Hash;
+
+use Hash,PhoneNumber;
 
 class CustomValidator extends Validator{
     /**
@@ -20,6 +21,16 @@ class CustomValidator extends Validator{
         switch (strtolower($type)) {
             case 'portal':
                 return User::where('email', $email)
+                    ->where('id', '<>', $id)
+                    ->count() ? false : true;
+                break;
+            case 'frontend':
+                return User::where('email', $email)
+                    ->where('id', '<>', $id)
+                    ->count() ? false : true;
+                break;
+            case 'register':
+                return UserKYC::where('email', $email)
                     ->where('id', '<>', $id)
                     ->count() ? false : true;
                 break;
@@ -50,5 +61,50 @@ class CustomValidator extends Validator{
     public function validatePasswordFormat($attribute, $value, $parameters){
         
         return preg_match(("/^(?=.*?[A-Z])(?=.*?[a-z])(?=.*?[0-9])(?=.*?[#?!@$%^&*-.]).{8,}$/"), $value);
+    }
+
+    public function validateAllowedCountry($attribute, $value, $parameters){
+        $contact_number = new PhoneNumber($value);
+        $allowed_countries = explode(",", env("ALLOWED_COUNTRY_CODE", "PH"));
+        return in_array($contact_number->getCountry() ?: "PH", $allowed_countries) ? true : false;
+    }
+
+    public function validateUniquePhone($attribute, $value, $parameters){
+        $id = (is_array($parameters) and isset($parameters[0])) ? $parameters[0] : "0";
+        $type = (is_array($parameters) and isset($parameters[1])) ? $parameters[1] : "user";
+
+        try{
+            $contact_number = new PhoneNumber($value);
+
+            if (is_null($contact_number->getCountry())) {
+                $contact_number = new PhoneNumber($value, "PH");
+            }
+
+            $contact_number = $contact_number->formatE164();
+        }catch(\Exception $e){
+           return false; 
+        }
+
+        switch (strtolower($type)) {
+            case 'portal':
+                return User::where('contact_number', $contact_number)
+                    ->where('id', '<>', $id)
+                    ->count() ? false : true;
+                break;
+            case 'frontend':
+                return User::where('contact_number', $contact_number)
+                    ->where('id', '<>', $id)
+                    ->count() ? false : true;
+                break;
+            case 'register':
+                return UserKYC::where('contact_number', $contact_number)
+                    ->where('id', '<>', $id)
+                    ->count() ? false : true;
+                break;
+            default:
+                return User::where('contact_number', $contact_number)
+                    ->where('id', '<>', $id)
+                    ->count() ? false : true;
+        }
     }
 }

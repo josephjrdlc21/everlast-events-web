@@ -15,13 +15,13 @@
     <div class="card-body">
         <form method="GET" action="">
             <div class="row">
-                <div class="col-sm-12 col-md-3 col-lg-3 col-xl-3">
+                <div class="col-sm-12 col-md-3 col-lg-3 col-xl-4">
                     <div class="form-group">
                         <label for="input_keyword">Keyword</label>
                         <input type="text" id="input_keyword" class="form-control" placeholder="eg. Category" name="keyword"  value="{{$keyword}}">
                     </div>
                 </div>
-                <div class="col-sm-12 col-md-3 col-lg-2 col-xl-2">
+                <div class="col-sm-12 col-md-3 col-lg-2 col-xl-3">
                     <div class="form-group">
                         <label for="input_category_status">Status</label>
                         {!! html()->select('status', $statuses, $selected_status, old('status'), ['id' => "input_category_status"])->class('form-control') !!}

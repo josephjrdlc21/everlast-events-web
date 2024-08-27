@@ -88,6 +88,17 @@
                             </div>
                         </div>
                     </div>
+                    <div class="row">
+                        <div class="col-md-12">
+                            <div class="form-group">
+                                <label for="input_contact">Contact No.<span class="text-danger">*</span></label>
+                                <input type="text" id="input_contact" class="form-control" placeholder="+63" name="contact" value="{{$user->contact_number}}">
+                                @if($errors->first('contact'))
+                                <small class="d-block mt-1 text-danger">{{$errors->first('contact')}}</small>
+                                @endif
+                            </div>
+                        </div>
+                    </div>
                     <hr>
                     <a href="{{route('portal.users.index')}}" class="btn btn-sm btn-danger">Cancel</a>
                     <button type="submit" class="btn btn-sm btn-info">Save</button>

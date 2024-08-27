@@ -4,12 +4,14 @@ Route::group(['as' => "frontend.", 'namespace' => "Frontend", 'middleware' => ["
     Route::group(['prefix' => "", 'as' => "auth."], function(){
         Route::group(['middleware' => "frontend.guest"], function(){
             Route::get('/login', ['as' => "login", 'uses' => "AuthController@login"]);
-            //Route::post('/login/{uri?}', ['uses' => "AuthController@authenticate"]);
+            Route::post('/login', ['uses' => "AuthController@authenticate"]);
             Route::get('/register', ['as' => "register", 'uses' => "AuthController@register"]);
-            //Route::post('register', ['uses' => "AuthenticationController@store"]);
+            Route::post('register', ['uses' => "AuthController@store"]);
         });
         //Route::get('logout', ['as' => "logout", 'uses' => "AuthController@logout"]);
     });
 
-    Route::get('/', ['as' => "index", 'uses' => "MainController@index"]);
+    Route::group(['middleware' => "frontend.auth"], function(){
+        Route::get('/', ['as' => "index", 'uses' => "MainController@index"]);
+    });
 });

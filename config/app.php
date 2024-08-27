@@ -187,7 +187,7 @@ return [
         'Str' => Illuminate\Support\Str::class,
         'Helper' => App\Laravel\Services\Helper::class,
         'Image' => Intervention\Image\Facades\Image::class,
-        //'PhoneNumber' => Propaganistas\LaravelPhone\PhoneNumber::class,
+        'PhoneNumber' => Propaganistas\LaravelPhone\PhoneNumber::class,
         'ImageUploader' => App\Laravel\Services\ImageUploader::class,
         'ImageRemover' => App\Laravel\Services\ImageRemover::class,
         'FileUploader' => App\Laravel\Services\FileUploader::class,

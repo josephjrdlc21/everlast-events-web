@@ -2,7 +2,7 @@
 
 @section('breadcrumb')
 <div class="mb-4">
-    <h1 class="h3 mb-0 text-gray-800">CMS - Permissions</h1>
+    <h1 class="h3 mb-0 text-gray-800">Rejected Registrations</h1>
 </div>
 @stop
 
@@ -18,7 +18,7 @@
                 <div class="col-sm-12 col-md-3 col-lg-3 col-xl-5">
                     <div class="form-group">
                         <label for="input_keyword">Keyword</label>
-                        <input type="text" id="input_keyword" class="form-control" placeholder="eg. Module, Permission" name="keyword"  value="{{$keyword}}">
+                        <input type="text" id="input_keyword" class="form-control" placeholder="eg. Registration ID, Name" name="keyword"  value="{{$keyword}}">
                     </div>
                 </div>
                 <div class="col-sm-12 col-md-3 col-lg-4 col-xl-7">
@@ -39,7 +39,7 @@
                 </div>
             </div> 
             <button type="submit" class="btn btn-sm btn-primary">Apply Filter</button>
-            <a href="{{route('portal.cms.permissions.index')}}" class="btn btn-sm btn-secondary">Reset Filter</a>
+            <a href="{{route('portal.users_kyc.rejected')}}" class="btn btn-sm btn-secondary">Reset Filter</a>
         </form>
     </div>
 </div>
@@ -52,24 +52,31 @@
             <table class="table table-hover mb-0">
                 <thead>
                     <tr>
-                        <th class="border-top-0">No.</th>
-                        <th class="border-top-0">Module</th>
-                        <th class="border-top-0">Permission</th>
-                        <th class="border-top-0">Date Added</th>
-                        <th class="border-top-0">Last Modified</th>
+                        <th class="border-top-0">Registrant</th>
+                        <th class="border-top-0">Email</th>
+                        <th class="border-top-0">Status</th>
+                        <th class="border-top-0">Registration Date</th>
+                        <th class="border-top-0"></th>
                     </tr>
                 </thead>
                 <tbody>
-                    @forelse($record as $index => $permission)
+                    @forelse($record as $index => $registration)
                     <tr>
-                        <td>{{$loop->index + $record->firstItem()}}</td>
-                        <td>{{$permission->module_name}}</td>
                         <td>
-                            <div>{{$permission->description}}</div>
-                            <div class="text-primary">{{$permission->name}}</div>
+                            <a href="{{route('portal.users_kyc.show', [$registration->id])}}">{{str_pad($registration->id, 5, "0", STR_PAD_LEFT)}}</a><br>
+                            <div>{{$registration->name}}</div>
                         </td>
-                        <td>{{$permission->created_at->format("m/d/Y h:i A")}}</td>
-                        <td>{{$permission->updated_at->format("m/d/Y h:i A")}}</td>
+                        <td>{{$registration->email}}<br><small>{{$registration->contact_number}}</small></td>
+                        <td><span class="badge badge-{{Helper::registration_badge_status($registration->status)}}">{{Str::upper($registration->status)}}</span></td>
+                        <td>{{$registration->created_at->format("m/d/Y h:i A")}}</td>
+                        <td>
+                            <div class="dropdown">
+                                <button class="btn btn-sm btn-info dropdown-toggle" type="button" id="dropdownMenuButton" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">Action</button>
+                                <div class="dropdown-menu animated--fade-in" aria-labelledby="dropdownMenuButton" style="">
+                                    <a class="dropdown-item" href="{{route('portal.users_kyc.show', [$registration->id])}}">View Registration</a>
+                                </div>
+                            </div>
+                        </td>
                     </tr>
                     @empty
                     <td colspan="5">

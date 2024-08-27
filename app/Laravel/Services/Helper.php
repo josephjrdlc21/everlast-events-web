@@ -114,4 +114,20 @@ class Helper
         }
         return $result;
     }
+
+    public static function registration_badge_status($registration)
+    {
+        $result = "default";
+
+        switch (Str::lower($registration)) {
+            case 'pending':$result = "primary";
+                break;
+            case 'approved':$result = "success";
+                break;
+            case 'rejected':$result = "danger";
+                break;
+        }
+
+        return $result;
+    }
 }

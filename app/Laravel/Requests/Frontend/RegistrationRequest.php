@@ -1,10 +1,10 @@
 <?php
 
-namespace App\Laravel\Requests\Portal;
+namespace App\Laravel\Requests\Frontend;
 
 use App\Laravel\Requests\RequestManager;
 
-class UserRequest extends RequestManager
+class RegistrationRequest extends RequestManager
 {
     /**
      * Determine if the user is authorized to make this request.
@@ -30,10 +30,10 @@ class UserRequest extends RequestManager
             'lastname' => 'required|regex:/^[a-zA-Z0-9.\-\s]+$/|min:2',
             'middlename' => 'nullable|regex:/^[a-zA-Z0-9.\-\s]*$/|min:2',
             'suffix' => 'nullable|regex:/^[a-zA-Z0-9.\-\s]*$/',
-            'email' => "required|email:rfc,dns|unique_email:{$id},portal",
-            'status' => 'required',
-            'role' => 'required',
-            'contact' => "required|phone:PH|unique_phone:{$id},portal"
+            'email' => "required|email:rfc,dns|unique_email:{$id},register",
+            'password' => "required|confirmed|password_format",
+            'password_confirmation' => "required",
+            'contact' => "required|phone:PH|unique_phone:{$id},register"            
         ];
 
         return $rules;
@@ -52,6 +52,8 @@ class UserRequest extends RequestManager
             'firstname.min' => 'The first name must be at least 2 characters.',
             'middlename.min' => 'The middle name must be at least 2 characters.',
             'lastname.min' => 'The last name must be at least 2 characters.',
+			'confirmed' => "Password mismatch.",
+			'password_format' => "Password must be atleast 8 characters long, should contain atleast 1 uppercase, 1 lowercase, 1 numeric and 1 special character.",
             'contact.unique_phone' => "Phone number already exists.",
             'contact.phone' => "Invalid PH phone number."
         ];

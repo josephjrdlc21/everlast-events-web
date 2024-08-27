@@ -15,13 +15,13 @@
     <div class="card-body">
         <form method="GET" action="">
             <div class="row">
-                <div class="col-sm-12 col-md-3 col-lg-3 col-xl-3">
+                <div class="col-sm-12 col-md-3 col-lg-3 col-xl-5">
                     <div class="form-group">
                         <label for="input_keyword">Keyword</label>
                         <input type="text" id="input_keyword" class="form-control" placeholder="eg. Sponsor" name="keyword"  value="{{$keyword}}">
                     </div>
                 </div>
-                <div class="col-sm-12 col-md-3 col-lg-4 col-xl-5">
+                <div class="col-sm-12 col-md-3 col-lg-4 col-xl-7">
                     <div class="row">
                         <div class="col-md-6">
                             <div class="form-group">

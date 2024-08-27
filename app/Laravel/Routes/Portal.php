@@ -36,6 +36,14 @@ Route::group(['prefix' => "portal", 'as' => "portal.", 'namespace' => "Portal", 
             Route::get('/show/{id?}', ['as' => "show", 'uses' => "EventsController@show", 'middleware' => "portal.permission:portal.events.view"]);
         });
 
+        Route::group(['prefix' => "users-kyc", 'as' => "users_kyc."], function(){
+            Route::get('/', ['as' => "index", 'uses' => "UsersKYCController@index"]);
+            Route::get('/approved', ['as' => "approved", 'uses' => "UsersKYCController@approved"]);
+            Route::get('/rejected', ['as' => "rejected", 'uses' => "UsersKYCController@rejected"]);
+            Route::get('/show/{id?}', ['as' => "show", 'uses' => "UsersKYCController@show"]);
+            Route::get('/update-status/{id?}/{status?}', ['as' => "update_status", 'uses' => "UsersKYCController@update_status"]);
+        });
+
         Route::group(['prefix' => "cms", 'as' => "cms."], function(){
             Route::group(['prefix' => "roles", 'as' => "roles."], function(){
                 Route::get('/', ['as' => "index", 'uses' => "RolesController@index", 'middleware' => "portal.permission:portal.cms.roles.index"]);

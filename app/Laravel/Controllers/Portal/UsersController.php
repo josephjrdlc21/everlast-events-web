@@ -7,7 +7,7 @@ use App\Laravel\Models\{User,Role};
 use App\Laravel\Requests\PageRequest;
 use App\Laravel\Requests\Portal\{UserRequest,UserResetPasswordRequest};
 
-use Carbon,DB,Str;
+use Carbon,DB,Str,Helper;
 
 class UsersController extends Controller{
     protected $data;
@@ -41,7 +41,7 @@ class UsersController extends Controller{
             if (strlen($this->data['keyword']) > 0) {
                 return $query
                     ->whereRaw("LPAD(id, 5, '0') LIKE '%{$this->data['keyword']}%'")
-                    ->orWhereRaw("LOWER(CONCAT(firstname, ' ', lastname)) LIKE '%{$this->data['keyword']}%'");
+                    ->orWhereRaw("LOWER(name) LIKE '%{$this->data['keyword']}%'");
             }
         })
         ->where(function ($query) {
@@ -88,6 +88,7 @@ class UsersController extends Controller{
             $user->email = Str::lower($request->input('email'));
             $user->status = Str::lower($request->input('status'));
             $user->user_type = "portal";
+            $user->contact_number = Helper::format_phone($request->input('contact'));
             $user->password = bcrypt($password);
             $user->save();
 
@@ -142,6 +143,7 @@ class UsersController extends Controller{
             $user->suffix = Str::upper($request->input('suffix'));
             $user->name = "{$user->firstname} {$user->middlename} {$user->lastname} {$user->suffix}";
             $user->email = Str::lower($request->input('email'));
+            $user->contact_number = Helper::format_phone($request->input('contact'));
             $user->status = Str::lower($request->input('status'));
             $user->save();
 
@@ -198,7 +200,6 @@ class UsersController extends Controller{
             session()->flash('notification-status', "success");
             session()->flash('notification-msg', "User password has been reset.");
             return redirect()->route('portal.users.index');
-
         }catch (\Exception $e){
             DB::rollBack();
 

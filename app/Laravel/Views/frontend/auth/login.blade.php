@@ -16,7 +16,9 @@
                         <div class="text-center">
                             <img src="{{asset('frontend/assets/images/logo/everlastlogo1.png')}}" alt="Logo" class="img-fluid" width="120">
                         </div>
-                        <form>
+                        <form method="POST" action="">
+                            {!!csrf_field()!!}
+                            @include('frontend._components.notification')
                             <div class="mb-3">
                                 <label class="form-label">Email</label>
                                 <input class="form-control form-control-lg" type="email" name="email" placeholder="Enter your email">
@@ -30,7 +32,7 @@
                             </div>
                             <div>
                                 <label class="form-check">
-                                    <input class="form-check-input" type="checkbox" value="remember-me" name="remember-me">
+                                    <input class="form-check-input" type="checkbox" value="remember_me" name="remember_me">
                                     <span class="form-check-label">Remember me next time</span>
                                 </label>
                             </div>
