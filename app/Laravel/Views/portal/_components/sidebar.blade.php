@@ -1,7 +1,7 @@
-<ul class="navbar-nav bg-dark sidebar sidebar-dark accordion" id="accordionSidebar">
+<ul class="navbar-nav sidebar sidebar-dark accordion" id="accordionSidebar" style="background: #003399">
     <a class="sidebar-brand d-flex align-items-center justify-content-center" href="{{route('portal.index')}}">
         <div class="sidebar-brand-icon">
-            <i class="fab fa-phoenix-framework"></i>
+            <img src="{{asset('assets/images/logo/everlastlogo1.png')}}" alt="Logo" class="img-fluid" width="40">
         </div>
         <div class="sidebar-brand-text mx-3">Everlast</div>
     </a>
@@ -21,6 +21,7 @@
     <div class="sidebar-heading">
         Menus
     </div>
+    @if($auth->canAny(['portal.users_kyc.index'], 'portal'))
     <li class="nav-item {{request()->segment(2) == "users-kyc" ? "active" : ""}}">
         <a class="nav-link {{request()->segment(2) == "users-kyc" ? "" : "collapsed"}}" href="#" data-toggle="collapse" data-target="#collapseRegistration" aria-expanded="true" aria-controls="collapseRegistration">
             <i class="fas fa-fw fa-cog"></i>
@@ -34,6 +35,7 @@
             </div>
         </div>
     </li>
+    @endif
     @if($auth->canAny(['portal.users.index'], 'portal'))
     <li class="nav-item {{request()->segment(2) == "users" ? "active" : ""}}">
         <a class="nav-link" href="{{route('portal.users.index')}}">
@@ -42,12 +44,14 @@
         </a>
     </li>
     @endif
-    <li class="nav-item">
-        <a class="nav-link" href="">
+    @if($auth->canAny(['portal.members.index'], 'portal'))
+    <li class="nav-item {{request()->segment(2) == "members" ? "active" : ""}}">
+        <a class="nav-link" href="{{route('portal.members.index')}}">
             <i class="fas fa-users"></i>
             <span>Members</span>
         </a>
     </li>
+    @endif
     <li class="nav-item">
         <a class="nav-link" href="">
             <i class="fas fa-calendar-alt"></i>

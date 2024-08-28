@@ -27,7 +27,7 @@ class UsersController extends Controller{
         $this->data['keyword'] = strtolower($request->get('keyword'));
         $this->data['selected_status'] = $request->input('status');
 
-        $first_record = User::orderBy('created_at', 'ASC')->first();
+        $first_record = User::where('id','!=',1)->where('user_type','portal')->orderBy('created_at', 'ASC')->first();
         $start_date = $request->get('start_date', now()->startOfMonth());
         if ($first_record) {
             $start_date = $request->get('start_date', $first_record->created_at->format("Y-m-d"));

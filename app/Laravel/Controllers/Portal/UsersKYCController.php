@@ -2,11 +2,11 @@
 
 namespace App\Laravel\Controllers\Portal;
 
-use App\Laravel\Models\UserKYC;
+use App\Laravel\Models\{UserKYC,User};
 
 use App\Laravel\Requests\PageRequest;
 
-use Carbon,DB,Str;
+use Carbon,DB;
 
 class UsersKYCController extends Controller{
     protected $data;
@@ -23,7 +23,7 @@ class UsersKYCController extends Controller{
 
         $this->data['keyword'] = strtolower($request->get('keyword'));
 
-        $first_record = UserKYC::orderBy('created_at', 'ASC')->first();
+        $first_record = UserKYC::where('status','pending')->orderBy('created_at', 'ASC')->first();
         $start_date = $request->get('start_date', now()->startOfMonth());
         if ($first_record) {
             $start_date = $request->get('start_date', $first_record->created_at->format("Y-m-d"));
@@ -62,7 +62,7 @@ class UsersKYCController extends Controller{
 
         $this->data['keyword'] = strtolower($request->get('keyword'));
 
-        $first_record = UserKYC::orderBy('created_at', 'ASC')->first();
+        $first_record = UserKYC::where('status','approved')->orderBy('created_at', 'ASC')->first();
         $start_date = $request->get('start_date', now()->startOfMonth());
         if ($first_record) {
             $start_date = $request->get('start_date', $first_record->created_at->format("Y-m-d"));
@@ -101,7 +101,7 @@ class UsersKYCController extends Controller{
 
         $this->data['keyword'] = strtolower($request->get('keyword'));
 
-        $first_record = UserKYC::orderBy('created_at', 'ASC')->first();
+        $first_record = UserKYC::where('status','rejected')->orderBy('created_at', 'ASC')->first();
         $start_date = $request->get('start_date', now()->startOfMonth());
         if ($first_record) {
             $start_date = $request->get('start_date', $first_record->created_at->format("Y-m-d"));
@@ -148,6 +148,21 @@ class UsersKYCController extends Controller{
         try{
             $registrant->status = $status;
             $registrant->save();
+
+            if($registrant->status == "approved"){
+                $user = new User;
+                $user->firstname = $registrant->firstname;
+                $user->lastname = $registrant->lastname;
+                $user->middlename = $registrant->middlename;
+                $user->suffix = $registrant->suffix;
+                $user->name = $registrant->name;
+                $user->email = $registrant->email;
+                $user->status = "active";
+                $user->user_type = $registrant->user_type;
+                $user->contact_number = $registrant->contact_number;
+                $user->password = $registrant->password;
+                $user->save();
+            }
                
             DB::commit();
 

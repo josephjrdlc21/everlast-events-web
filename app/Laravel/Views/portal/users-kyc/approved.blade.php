@@ -15,13 +15,13 @@
     <div class="card-body">
         <form method="GET" action="">
             <div class="row">
-                <div class="col-sm-12 col-md-3 col-lg-3 col-xl-5">
+                <div class="col-sm-12 col-lg-5">
                     <div class="form-group">
                         <label for="input_keyword">Keyword</label>
                         <input type="text" id="input_keyword" class="form-control" placeholder="eg. Registration ID, Name" name="keyword"  value="{{$keyword}}">
                     </div>
                 </div>
-                <div class="col-sm-12 col-md-3 col-lg-4 col-xl-7">
+                <div class="col-sm-12 col-lg-7">
                     <div class="row">
                         <div class="col-md-6">
                             <div class="form-group">
@@ -63,7 +63,11 @@
                     @forelse($record as $index => $registration)
                     <tr>
                         <td>
+                            @if($auth->canAny(['portal.users_kyc.view'], 'portal'))
                             <a href="{{route('portal.users_kyc.show', [$registration->id])}}">{{str_pad($registration->id, 5, "0", STR_PAD_LEFT)}}</a><br>
+                            @else
+                            <a href="#">{{str_pad($registration->id, 5, "0", STR_PAD_LEFT)}}</a><br>
+                            @endif
                             <div>{{$registration->name}}</div>
                         </td>
                         <td>{{$registration->email}}<br><small>{{$registration->contact_number}}</small></td>
@@ -73,7 +77,9 @@
                             <div class="dropdown">
                                 <button class="btn btn-sm btn-info dropdown-toggle" type="button" id="dropdownMenuButton" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">Action</button>
                                 <div class="dropdown-menu animated--fade-in" aria-labelledby="dropdownMenuButton" style="">
+                                    @if($auth->canAny(['portal.users_kyc.view'], 'portal'))
                                     <a class="dropdown-item" href="{{route('portal.users_kyc.show', [$registration->id])}}">View Registration</a>
+                                    @endif
                                 </div>
                             </div>
                         </td>

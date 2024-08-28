@@ -8,7 +8,7 @@ Route::group(['prefix' => "portal", 'as' => "portal.", 'namespace' => "Portal", 
             Route::get('/register', ['as' => "register", 'uses' => "AuthController@register"]);
             //Route::post('register', ['uses' => "AuthenticationController@store"]);
         });
-        Route::get('logout', ['as' => "logout", 'uses' => "AuthController@logout"]);
+        Route::get('/logout', ['as' => "logout", 'uses' => "AuthController@logout"]);
     });
 
     Route::group(['middleware' => "portal.auth"], function(){
@@ -22,7 +22,7 @@ Route::group(['prefix' => "portal", 'as' => "portal.", 'namespace' => "Portal", 
             Route::post('/edit/{id?}', ['uses' => "UsersController@update", 'middleware' => "portal.permission:portal.users.update"]);
             Route::get('/edit-password/{id?}', ['as' => "edit_password", 'uses' => "UsersController@edit_password", 'middleware' => "portal.permission:portal.users.edit_password"]);
             Route::post('/edit-password/{id?}', ['uses' => "UsersController@update_password", 'middleware' => "portal.permission:portal.users.edit_password"]);
-            Route::get('update-status/{id?}',['as' => "update_status", 'uses' => "UsersController@update_status", 'middleware' => "portal.permission:portal.users.update_status"]);
+            Route::get('/update-status/{id?}', ['as' => "update_status", 'uses' => "UsersController@update_status", 'middleware' => "portal.permission:portal.users.update_status"]);
             Route::get('/show/{id?}', ['as' => "show", 'uses' => "UsersController@show", 'middleware' => "portal.permission:portal.users.view"]);
         });
 
@@ -37,11 +37,19 @@ Route::group(['prefix' => "portal", 'as' => "portal.", 'namespace' => "Portal", 
         });
 
         Route::group(['prefix' => "users-kyc", 'as' => "users_kyc."], function(){
-            Route::get('/', ['as' => "index", 'uses' => "UsersKYCController@index"]);
-            Route::get('/approved', ['as' => "approved", 'uses' => "UsersKYCController@approved"]);
-            Route::get('/rejected', ['as' => "rejected", 'uses' => "UsersKYCController@rejected"]);
-            Route::get('/show/{id?}', ['as' => "show", 'uses' => "UsersKYCController@show"]);
-            Route::get('/update-status/{id?}/{status?}', ['as' => "update_status", 'uses' => "UsersKYCController@update_status"]);
+            Route::get('/', ['as' => "index", 'uses' => "UsersKYCController@index", 'middleware' => "portal.permission:portal.users_kyc.index"]);
+            Route::get('/approved', ['as' => "approved", 'uses' => "UsersKYCController@approved", 'middleware' => "portal.permission:portal.users_kyc.index"]);
+            Route::get('/rejected', ['as' => "rejected", 'uses' => "UsersKYCController@rejected", 'middleware' => "portal.permission:portal.users_kyc.index"]);
+            Route::get('/show/{id?}', ['as' => "show", 'uses' => "UsersKYCController@show", 'middleware' => "portal.permission:portal.users_kyc.view"]);
+            Route::get('/update-status/{id?}/{status?}', ['as' => "update_status", 'uses' => "UsersKYCController@update_status", 'middleware' => "portal.permission:portal.users_kyc.update_status"]);
+        });
+
+        Route::group(['prefix' => "members", 'as' => "members."], function(){
+            Route::get('/', ['as' => "index", 'uses' => "MembersController@index", 'middleware' => "portal.permission:portal.members.index"]);
+            Route::get('/show/{id?}', ['as' => "show", 'uses' => "MembersController@show", 'middleware' => "portal.permission:portal.members.view"]);
+            Route::get('/edit-password/{id?}', ['as' => "edit_password", 'uses' => "MembersController@edit_password", 'middleware' => "portal.permission:portal.members.edit_password"]);
+            Route::post('/edit-password/{id?}', ['uses' => "MembersController@update_password", 'middleware' => "portal.permission:portal.members.edit_password"]);
+            Route::get('/update-status/{id?}', ['as' => "update_status", 'uses' => "MembersController@update_status", 'middleware' => "portal.permission:portal.members.update_status"]);
         });
 
         Route::group(['prefix' => "cms", 'as' => "cms."], function(){
@@ -63,7 +71,7 @@ Route::group(['prefix' => "portal", 'as' => "portal.", 'namespace' => "Portal", 
                 Route::post('/create', ['uses' => "CategoryController@store", 'middleware' => "portal.permission:portal.cms.category.create"]);
                 Route::get('/edit/{id?}', ['as' => "edit", 'uses' => "CategoryController@edit", 'middleware' => "portal.permission:portal.cms.category.update"]);
                 Route::post('/edit/{id?}', ['uses' => "CategoryController@update", 'middleware' => "portal.permission:portal.cms.category.update"]);
-                Route::get('update-status/{id?}',['as' => "update_status", 'uses' => "CategoryController@update_status", 'middleware' => "portal.permission:portal.cms.category.update_status"]);
+                Route::get('/update-status/{id?}',['as' => "update_status", 'uses' => "CategoryController@update_status", 'middleware' => "portal.permission:portal.cms.category.update_status"]);
                 Route::get('/show/{id?}', ['as' => "show", 'uses' => "CategoryController@show", 'middleware' => "portal.permission:portal.cms.category.view"]);
                 Route::any('/delete/{id?}', ['as' => "delete", 'uses' => "CategoryController@destroy", 'middleware' => "portal.permission:portal.cms.category.delete"]);
             });
@@ -81,8 +89,8 @@ Route::group(['prefix' => "portal", 'as' => "portal.", 'namespace' => "Portal", 
 
         Route::group(['prefix' => "profile", 'as' => "profile."], function(){
             Route::get('/', ['as' => "index", 'uses' => "ProfileController@index"]);
-            Route::get('password', ['as' => "edit_password", 'uses' => "ProfileController@edit_password"]);
-            Route::post('password', ['uses' => "ProfileController@update_password"]);
+            Route::get('/password', ['as' => "edit_password", 'uses' => "ProfileController@edit_password"]);
+            Route::post('/password', ['uses' => "ProfileController@update_password"]);
         });
     });
 });

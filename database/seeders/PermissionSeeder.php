@@ -51,6 +51,17 @@ class PermissionSeeder extends Seeder
             ['name' => "portal.events.update", 'description' => "Update Event Details", 'module' => "events", 'module_name' => "Events", 'guard_name' => "portal"],
             ['name' => "portal.events.search", 'description' => "Search Record", 'module' => "events", 'module_name' => "Events", 'guard_name' => "portal"],
             ['name' => "portal.events.update_is_cancelled", 'description' => "Cancel Event", 'module' => "events", 'module_name' => "Events", 'guard_name' => "portal"],
+
+            ['name' => "portal.users_kyc.index", 'description' => "List of Registrants", 'module' => "registrations", 'module_name' => "Registrations", 'guard_name' => "portal"],
+            ['name' => "portal.users_kyc.view", 'description' => "View Registrant Details", 'module' => "registrations", 'module_name' => "Registrations", 'guard_name' => "portal"],
+            ['name' => "portal.users_kyc.update_status", 'description' => "Approve or Reject Registrant", 'module' => "registrations", 'module_name' => "Registrations", 'guard_name' => "portal"],
+            ['name' => "portal.users_kyc.search", 'description' => "Search Record", 'module' => "registrations", 'module_name' => "Registrations", 'guard_name' => "portal"],
+
+            ['name' => "portal.members.index", 'description' => "List of Members", 'module' => "members", 'module_name' => "Members", 'guard_name' => "portal"],
+            ['name' => "portal.members.view", 'description' => "View Member Details", 'module' => "members", 'module_name' => "Members", 'guard_name' => "portal"],
+            ['name' => "portal.members.edit_password", 'description' => "Reset Member Password", 'module' => "members", 'module_name' => "Members", 'guard_name' => "portal"],
+            ['name' => "portal.members.update_status", 'description' => "Activate or Deactivate Member", 'module' => "members", 'module_name' => "Members", 'guard_name' => "portal"],
+            ['name' => "portal.members.search", 'description' => "Search Record", 'module' => "members", 'module_name' => "Members", 'guard_name' => "portal"],
         ];
         
         foreach($permissions as $permission){

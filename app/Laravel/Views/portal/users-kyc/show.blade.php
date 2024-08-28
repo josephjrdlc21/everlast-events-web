@@ -55,9 +55,11 @@
                 </div>
                 <hr>
                 <a href="{{route('portal.users_kyc.index')}}" class="btn btn-sm btn-secondary">Close</a>
-                @if($registrant->status === 'pending')
-                <button data-url="{{route('portal.users_kyc.update_status', ['id' => $registrant->id, 'status' => 'approved'])}}" class="btn btn-sm btn-success btn-approve">Approve</button>
-                <button data-url="{{route('portal.users_kyc.update_status', ['id' => $registrant->id, 'status' => 'rejected'])}}" class="btn btn-sm btn-danger btn-cancel">Reject</button>
+                @if($auth->canAny(['portal.users_kyc.update_status'], 'portal'))
+                    @if($registrant->status === 'pending')
+                    <button data-url="{{route('portal.users_kyc.update_status', ['id' => $registrant->id, 'status' => 'approved'])}}" class="btn btn-sm btn-success btn-approve">Approve</button>
+                    <button data-url="{{route('portal.users_kyc.update_status', ['id' => $registrant->id, 'status' => 'rejected'])}}" class="btn btn-sm btn-danger btn-cancel">Reject</button>
+                    @endif
                 @endif
             </div>
         </div>

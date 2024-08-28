@@ -103,4 +103,12 @@ class AuthController extends Controller{
         session()->flash('notification-msg', "Unable to register your account.");
         return redirect()->back();
     }
+
+    public function logout(PageRequest $request){
+        auth($this->guard)->logout();
+		
+		session()->flash('notification-status', "success");
+		session()->flash('notification-msg', "Logged out successfully.");
+		return redirect()->route('frontend.auth.login');
+    }
 }
