@@ -35,7 +35,7 @@ class Authenticate {
 	public function handle($request, Closure $next, $guard = null)
     {
         if (!auth('frontend')->check()){
-            return redirect()->route('frontend.auth.login');
+            return redirect()->route('frontend.home');
         }
 
         return $next($request);

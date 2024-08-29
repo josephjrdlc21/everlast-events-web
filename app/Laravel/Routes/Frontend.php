@@ -1,6 +1,8 @@
 <?php
 
 Route::group(['as' => "frontend.", 'namespace' => "Frontend", 'middleware' => ["web"]], function() {
+    Route::get('/home', ['as' => "home", 'uses' => "MainController@home", 'middleware' => "frontend.guest"]);
+
     Route::group(['prefix' => "", 'as' => "auth."], function(){
         Route::group(['middleware' => "frontend.guest"], function(){
             Route::get('/login', ['as' => "login", 'uses' => "AuthController@login"]);

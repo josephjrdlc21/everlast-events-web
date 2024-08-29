@@ -62,6 +62,12 @@ class PermissionSeeder extends Seeder
             ['name' => "portal.members.edit_password", 'description' => "Reset Member Password", 'module' => "members", 'module_name' => "Members", 'guard_name' => "portal"],
             ['name' => "portal.members.update_status", 'description' => "Activate or Deactivate Member", 'module' => "members", 'module_name' => "Members", 'guard_name' => "portal"],
             ['name' => "portal.members.search", 'description' => "Search Record", 'module' => "members", 'module_name' => "Members", 'guard_name' => "portal"],
+
+            ['name' => "portal.cms.pages.index", 'description' => "List of Pages", 'module' => "cms.pages", 'module_name' => "CMS - Pages", 'guard_name' => "portal"],
+            ['name' => "portal.cms.pages.create", 'description' => "Create New Page", 'module' => "cms.pages", 'module_name' => "CMS - Pages", 'guard_name' => "portal"],
+            ['name' => "portal.cms.pages.update", 'description' => "Update Page Details", 'module' => "cms.pages", 'module_name' => "CMS - Pages", 'guard_name' => "portal"],
+            ['name' => "portal.cms.pages.view", 'description' => "View Page Details", 'module' => "cms.pages", 'module_name' => "CMS - Pages", 'guard_name' => "portal"],
+            ['name' => "portal.cms.pages.search", 'description' => "Search Record", 'module' => "cms.pages", 'module_name' => "CMS - Pages", 'guard_name' => "portal"],
         ];
         
         foreach($permissions as $permission){

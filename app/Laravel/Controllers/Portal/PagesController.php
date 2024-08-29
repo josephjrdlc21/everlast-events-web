@@ -1,0 +1,154 @@
+<?php
+
+namespace App\Laravel\Controllers\Portal;
+
+use App\Laravel\Models\Page;
+
+use App\Laravel\Requests\PageRequest;
+use App\Laravel\Requests\Portal\WebPageRequest;
+
+use Carbon,DB;
+
+class PagesController extends Controller{
+    protected $data;
+
+    public function __construct(){
+        parent::__construct();
+        array_merge($this->data?:[], parent::get_data());
+        $this->data['type'] = ['' => "-- Select Page -- ",'contact' => "Contact Us",'about' => "About Us",'banner' => "Banner Message"];
+        $this->data['page_title'] .= " - Pages";
+        $this->per_page = env("DEFAULT_PER_PAGE", 10);
+    }
+
+    public function index(PageRequest $request){
+        $this->data['page_title'] .= " - List of Pages";
+
+        $this->data['keyword'] = strtolower($request->get('keyword'));
+
+        $first_record = Page::orderBy('created_at', 'ASC')->first();
+        $start_date = $request->get('start_date', now()->startOfMonth());
+        if ($first_record) {
+            $start_date = $request->get('start_date', $first_record->created_at->format("Y-m-d"));
+        }
+
+        $this->data['start_date'] = Carbon::parse($start_date)->format("Y-m-d");
+        $this->data['end_date'] = Carbon::parse($request->get('end_date', now()))->format("Y-m-d");
+
+        $this->data['record'] = Page::where(function ($query) {
+            if (strlen($this->data['keyword']) > 0) {
+                return $query
+                    ->whereRaw("LOWER(title) LIKE '%{$this->data['keyword']}%'")
+                    ->orWhereRaw("LOWER(type) LIKE '%{$this->data['keyword']}%'");
+            }
+        })
+        ->where(function ($query) {
+            return $query->where(function ($q) {
+                if(strlen($this->data['start_date']) > 0) {
+                    return $q->whereDate('created_at', '>=', Carbon::parse($this->data['start_date'])->format("Y-m-d"));
+                }
+            })->where(function ($q) {
+                if(strlen($this->data['end_date']) > 0) {
+                    return $q->whereDate('created_at', '<=', Carbon::parse($this->data['end_date'])->format("Y-m-d"));
+                }
+            });
+        })
+        ->orderBy('created_at','DESC')
+        ->paginate($this->per_page);
+
+        return view('portal.cms.pages.index', $this->data);
+    }
+
+    public function create(PageRequest $request){
+        $this->data['page_title'] .= " - Create Page";
+
+        return view('portal.cms.pages.create', $this->data);
+    }
+
+    public function store(WebPageRequest $request){
+        DB::beginTransaction();
+        try{
+            $page = new Page;
+            $page->user_id = $this->data['auth']->id;
+            $page->title = $request->input('title');
+            $page->content = $request->input('content');
+            $page->type = $request->input('type');
+            $page->save();
+
+            DB::commit();
+
+            session()->flash('notification-status', "success");
+            session()->flash('notification-msg', "New page has been added.");
+            return redirect()->route('portal.cms.pages.index');
+        }catch(\Exception $e){
+            DB::rollback();
+            
+            session()->flash('notification-status', "failed");
+            session()->flash('notification-msg', "Server Error: Code #{$e->getLine()}");
+            return redirect()->back();
+        }
+
+        session()->flash('notification-status', "warning");
+        session()->flash('notification-msg', "Unable to add page.");
+        return redirect()->back();
+    }
+
+    public function edit(PageRequest $request,$id = null){
+        $this->data['page_title'] .= " - Edit Page";
+        $this->data['page'] = Page::find($id);
+
+        if(!$this->data['page']){
+            session()->flash('notification-status', "failed");
+            session()->flash('notification-msg', "Record not found.");
+            return redirect()->route('portal.cms.pages.index');
+        }
+
+        return view('portal.cms.pages.edit', $this->data);
+    }
+
+    public function update(WebPageRequest $request,$id = null){
+        $page = Page::find($id);
+
+        if(!$page){
+            session()->flash('notification-status', "failed");
+            session()->flash('notification-msg', "Server Error: Code #{$e->getLine()}");
+            return redirect()->route('portal.cms.pages.index');
+        }
+
+        DB::beginTransaction();
+        try{
+            $page->user_id = $this->data['auth']->id;
+            $page->title = $request->input('title');
+            $page->content = $request->input('content');
+            $page->type = $request->input('type');
+            $page->save();
+
+            DB::commit();
+
+            session()->flash('notification-status', "success");
+            session()->flash('notification-msg', "Page has been modified.");
+            return redirect()->route('portal.cms.pages.index');
+        }catch(\Exception $e){
+            DB::rollback();
+
+            session()->flash('notification-status', "failed");
+            session()->flash('notification-msg', "Server Error: Code #{$e->getLine()}");
+            return redirect()->back();
+        }
+        session()->flash('notification-status', "warning");
+        session()->flash('notification-msg', "Unable to update page.");
+        return redirect()->back();
+    }
+
+    public function show(PageRequest $request,$id = null){
+        $this->data['page_title'] .= " - Information";
+        $this->data['page'] = Page::find($id);
+
+        if(!$this->data['page']){
+            session()->flash('notification-status', "failed");
+            session()->flash('notification-msg', "Record not found.");
+            return redirect()->route('portal.cms.pages.index');
+        }
+
+        return view('portal.cms.pages.show', $this->data);
+    }
+}

@@ -85,6 +85,15 @@ Route::group(['prefix' => "portal", 'as' => "portal.", 'namespace' => "Portal", 
                 Route::get('/show/{id?}', ['as' => "show", 'uses' => "SponsorsController@show", 'middleware' => "portal.permission:portal.cms.sponsors.view"]);
                 Route::any('/delete/{id?}', ['as' => "delete", 'uses' => "SponsorsController@destroy", 'middleware' => "portal.permission:portal.cms.sponsors.delete"]);
             });
+
+            Route::group(['prefix' => "pages", 'as' => "pages."], function(){
+                Route::get('/', ['as' => "index", 'uses' => "PagesController@index", 'middleware' => "portal.permission:portal.cms.pages.index"]);
+                Route::get('/create', ['as' => "create", 'uses' => "PagesController@create", 'middleware' => "portal.permission:portal.cms.pages.create"]);
+                Route::post('/create', ['uses' => "PagesController@store", 'middleware' => "portal.permission:portal.cms.pages.create"]);
+                Route::get('/edit/{id?}', ['as' => "edit", 'uses' => "PagesController@edit", 'middleware' => "portal.permission:portal.cms.pages.update"]);
+                Route::post('/edit/{id?}', ['uses' => "PagesController@update", 'middleware' => "portal.permission:portal.cms.pages.update"]);
+                Route::get('/show/{id?}', ['as' => "show", 'uses' => "PagesController@show", 'middleware' => "portal.permission:portal.cms.pages.view"]);
+            });
         });
 
         Route::group(['prefix' => "profile", 'as' => "profile."], function(){

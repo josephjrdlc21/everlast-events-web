@@ -45,4 +45,14 @@
         left: 0;
         top: 0;
     }
+
+    .sidebar, .sidebar-content {
+        background: #7a6ad8 !important;
+        color: whitesmoke !important; 
+    }
+
+    .sidebar-link{
+        background: #7a6ad8 !important;
+        color: whitesmoke !important; 
+    }
 </style>

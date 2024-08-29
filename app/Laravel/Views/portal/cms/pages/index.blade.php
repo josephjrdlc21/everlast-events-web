@@ -1,0 +1,106 @@
+@extends('portal._layouts.main')
+
+@section('breadcrumb')
+<div class="mb-4">
+    <h1 class="h3 mb-0 text-gray-800">CMS - Pages</h1>
+</div>
+@stop
+
+@section('content')
+@include('portal._components.notification')
+<div class="card shadow mb-4 border-bottom-secondary">
+    <div class="card-header py-3">
+        <h6 class="m-0 font-weight-bold text-primary">Advance Filter</h6>
+    </div>
+    <div class="card-body">
+        <form method="GET" action="">
+            <div class="row">
+                <div class="col-sm-12 col-lg-5">
+                    <div class="form-group">
+                        <label for="input_keyword">Keyword</label>
+                        <input type="text" id="input_keyword" class="form-control" placeholder="eg. Page Type, Title" name="keyword"  value="{{$keyword}}">
+                    </div>
+                </div>
+                <div class="col-sm-12 col-lg-7">
+                    <div class="row">
+                        <div class="col-md-6">
+                            <div class="form-group">
+                                <label for="input_from">From</label>
+                                <input type="date" class="form-control" name="start_date" value="{{$start_date}}">
+                            </div>
+                        </div>
+                        <div class="col-md-6">
+                            <div class="form-group">
+                                <label for="input_from">To</label>
+                                <input type="date" class="form-control" name="end_date" value="{{$end_date}}">
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div> 
+            <button type="submit" class="btn btn-sm btn-primary">Apply Filter</button>
+            <a href="{{route('portal.cms.pages.index')}}" class="btn btn-sm btn-secondary">Reset Filter</a>
+        </form>
+    </div>
+</div>
+<div class="card shadow mb-4 border-bottom-secondary">
+    <div class="card-header py-3 d-sm-flex align-items-center justify-content-between">
+        <h6 class="m-0 font-weight-bold text-primary">Record Data</h6>
+        @if($auth->canAny(['portal.cms.pages.create'], 'portal'))
+        <a class="btn btn-sm btn-primary" href="{{route('portal.cms.pages.create')}}">Add Pages</a>
+        @endif
+    </div>
+    <div class="card-body">
+        <div class="table-responsive">
+            <table class="table table-hover mb-0">
+                <thead>
+                    <tr>
+                        <th class="border-top-0">No.</th>
+                        <th class="border-top-0">Type</th>
+                        <th class="border-top-0">Title</th>
+                        <th class="border-top-0">User</th>
+                        <th class="border-top-0">Date Added</th>
+                        <th class="border-top-0">Last Modified</th>
+                        <th class="border-top-0"></th>
+                    </tr>
+                </thead>
+                <tbody>
+                    @forelse($record as $index => $page)
+                    <tr>
+                        <td>{{$loop->index + $record->firstItem()}}</td>
+                        <td>{{Helper::capitalize_text($page->type)}}</td>
+                        <td>{{$page->title}}</td>
+                        <td>{{$page->user->name}}</td>
+                        <td>{{Carbon::parse($page->created_at)->format('m/d/Y')}}<br><small>{{Carbon::parse($page->created_at)->format('g:i A')}}</small></td>
+                        <td>{{Carbon::parse($page->updated_at)->format('m/d/Y')}}<br><small>{{Carbon::parse($page->updated_at)->format('g:i A')}}</small></td>
+                        <td>
+                            <div class="dropdown">
+                                <button class="btn btn-sm btn-info dropdown-toggle" type="button" id="dropdownMenuButton" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">Action</button>
+                                <div class="dropdown-menu animated--fade-in" aria-labelledby="dropdownMenuButton" style="">
+                                    @if($auth->canAny(['portal.cms.pages.view'], 'portal'))
+                                    <a class="dropdown-item" href="{{route('portal.cms.pages.show', [$page->id])}}">View Details</a>
+                                    @endif
+                                    @if($auth->canAny(['portal.cms.pages.update'], 'portal'))
+                                    <a class="dropdown-item" href="{{route('portal.cms.pages.edit', [$page->id])}}">Edit Details</a>
+                                    @endif
+                                </div>
+                            </div>
+                        </td>
+                    </tr>
+                    @empty
+                    <td colspan="7">
+                        <p class="text-center">No record found yet.</p>
+                    </td>
+                    @endforelse
+                </tbody>
+            </table>
+        </div>
+        @if($record->total() > 0)
+        <div class="mt-4 d-sm-flex align-items-center justify-content-between">
+            <div>Showing <strong>{{$record->firstItem()}}</strong> to <strong>{{$record->lastItem()}}</strong> of <strong>{{$record->total()}}</strong> entries</div>
+            <div class="pagination pagination-sm">{!!$record->appends(request()->query())->render()!!}</div>
+        </div>
+        @endif
+    </div>
+</div>
+@stop

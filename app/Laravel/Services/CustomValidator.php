@@ -2,7 +2,7 @@
 
 namespace App\Laravel\Services;
 
-use App\Laravel\Models\{User,UserKYC};
+use App\Laravel\Models\{User,UserKYC,Page};
 use Illuminate\Validation\Validator;
 
 use Hash,PhoneNumber;
@@ -106,5 +106,15 @@ class CustomValidator extends Validator{
                     ->where('id', '<>', $id)
                     ->count() ? false : true;
         }
+    }
+
+    public function validateUniquePage($attribute, $value, $parameters){
+
+        $type = strtolower($value);
+        $id = (is_array($parameters) and isset($parameters[0])) ? $parameters[0] : "0";
+
+        return Page::where('type', $type)
+            ->where('id', '<>', $id)
+            ->count() ? false : true;
     }
 }
