@@ -2,7 +2,7 @@
 
 namespace App\Laravel\Controllers\Frontend;
 
-use App\Laravel\Models\{Sponsor,Event,Page};
+use App\Laravel\Models\{Sponsor,Event,Page,FAQ};
 
 use App\Laravel\Requests\PageRequest;
 
@@ -28,6 +28,7 @@ class MainController extends Controller{
 
         $this->data['sponsors'] = Sponsor::orderBy('created_at', 'desc')->limit(6)->get();
         $this->data['events'] = Event::orderBy('created_at', 'desc')->limit(6)->get();
+        $this->data['faqs'] = FAQ::where('status', 'active')->orderBy('created_at', 'desc')->limit(5)->get();
         $this->data['about'] = Page::where('type', 'about')->first();
         $this->data['contact'] = Page::where('type', 'contact')->first();
         $this->data['banner'] = Page::where('type', 'banner')->first();

@@ -74,8 +74,8 @@
                     @forelse($record as $index => $faq)
                     <tr>
                         <td>{{$loop->index + $record->firstItem()}}</td>
-                        <td>{{Str::limit($faq->question, 15, '...')}}</td>
-                        <td>{!!Str::limit($faq->answer, 15, '...')!!}</td>
+                        <td>{{$faq->question}}</td>
+                        <td>{!!$faq->answer!!}</td>
                         <td>{{$faq->user->name}}<br><span class="badge badge-{{Helper::badge_status($faq->status)}}">{{Str::upper($faq->status)}}</span></td>
                         <td>{{Carbon::parse($faq->created_at)->format('m/d/Y')}}<br><small>{{Carbon::parse($faq->created_at)->format('g:i A')}}</small></td>
                         <td>{{Carbon::parse($faq->updated_at)->format('m/d/Y')}}<br><small>{{Carbon::parse($faq->updated_at)->format('g:i A')}}</small></td>

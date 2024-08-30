@@ -21,22 +21,26 @@
 <div class="section about-us" id="about">
     <div class="container">
         <div class="row">
+            @if($faqs && $faqs->count() > 0)
             <div class="col-lg-6 offset-lg-1">
                 <div class="accordion" id="accordionExample">
+                    @foreach($faqs as $index => $faq)
                     <div class="accordion-item">
-                        <h2 class="accordion-header" id="headingOne">
-                            <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#collapseOne" aria-expanded="false" aria-controls="collapseOne">
-                            Where shall we begin?
+                        <h2 class="accordion-header" id="heading{{$faq->id}}">
+                            <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#collapse{{$faq->id}}" aria-expanded="false" aria-controls="collapse{{$faq->id}}">
+                                {{$faq->question}}
                             </button>
                         </h2>
-                        <div id="collapseOne" class="accordion-collapse collapse" aria-labelledby="headingOne" data-bs-parent="#accordionExample" style="">
+                        <div id="collapse{{$faq->id}}" class="accordion-collapse collapse" aria-labelledby="heading{{$faq->id}}" data-bs-parent="#accordionExample" style="">
                             <div class="accordion-body">
-                                Dolor <strong>almesit amet</strong>, consectetur adipiscing elit, sed doesn't eiusmod tempor incididunt ut labore consectetur <code>adipiscing</code> elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Quis ipsum suspendisse ultrices gravida.
+                                {!!$faq->answer!!}
                             </div>
                         </div>
                     </div>
+                    @endforeach
                 </div>
             </div>
+            @endif
             <div class="col-lg-5 align-self-center">
                 <div class="section-heading">
                     <h6>{{$about->type}}</h6>
