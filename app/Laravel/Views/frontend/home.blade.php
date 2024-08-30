@@ -7,7 +7,7 @@
             <div class="col-lg-12">  
                 <div class="header-text text-center">
                     <span class="category text-white">Event Management System</span>
-                    @if($banner->count() > 0)
+                    @if($banner && $banner->count() > 0)
                     <h2 class="text-white mt-5">{{$banner->title}}</h2>
                     <div class="mt-2">{!!$banner->content!!}</div>
                     @endif
@@ -17,7 +17,7 @@
     </div>
 </div>
 
-@if($about->count() > 0)
+@if($about && $about->count() > 0)
 <div class="section about-us" id="about">
     <div class="container">
         <div class="row">
@@ -49,7 +49,7 @@
 </div>
 @endif
 
-@if($events->count() > 0)
+@if($events && $events->count() > 0)
 <div class="section events" id="events">
     <div class="container">
         <div class="row">
@@ -97,7 +97,7 @@
 </div>
 @endif
 
-@if($sponsors->count() > 0)
+@if($sponsors && $sponsors->count() > 0)
 <section class="section courses" id="courses">
     <div class="container">
         <div class="row">
@@ -127,7 +127,7 @@
 </section>
 @endif
 
-@if($contact->count() > 0)
+@if($contact && $contact->count() > 0)
 <div class="contact-us section" id="contact">
     <div class="container">
         <div class="row">
