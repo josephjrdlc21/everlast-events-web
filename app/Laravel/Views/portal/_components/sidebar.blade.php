@@ -77,7 +77,7 @@
     <div class="sidebar-heading">
         System Settings
     </div>
-    @if($auth->canAny(['portal.cms.permissions.index', 'portal.cms.roles.index', 'portal.cms.category.index', 'portal.cms.sponsors.index', 'portal.cms.pages.index'], 'portal'))
+    @if($auth->canAny(['portal.cms.permissions.index', 'portal.cms.roles.index', 'portal.cms.category.index', 'portal.cms.sponsors.index', 'portal.cms.pages.index', 'portal.cms.faq.index'], 'portal'))
     <li class="nav-item {{request()->segment(2) == "cms" ? "active" : ""}}">
         <a class="nav-link {{request()->segment(2) == "cms" ? "" : "collapsed"}}" href="#" data-toggle="collapse" data-target="#collapseCMS" aria-expanded="true" aria-controls="collapseCMS">
             <i class="fas fa-book"></i>
@@ -97,7 +97,9 @@
                 @if($auth->canAny(['portal.cms.sponsors.index'], 'portal'))
                 <a class="collapse-item {{request()->segment(3) == "sponsors" ? "active" : ""}}" href="{{route('portal.cms.sponsors.index')}}">Sponsors</a>
                 @endif
-                <a class="collapse-item" href="">FAQ</a>
+                @if($auth->canAny(['portal.cms.faq.index'], 'portal'))
+                <a class="collapse-item {{request()->segment(3) == "faq" ? "active" : ""}}" href="{{route('portal.cms.faq.index')}}">FAQ</a>
+                @endif
                 @if($auth->canAny(['portal.cms.pages.index'], 'portal'))
                 <a class="collapse-item {{request()->segment(3) == "pages" ? "active" : ""}}" href="{{route('portal.cms.pages.index')}}">Pages</a>
                 @endif

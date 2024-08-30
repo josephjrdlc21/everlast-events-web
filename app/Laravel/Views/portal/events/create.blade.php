@@ -83,7 +83,7 @@
                         <div class="col-md-6">
                             <div class="form-group">
                                 <label for="input_start">Event Start</label>
-                                <input type="date" class="form-control" name="start_date" value="{{old('start_date')}}">
+                                <input type="datetime-local" class="form-control" name="start_date" value="{{old('start_date')}}">
                                 @if($errors->first('start_date'))
                                 <small class="d-block mt-1 text-danger">{{$errors->first('start_date')}}</small>
                                 @endif
@@ -92,7 +92,7 @@
                         <div class="col-md-6">
                             <div class="form-group">
                                 <label for="input_end">Event End</label>
-                                <input type="date" class="form-control" name="end_date" value="{{old('end_date')}}">
+                                <input type="datetime-local" class="form-control" name="end_date" value="{{old('end_date')}}">
                                 @if($errors->first('end_date'))
                                 <small class="d-block mt-1 text-danger">{{$errors->first('end_date')}}</small>
                                 @endif

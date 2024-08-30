@@ -83,6 +83,9 @@
                                     @if($auth->canAny(['portal.cms.pages.update'], 'portal'))
                                     <a class="dropdown-item" href="{{route('portal.cms.pages.edit', [$page->id])}}">Edit Details</a>
                                     @endif
+                                    @if($auth->canAny(['portal.cms.pages.delete'], 'portal'))
+                                    <a class="dropdown-item delete-record" data-url="{{route('portal.cms.pages.delete', [$page->id])}}" type="button">Delete Page</a>
+                                    @endif
                                 </div>
                             </div>
                         </td>
@@ -103,4 +106,25 @@
         @endif
     </div>
 </div>
+@stop
+
+@section('page-scripts')
+<script type="text/javascript">
+    $(".delete-record").on('click', function(){
+        var url = $(this).data('url');
+        Swal.fire({
+            title: 'Are you sure you want to delete this?',
+            icon: 'question',
+            showCancelButton: true,
+            showLoaderOnConfirm: true,
+            confirmButtonColor: '#3085d6',
+            cancelButtonColor: '#d33',
+            confirmButtonText: 'Yes',
+        }).then((result) => {
+            if (result.isConfirmed) {
+                window.location.href = url;
+            }
+        })
+    });
+</script>
 @stop

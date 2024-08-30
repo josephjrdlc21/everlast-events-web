@@ -68,6 +68,15 @@ class PermissionSeeder extends Seeder
             ['name' => "portal.cms.pages.update", 'description' => "Update Page Details", 'module' => "cms.pages", 'module_name' => "CMS - Pages", 'guard_name' => "portal"],
             ['name' => "portal.cms.pages.view", 'description' => "View Page Details", 'module' => "cms.pages", 'module_name' => "CMS - Pages", 'guard_name' => "portal"],
             ['name' => "portal.cms.pages.search", 'description' => "Search Record", 'module' => "cms.pages", 'module_name' => "CMS - Pages", 'guard_name' => "portal"],
+            ['name' => "portal.cms.pages.delete", 'description' => "Delete Page", 'module' => "cms.pages", 'module_name' => "CMS - Pages", 'guard_name' => "portal"],
+
+            ['name' => "portal.cms.faq.index", 'description' => "List of FAQ", 'module' => "cms.faq", 'module_name' => "CMS - FAQ", 'guard_name' => "portal"],
+            ['name' => "portal.cms.faq.view", 'description' => "View FAQ Details", 'module' => "cms.faq", 'module_name' => "CMS - FAQ", 'guard_name' => "portal"],
+            ['name' => "portal.cms.faq.create", 'description' => "Create New FAQ", 'module' => "cms.faq", 'module_name' => "CMS - FAQ", 'guard_name' => "portal"],
+            ['name' => "portal.cms.faq.update", 'description' => "Update FAQ Details", 'module' => "cms.faq", 'module_name' => "CMS - FAQ", 'guard_name' => "portal"],
+            ['name' => "portal.cms.faq.update_status", 'description' => "Activate or Deactivate FAQ", 'module' => "cms.faq", 'module_name' => "CMS - FAQ", 'guard_name' => "portal"],
+            ['name' => "portal.cms.faq.delete", 'description' => "Delete FAQ", 'module' => "cms.faq", 'module_name' => "CMS - FAQ", 'guard_name' => "portal"],
+            ['name' => "portal.cms.faq.search", 'description' => "Search Record", 'module' => "cms.faq", 'module_name' => "CMS - FAQ", 'guard_name' => "portal"],
         ];
         
         foreach($permissions as $permission){

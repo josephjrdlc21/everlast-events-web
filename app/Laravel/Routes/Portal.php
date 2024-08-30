@@ -93,6 +93,18 @@ Route::group(['prefix' => "portal", 'as' => "portal.", 'namespace' => "Portal", 
                 Route::get('/edit/{id?}', ['as' => "edit", 'uses' => "PagesController@edit", 'middleware' => "portal.permission:portal.cms.pages.update"]);
                 Route::post('/edit/{id?}', ['uses' => "PagesController@update", 'middleware' => "portal.permission:portal.cms.pages.update"]);
                 Route::get('/show/{id?}', ['as' => "show", 'uses' => "PagesController@show", 'middleware' => "portal.permission:portal.cms.pages.view"]);
+                Route::any('/delete/{id?}', ['as' => "delete", 'uses' => "PagesController@destroy", 'middleware' => "portal.permission:portal.cms.pages.delete"]);
+            });
+
+            Route::group(['prefix' => "faq", 'as' => "faq."], function(){
+                Route::get('/', ['as' => "index", 'uses' => "FAQController@index", 'middleware' => "portal.permission:portal.cms.faq.index"]);
+                Route::get('/create', ['as' => "create", 'uses' => "FAQController@create", 'middleware' => "portal.permission:portal.cms.faq.create"]);
+                Route::post('/create', ['uses' => "FAQController@store", 'middleware' => "portal.permission:portal.cms.faq.create"]);
+                Route::get('/edit/{id?}', ['as' => "edit", 'uses' => "FAQController@edit", 'middleware' => "portal.permission:portal.cms.faq.update"]);
+                Route::post('/edit/{id?}', ['uses' => "FAQController@update", 'middleware' => "portal.permission:portal.cms.faq.update"]);
+                Route::get('/update-status/{id?}', ['as' => "update_status", 'uses' => "FAQController@update_status", 'middleware' => "portal.permission:portal.cms.faq.update_status"]);
+                Route::get('/show/{id?}', ['as' => "show", 'uses' => "FAQController@show", 'middleware' => "portal.permission:portal.cms.faq.view"]);
+                Route::any('/delete/{id?}', ['as' => "delete", 'uses' => "FAQController@destroy", 'middleware' => "portal.permission:portal.cms.faq.delete"]);
             });
         });
 

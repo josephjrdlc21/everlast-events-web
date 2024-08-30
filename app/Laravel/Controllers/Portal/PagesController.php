@@ -110,7 +110,7 @@ class PagesController extends Controller{
 
         if(!$page){
             session()->flash('notification-status', "failed");
-            session()->flash('notification-msg', "Server Error: Code #{$e->getLine()}");
+            session()->flash('notification-msg', "Record not found.");
             return redirect()->route('portal.cms.pages.index');
         }
 
@@ -150,5 +150,21 @@ class PagesController extends Controller{
         }
 
         return view('portal.cms.pages.show', $this->data);
+    }
+
+    public function destroy(PageRequest $request,$id = null){
+        $page = Page::find($id);
+
+        if(!$page){
+            session()->flash('notification-status',"failed");
+            session()->flash('notification-msg', "Record not found.");
+            return redirect()->back();
+        }
+
+        if($page->delete()){
+            session()->flash('notification-status', 'success');
+            session()->flash('notification-msg', "Page has been deleted.");
+            return redirect()->back();
+        }
     }
 }
