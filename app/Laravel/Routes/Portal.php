@@ -6,7 +6,7 @@ Route::group(['prefix' => "portal", 'as' => "portal.", 'namespace' => "Portal", 
             Route::get('/login/{uri?}', ['as' => "login", 'uses' => "AuthController@login"]);
             Route::post('/login/{uri?}', ['uses' => "AuthController@authenticate"]);
             Route::get('/register', ['as' => "register", 'uses' => "AuthController@register"]);
-            //Route::post('register', ['uses' => "AuthenticationController@store"]);
+            Route::post('/register', ['uses' => "AuthController@store"]);
         });
         Route::get('/logout', ['as' => "logout", 'uses' => "AuthController@logout"]);
     });

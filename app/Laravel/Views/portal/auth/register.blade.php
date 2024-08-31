@@ -11,36 +11,51 @@
                 <div class="col-lg-6">
                     <div class="p-5">
                         <div class="text-center">
-                            <h1 class="h4 text-gray-900 mb-4">Everlast Portal Login</h1>
+                            <h1 class="h4 text-gray-900 mb-4">Everlast Portal Register</h1>
                         </div>
                         <form class="user" method="POST" action="">
                             @include('portal._components.notification')
                             {!!csrf_field()!!}
                             <div class="form-group row">
                                 <div class="col-sm-6 mb-3 mb-sm-0">
-                                    <input type="text" class="form-control form-control-user" id="input_firstname" placeholder="First Name">
+                                    <input type="text" class="form-control form-control-user" id="input_firstname" placeholder="First Name" name="firstname" value="{{old('firstname')}}">
+                                    @if($errors->first('firstname'))
+                                    <small class="d-block mt-1 text-danger">{{$errors->first('firstname')}}</small>
+                                    @endif
                                 </div>
                                 <div class="col-sm-6">
-                                    <input type="text" class="form-control form-control-user" id="input_lastname" placeholder="Last Name">
+                                    <input type="text" class="form-control form-control-user" id="input_lastname" placeholder="Last Name" name="lastname" value="{{old('lastname')}}">
+                                    @if($errors->first('lastname'))
+                                    <small class="d-block mt-1 text-danger">{{$errors->first('lastname')}}</small>
+                                    @endif
                                 </div>
                             </div>
                             <div class="form-group row">
                                 <div class="col-sm-6 mb-3 mb-sm-0">
-                                    <input type="text" class="form-control form-control-user" id="input_middlename" placeholder="Middle Name">
+                                    <input type="text" class="form-control form-control-user" id="input_middlename" placeholder="Middle Name" name="middlename" value="{{old('middlename')}}">
+                                    @if($errors->first('middlename'))
+                                    <small class="d-block mt-1 text-danger">{{$errors->first('middlename')}}</small>
+                                    @endif
                                 </div>
                                 <div class="col-sm-6">
-                                    <input type="text" class="form-control form-control-user" id="input_suffix" placeholder="Suffix">
+                                    <input type="text" class="form-control form-control-user" id="input_suffix" placeholder="Suffix" name="suffix" value="{{old('suffix')}}">
+                                    @if($errors->first('suffix'))
+                                    <small class="d-block mt-1 text-danger">{{$errors->first('suffix')}}</small>
+                                    @endif
                                 </div>
-                            </div>
-                            <div class="form-group">
-                                <input type="email" class="form-control form-control-user" id="input_email" placeholder="Email Address">
                             </div>
                             <div class="form-group row">
                                 <div class="col-sm-6 mb-3 mb-sm-0">
-                                    <input type="text" class="form-control form-control-user" id="input_password" placeholder="Password">
+                                    <input type="email" class="form-control form-control-user" id="input_email" placeholder="Email Address" name="email" value="{{old('email')}}">
+                                    @if($errors->first('email'))
+                                    <small class="d-block mt-1 text-danger">{{$errors->first('email')}}</small>
+                                    @endif
                                 </div>
                                 <div class="col-sm-6">
-                                    <input type="text" class="form-control form-control-user" id="input_password_confirmation" placeholder="Confirm Password">
+                                    <input type="text" class="form-control form-control-user" id="input_contact" placeholder="+63" name="contact" value="{{old('contact')}}">
+                                    @if($errors->first('contact'))
+                                    <small class="d-block mt-1 text-danger">{{$errors->first('contact')}}</small>
+                                    @endif
                                 </div>
                             </div>
                             <button type="submit" class="btn btn-primary btn-user btn-block">Register</button>

@@ -2,9 +2,12 @@
 
 namespace App\Laravel\Controllers\Portal;
 
-use App\Laravel\Requests\PageRequest;
+use App\Laravel\Models\User;
 
-use Str;
+use App\Laravel\Requests\PageRequest;
+use App\Laravel\Requests\Portal\RegistrationRequest;
+
+use Str,DB,Helper;
 
 class AuthController extends Controller{
     protected $data;
@@ -21,6 +24,38 @@ class AuthController extends Controller{
 		$this->data['page_title'] .= " - Register";
 
 		return view('portal.auth.register',$this->data);
+	}
+
+	public function store(RegistrationRequest $request){
+		DB::beginTransaction();
+		try{
+			$password = Str::random(8);
+
+            $user = new User;
+            $user->firstname = Str::upper($request->input('firstname'));
+            $user->lastname = Str::upper($request->input('lastname'));
+            $user->middlename = Str::upper($request->input('middlename'));
+            $user->suffix = Str::upper($request->input('suffix'));
+            $user->name = "{$user->firstname} {$user->middlename} {$user->lastname} {$user->suffix}";
+            $user->email = Str::lower($request->input('email'));
+            $user->status = "inactive";
+            $user->user_type = "portal";
+            $user->contact_number = Helper::format_phone($request->input('contact'));
+            $user->password = bcrypt($password);
+            $user->save();
+
+			DB::commit();
+
+            session()->flash('notification-status', "success");
+            session()->flash('notification-msg', "Your default password was sent to email. Wait for your account activation.");
+		}catch(\Exception $e){
+			DB::rollback();
+
+			session()->flash('notification-status', "failed");
+            session()->flash('notification-msg', "Server Error: Code #{$e->getLine()}");
+		}
+
+		return redirect()->route('portal.auth.login');
 	}
 
     public function login(PageRequest $request){
