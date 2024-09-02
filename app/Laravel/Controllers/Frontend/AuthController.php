@@ -104,6 +104,12 @@ class AuthController extends Controller{
         return redirect()->back();
     }
 
+    public function forgot_password(PageRequest $request){
+        $this->data['page_title'] .= " - Forgot Password";
+
+		return view('frontend.auth.forgot-password',$this->data);
+    }
+
     public function logout(PageRequest $request){
         auth($this->guard)->logout();
 		

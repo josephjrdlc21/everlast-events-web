@@ -2,12 +2,12 @@
 
 @section('content')
 <div class="row vh-100">
-    <div class="col-sm-10 col-md-8 col-lg-6 mx-auto d-table h-100">
+    <div class="col-sm-10 col-md-8 col-lg-5 mx-auto d-table h-100">
         <div class="d-table-cell align-middle">
             <div class="text-center mt-4">
-                <h1 class="h2">Welcome!</h1>
+                <h1 class="h2">Forgot Password</h1>
                 <p class="lead">
-                    Sign in to your account to continue
+                    Enter your email for new password
                 </p>
             </div>
             <div class="card">
@@ -23,23 +23,10 @@
                                 <label class="form-label">Email</label>
                                 <input class="form-control form-control-lg" type="email" name="email" placeholder="Enter your email">
                             </div>
-                            <div class="mb-3">
-                                <label class="form-label">Password</label>
-                                <input class="form-control form-control-lg" type="password" name="password" placeholder="Enter your password">
-                                <small>
-                                    <a href="{{route('frontend.auth.forgot_password')}}">Forgot password?</a>
-                                </small>
-                            </div>
-                            <div>
-                                <label class="form-check">
-                                    <input class="form-check-input" type="checkbox" value="remember_me" name="remember_me">
-                                    <span class="form-check-label">Remember me next time</span>
-                                </label>
-                            </div>
                             <div class="text-center mt-3">
-                                <button type="submit" class="btn btn-lg btn-primary mb-2">Sign in</button>
+                                <button type="submit" class="btn btn-lg btn-primary mb-2">Submit Request</button>
                                 <div>
-                                    <small>Do you have an account? <a class="text-center" href="{{route('frontend.auth.register')}}">Sign Up</a></small>
+                                    <small><a class="text-center" href="{{route('frontend.auth.login')}}">Already have an account ?</a></small>
                                 </div>
                             </div>
                         </form>
