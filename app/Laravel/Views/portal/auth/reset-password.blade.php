@@ -11,28 +11,28 @@
                 <div class="col-lg-6">
                     <div class="p-5">
                         <div class="text-center">
-                            <h1 class="h4 text-gray-900 mb-4">Everlast Portal Login</h1>
+                            <h1 class="h4 text-gray-900 mb-4">Everlast Reset Password</h1>
                         </div>
                         <form class="user" method="POST" action="">
                             @include('portal._components.notification')
                             {!!csrf_field()!!}
                             <div class="form-group">
-                                <input type="email" class="form-control form-control-user" id="input_email" placeholder="Enter Email Address" name="email">
-                            </div>
-                            <div class="form-group">
                                 <input type="password" class="form-control form-control-user" id="input_password" placeholder="Password" name="password">
+                                @if($errors->first('password'))
+                                <small class="d-block mt-1 text-danger">{{$errors->first('password')}}</small>
+                                @endif
                             </div>
                             <div class="form-group">
-                                <div class="custom-control custom-checkbox small">
-                                    <input type="checkbox" class="custom-control-input" id="customCheck" name="remember_me">
-                                    <label class="custom-control-label" for="customCheck">Remember Me</label>
-                                </div>
+                                <input type="password" class="form-control form-control-user" id="input_password_confirmation" placeholder="Confirm Password" name="password_confirmation">
+                                @if($errors->first('password_confirmation'))
+                                <small class="d-block mt-1 text-danger">{{$errors->first('password_confirmation')}}</small>
+                                @endif
                             </div>
-                            <button type="submit" class="btn btn-primary btn-user btn-block">Login</button>
+                            <button type="submit" class="btn btn-primary btn-user btn-block">Submit</button>
                         </form>
                         <hr>
                         <div class="text-center">
-                            <a class="small" href="{{route('portal.auth.forgot_password')}}">Forgot Password?</a>
+                            <a class="small" href="">Forgot Password?</a>
                         </div>
                         <div class="text-center">
                             <a class="small" href="{{route('portal.auth.register')}}">Create an Account!</a>
