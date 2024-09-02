@@ -22,6 +22,9 @@
                             <div class="mb-3">
                                 <label class="form-label">Email</label>
                                 <input class="form-control form-control-lg" type="email" name="email" placeholder="Enter your email">
+                                @if($errors->first('email'))
+                                    <small class="d-block mt-1 text-danger">{{$errors->first('email')}}</small>
+                                @endif
                             </div>
                             <div class="text-center mt-3">
                                 <button type="submit" class="btn btn-lg btn-primary mb-2">Submit Request</button>

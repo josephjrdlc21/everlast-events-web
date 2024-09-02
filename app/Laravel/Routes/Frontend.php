@@ -11,6 +11,8 @@ Route::group(['as' => "frontend.", 'namespace' => "Frontend", 'middleware' => ["
             Route::post('/register', ['uses' => "AuthController@store"]);
             Route::get('/forgot-password', ['as' => "forgot_password", 'uses' => "AuthController@forgot_password"]);
             Route::post('/forgot-password', ['uses' => "AuthController@forgot_password_email"]);
+            Route::get('/reset-password/{refid?}', ['as' => "reset_password", 'uses' => "AuthController@reset_password"]);
+            Route::post('/reset-password/{refid?}', ['uses' => "AuthController@store_password"]);
         });
         Route::get('/logout', ['as' => "logout", 'uses' => "AuthController@logout"]);
     });

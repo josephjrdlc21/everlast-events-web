@@ -5,7 +5,7 @@ use Illuminate\Database\Eloquent\Model;
 
 class PasswordReset extends Model
 {
-    public $timestamps = true;
+    public $timestamps = false;
 
     protected static function boot()
     {
