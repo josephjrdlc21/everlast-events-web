@@ -10,6 +10,7 @@ Route::group(['as' => "frontend.", 'namespace' => "Frontend", 'middleware' => ["
             Route::get('/register', ['as' => "register", 'uses' => "AuthController@register"]);
             Route::post('/register', ['uses' => "AuthController@store"]);
             Route::get('/forgot-password', ['as' => "forgot_password", 'uses' => "AuthController@forgot_password"]);
+            Route::post('/forgot-password', ['uses' => "AuthController@forgot_password_email"]);
         });
         Route::get('/logout', ['as' => "logout", 'uses' => "AuthController@logout"]);
     });

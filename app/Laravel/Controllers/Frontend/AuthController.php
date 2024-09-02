@@ -2,7 +2,7 @@
 
 namespace App\Laravel\Controllers\Frontend;
 
-use App\Laravel\Models\UserKYC;
+use App\Laravel\Models\{UserKYC,User};
 
 use App\Laravel\Requests\PageRequest;
 use App\Laravel\Requests\Frontend\RegistrationRequest;
@@ -108,6 +108,13 @@ class AuthController extends Controller{
         $this->data['page_title'] .= " - Forgot Password";
 
 		return view('frontend.auth.forgot-password',$this->data);
+    }
+
+    public function forgot_password_email(PageRequest $request){
+        $email = strtolower($request->input('email'));
+        $token = Str::random(60);
+
+        $user = User::where('email', $email)->first();
     }
 
     public function logout(PageRequest $request){
