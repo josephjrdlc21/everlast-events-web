@@ -19,7 +19,7 @@ class ResetPasswordSuccess extends Mailable
     public function __construct($data)
     {
         $this->data = $data;
-        $this->subject("Everlast Reset Password Success");
+        $this->subject("Events Reset Password Success");
     }
     
     /**
