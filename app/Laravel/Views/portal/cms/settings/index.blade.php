@@ -51,7 +51,7 @@
                         </div>
                     </div>
                     <hr>
-                    <a href="{{route('portal.cms.settings.index')}}" class="btn btn-sm btn-danger">Cancel</a>
+                    <a href="{{route('portal.index')}}" class="btn btn-sm btn-danger">Cancel</a>
                     <button type="submit" class="btn btn-sm btn-info">Save</button>
                 </form>
             </div>
