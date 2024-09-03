@@ -6,12 +6,12 @@
         <div class="card-body p-0">
             <div class="row">
                 <div class="col-lg-6 d-flex justify-content-center align-items-center">
-                    <img src="{{asset('assets/images/logo/everlastlogo1.png')}}" width="255" height="220" alt="Logo">
+                    <img src="{{isset($settings) ? "{$settings->directory}/{$settings->filename}" : ""}}" width="255" height="220" alt="Logo">
                 </div>
                 <div class="col-lg-6">
                     <div class="p-5">
                         <div class="text-center">
-                            <h1 class="h4 text-gray-900 mb-4">Everlast Portal Login</h1>
+                            <h1 class="h4 text-gray-900 mb-4">{{$settings->brand_name ?? 'Brand Name'}} Portal Login</h1>
                         </div>
                         <form class="user" method="POST" action="">
                             @include('portal._components.notification')

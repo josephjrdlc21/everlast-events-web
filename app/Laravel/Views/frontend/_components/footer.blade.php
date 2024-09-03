@@ -3,7 +3,7 @@
         <div class="row text-muted">
             <div class="col-6 text-start">
                 <p class="mb-0">
-                    <a class="text-muted" href=""><strong>Everlast</strong></a> © <script>document.write(new Date().getFullYear());</script>
+                    <a class="text-muted" href=""><strong>{{$settings->brand_name ?? 'Brand Name'}}</strong></a> © <script>document.write(new Date().getFullYear());</script>
                 </p>
             </div>
             <div class="col-6 text-end">

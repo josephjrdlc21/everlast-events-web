@@ -1,9 +1,11 @@
 <ul class="navbar-nav sidebar sidebar-dark accordion" id="accordionSidebar" style="background: #003399">
     <a class="sidebar-brand d-flex align-items-center justify-content-center" href="{{route('portal.index')}}">
         <div class="sidebar-brand-icon">
-            <img src="{{asset('assets/images/logo/everlastlogo1.png')}}" alt="Logo" class="img-fluid" width="40">
+            <img src="{{isset($settings) ? "{$settings->directory}/{$settings->filename}" : ""}}" alt="Logo" class="img-fluid" width="40">
         </div>
-        <div class="sidebar-brand-text mx-3">Everlast</div>
+        <div class="sidebar-brand-text mx-3">
+            {{$settings->brand_name ?? 'Brand Name'}}
+        </div>
     </a>
 
     <hr class="sidebar-divider">
@@ -103,7 +105,7 @@
                 @if($auth->canAny(['portal.cms.pages.index'], 'portal'))
                 <a class="collapse-item {{request()->segment(3) == "pages" ? "active" : ""}}" href="{{route('portal.cms.pages.index')}}">Pages</a>
                 @endif
-                <a class="collapse-item" href="">Settings</a>
+                <a class="collapse-item {{request()->segment(3) == "settings" ? "active" : ""}}" href="{{route('portal.cms.settings.index')}}">Settings</a>
             </div>
         </div>
     </li>

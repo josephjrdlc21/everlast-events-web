@@ -2,8 +2,8 @@
     <div class="sidebar-content js-simplebar" data-simplebar="init"><div class="simplebar-wrapper" style="margin: 0px;"><div class="simplebar-height-auto-observer-wrapper"><div class="simplebar-height-auto-observer"></div></div><div class="simplebar-mask"><div class="simplebar-offset" style="right: 0px; bottom: 0px;"><div class="simplebar-content-wrapper" tabindex="0" role="region" aria-label="scrollable content" style="height: 100%; overflow: hidden scroll;"><div class="simplebar-content" style="padding: 0px;">
         <a class="sidebar-brand" href="{{route('frontend.index')}}">
             <div class="d-flex align-items-center">
-                <img src="{{asset('frontend/assets/images/logo/everlastlogo1.png')}}" alt="Logo" class="img-fluid" width="40">
-                <span class="ms-2">Everlast</span>
+                <img src="{{isset($settings) ? "{$settings->directory}/{$settings->filename}" : ""}}" alt="Logo" class="img-fluid" width="40">
+                <span class="ms-2">{{$settings->brand_name ?? 'Brand Name'}}</span>
             </div>
         </a>
         <ul class="sidebar-nav">

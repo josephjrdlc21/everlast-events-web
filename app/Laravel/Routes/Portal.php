@@ -110,6 +110,11 @@ Route::group(['prefix' => "portal", 'as' => "portal.", 'namespace' => "Portal", 
                 Route::get('/show/{id?}', ['as' => "show", 'uses' => "FAQController@show", 'middleware' => "portal.permission:portal.cms.faq.view"]);
                 Route::any('/delete/{id?}', ['as' => "delete", 'uses' => "FAQController@destroy", 'middleware' => "portal.permission:portal.cms.faq.delete"]);
             });
+
+            Route::group(['prefix' => "settings", 'as' => "settings."], function(){
+                Route::get('/', ['as' => "index", 'uses' => "SettingsController@index"]);
+                Route::post('/', ['uses' => "SettingsController@store"]);
+            });
         });
 
         Route::group(['prefix' => "profile", 'as' => "profile."], function(){

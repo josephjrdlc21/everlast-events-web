@@ -14,7 +14,7 @@
                 <div class="card-body">
                     <div class="m-sm-4">
                         <div class="text-center mb-3">
-                            <img src="{{asset('frontend/assets/images/logo/everlastlogo1.png')}}" alt="Logo" class="img-fluid" width="120">
+                            <img src="{{isset($settings) ? "{$settings->directory}/{$settings->filename}" : ""}}" alt="Logo" class="img-fluid" width="120">
                         </div>
                         <form method="POST" action="">
                             {!!csrf_field()!!}

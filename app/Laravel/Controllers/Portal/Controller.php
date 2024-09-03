@@ -3,7 +3,8 @@
 namespace App\Laravel\Controllers\Portal;
 
 use App\Laravel\Controllers\Controller as BaseController;
-use Illuminate\Support\Facades\Request;
+
+use App\Laravel\Models\Setting;
 
 use Route;
 
@@ -14,6 +15,7 @@ class Controller extends BaseController{
 	public function __construct(){
 		self::set_current_route();
 		self::set_loggedin_user();
+		self::set_settings();
 	}
 
 	public function get_data(){
@@ -32,5 +34,9 @@ class Controller extends BaseController{
 		if (auth('portal')->user()) {
         	$this->data['auth'] = auth('portal')->user();
 		}
+	}
+
+	public function set_settings(){
+		$this->data['settings'] = Setting::orderBy('created_at', 'DESC')->first();
 	}
 }

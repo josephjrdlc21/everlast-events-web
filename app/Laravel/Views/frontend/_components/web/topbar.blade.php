@@ -6,8 +6,8 @@
                     <!-- ***** Logo Start ***** -->
                     <a href="" class="logo">
                         <div class="d-flex align-items-center">
-                            <img src="{{asset('web/assets/images/logo/everlastlogo1.png')}}" alt="Logo" style="width: 45px; margin-right: 5px;">
-                            <h1>Everlast</h1>
+                            <img src="{{isset($settings) ? "{$settings->directory}/{$settings->filename}" : ""}}" alt="Logo" style="width: 45px; margin-right: 5px;">
+                            <h1>{{$settings->brand_name ?? 'Brand Name'}}</h1>
                         </div>
                     </a>
                     <!-- ***** Logo End ***** -->

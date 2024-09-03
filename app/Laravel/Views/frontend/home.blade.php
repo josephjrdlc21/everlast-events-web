@@ -6,7 +6,7 @@
         <div class="row">
             <div class="col-lg-12">  
                 <div class="header-text text-center">
-                    <span class="category text-white">Event Management System</span>
+                    <span class="category text-white">{{$settings->system_name ?? 'System Name'}}/span>
                     @if($banner && $banner->count() > 0)
                     <h2 class="text-white mt-5">{{$banner->title}}</h2>
                     <div class="mt-2">{!!$banner->content!!}</div>
