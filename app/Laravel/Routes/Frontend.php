@@ -19,5 +19,9 @@ Route::group(['as' => "frontend.", 'namespace' => "Frontend", 'middleware' => ["
 
     Route::group(['middleware' => "frontend.auth"], function(){
         Route::get('/', ['as' => "index", 'uses' => "MainController@index"]);
+
+        Route::group(['prefix' => "events", 'as' => "events."], function(){
+            Route::get('/', ['as' => "index", 'uses' => "EventsController@index"]);
+        });
     });
 });
