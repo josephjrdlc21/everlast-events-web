@@ -83,7 +83,7 @@
                         <div class="col-md-6">
                             <div class="form-group">
                                 <label for="input_start">Event Start</label>
-                                <input type="datetime-local" class="form-control" name="start_date" value="{{Carbon::parse($event->event_start)->format('Y-m-d')}}">
+                                <input type="datetime-local" class="form-control" name="start_date" value="{{Carbon::parse($event->event_start)->format('Y-m-d\TH:i')}}">
                                 @if($errors->first('start_date'))
                                 <small class="d-block mt-1 text-danger">{{$errors->first('start_date')}}</small>
                                 @endif
@@ -92,7 +92,7 @@
                         <div class="col-md-6">
                             <div class="form-group">
                                 <label for="input_end">Event End</label>
-                                <input type="datetime-local" class="form-control" name="end_date" value="{{Carbon::parse($event->event_end)->format('Y-m-d')}}">
+                                <input type="datetime-local" class="form-control" name="end_date" value="{{Carbon::parse($event->event_end)->format('Y-m-d\TH:i')}}">
                                 @if($errors->first('end_date'))
                                 <small class="d-block mt-1 text-danger">{{$errors->first('end_date')}}</small>
                                 @endif
