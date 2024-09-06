@@ -5,7 +5,6 @@ namespace App\Laravel\Controllers\Frontend;
 use App\Laravel\Models\{Event,Category};
 
 use App\Laravel\Requests\PageRequest;
-//use App\Laravel\Requests\Frontend\EventRequest;
 
 use Str,Carbon,DB;
 
@@ -62,5 +61,18 @@ class EventsController extends Controller{
         ->paginate($this->per_page);
 
         return view('frontend.events.index', $this->data);
+    }
+
+    public function show(PageRequest $request,$id = null){
+        $this->data['page_title'] .= " - Information";
+        $this->data['event'] = Event::find($id);
+
+        if(!$this->data['event']){
+            session()->flash('notification-status', "failed");
+            session()->flash('notification-msg', "Record not found.");
+            return redirect()->route('frontend.events.index');
+        }
+
+        return view('frontend.events.show', $this->data);
     }
 }

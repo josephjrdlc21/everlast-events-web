@@ -51,4 +51,16 @@ class Booking extends Model
      */
     protected $casts = [
     ];
+
+    public function user(){
+		return $this->belongsTo('App\Laravel\Models\User','user_id','id');
+	}
+
+    public function processor(){
+		return $this->belongsTo('App\Laravel\Models\User','processor_id','id');
+	}
+
+    public function event(){
+		return $this->belongsTo('App\Laravel\Models\Event','event_id','id');
+	}
 }

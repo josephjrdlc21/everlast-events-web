@@ -22,6 +22,15 @@ Route::group(['as' => "frontend.", 'namespace' => "Frontend", 'middleware' => ["
 
         Route::group(['prefix' => "events", 'as' => "events."], function(){
             Route::get('/', ['as' => "index", 'uses' => "EventsController@index"]);
+            Route::get('/{id?}', ['as' => "show", 'uses' => "EventsController@show"]);
+        });
+
+        Route::group(['prefix' => "bookings", 'as' => "bookings."], function(){
+            Route::get('/', ['as' => "index", 'uses' => "BookingsController@index"]);
+            Route::get('/show/{id?}', ['as' => "show", 'uses' => "BookingsController@show"]);
+            Route::get('/update-status/{id?}', ['as' => "update_status", 'uses' => "BookingsController@update_status"]);
+            Route::get('/{id?}', ['as' => "create", 'uses' => "BookingsController@create"]);
+            Route::post('/{id?}', ['uses' => "BookingsController@store"]);
         });
     });
 });

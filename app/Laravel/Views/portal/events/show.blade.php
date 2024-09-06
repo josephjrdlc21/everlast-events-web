@@ -30,7 +30,10 @@
                                 <p>Code: {{$event->code}}</p>
                                 <p>Category: {{$event->category->title}}</p>
                                 <p>Sponsor: {{$event->sponsor->name}}</p>
-                                <p>Is Cancelled: <span class="badge badge-{{Helper::is_cancelled_badge_status($event->is_cancelled)}}">{{$event->is_cancelled ? 'Yes' : 'No'}}</span></p>
+                                <p>Status: 
+                                    <span class="text-white badge bg-{{Carbon::parse($event->event_end)->lt(Carbon::now()) ? 'secondary' : 'success'}}">{{Carbon::parse($event->event_end)->lt(Carbon::now()) ? 'Unavailable' : 'Available'}}</span>
+                                    <span class="text-white badge bg-{{Helper::is_cancelled_badge_status($event->is_cancelled)}}">{{$event->is_cancelled ? 'Cancelled' : 'Start'}}</span>
+                                </p>
                                 <p>Location: {{$event->location}}</p>
                             </div>
                             <div class="col-md-12 mt-5">

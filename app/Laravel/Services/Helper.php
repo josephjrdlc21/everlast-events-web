@@ -130,4 +130,34 @@ class Helper
 
         return $result;
     }
+
+    public static function booking_badge_status($booking)
+    {
+        $result = "default";
+
+        switch (Str::lower($booking)) {
+            case 'pending':$result = "primary";
+                break;
+            case 'approved':$result = "success";
+                break;
+            case 'cancelled':$result = "danger";
+                break;
+        }
+
+        return $result;
+    }
+
+    public static function payment_badge_status($payment)
+    {
+        $result = "default";
+
+        switch (Str::lower($payment)) {
+            case 'unpaid':$result = "secondary";
+                break;
+            case 'paid':$result = "warning";
+                break;
+        }
+
+        return $result;
+    }
 }

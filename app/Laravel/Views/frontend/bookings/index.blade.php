@@ -1,7 +1,7 @@
 @extends('frontend._layouts.main')
 
 @section('breadcrumb')
-<h1 class="h3 mb-3"><strong>Events</strong></h1>
+<h1 class="h3 mb-3"><strong>Booking</strong></h1>
 @stop
 
 @section('content')
@@ -15,19 +15,13 @@
             <div class="card-body">
                 <form method="GET" action="">
                     <div class="row">
-                        <div class="col-sm-12 col-lg-4">
+                        <div class="col-sm-12 col-lg-5">
                             <div class="form-group">
                                 <label for="input_keyword">Keyword</label>
-                                <input type="text" id="input_keyword" class="form-control" placeholder="eg. Events" name="keyword"  value="{{$keyword}}">
+                                <input type="text" id="input_keyword" class="form-control" placeholder="eg. Booking Code, Event Name" name="keyword" value="{{$keyword}}">
                             </div>
                         </div>
-                        <div class="col-sm-12 col-lg-3">
-                            <div class="form-group">
-                                <label for="input_category">Category</label>
-                                {!! html()->select('category', $categories, $selected_category, old('category'), ['id' => "input_category"])->class('form-control') !!}
-                            </div>
-                        </div>
-                        <div class="col-sm-12 col-lg-5">
+                        <div class="col-sm-12 col-lg-7">
                             <div class="row">
                                 <div class="col-md-6">
                                     <div class="form-group">
@@ -45,7 +39,7 @@
                         </div>
                     </div>
                     <button type="submit" class="btn btn-sm btn-primary mt-4">Apply Filter</button>
-                    <a href="{{route('frontend.events.index')}}" class="btn btn-sm btn-secondary mt-4">Reset Filter</a>
+                    <a href="{{route('frontend.bookings.index')}}" class="btn btn-sm btn-secondary mt-4">Reset Filter</a>
                 </form>
             </div>
         </div>
@@ -63,25 +57,24 @@
                         <thead>
                             <tr>
                                 <th class="text-center">No.</th>
+                                <th>Code</th>
                                 <th>Event</th>
-                                <th>Category/Sponsor</th>
                                 <th>Status</th>
-                                <th>Date</th>
+                                <th>Date Booked</th>
                                 <th>Action</th>
                             </tr>
                         </thead>
                         <tbody>
-                            @forelse($record as $index => $event)
+                            @forelse($record as $index => $booking)
                             <tr>
-                                <td class="text-center"><div class="mt-2 mb-2">{{$loop->index + $record->firstItem()}}</div></td>
-                                <td><a href="{{route('frontend.events.show', [$event->id])}}">{{$event->code}}</a><br><small>{{$event->name}}</small></td>
-                                <td>{{$event->category->title}}<br><small>{{$event->sponsor->name}}</small></td>
-                                <td>
-                                    <small><span class="badge bg-{{Carbon::parse($event->event_end)->lt(Carbon::now()) ? 'secondary' : 'success'}}">{{Carbon::parse($event->event_end)->lt(Carbon::now()) ? 'Unavailable' : 'Available'}}</span><br>
-                                    <span class="mt-1 badge bg-{{Helper::is_cancelled_badge_status($event->is_cancelled)}}">{{$event->is_cancelled ? 'Cancelled' : 'Start'}}</span></small>
+                                <td class="text-center "><div class="mt-2 mb-2">{{$loop->index + $record->firstItem()}}</div></td>
+                                <td><a href="{{route('frontend.bookings.show', [$booking->id])}}">{{$booking->code}}</a></td>
+                                <td>{{$booking->event->name}}</td>
+                                <td><span class="badge bg-{{Helper::booking_badge_status($booking->status)}}">{{$booking->status}}</span>
+                                    <span class="badge bg-{{Helper::payment_badge_status($booking->payment_status)}}">{{$booking->payment_status}}</span>
                                 </td>
-                                <td>{{Carbon::parse($event->event_start)->format('m/d/Y')}} - {{Carbon::parse($event->event_end)->format('m/d/Y')}}<br><small>{{$event->location}}</small></td>
-                                <td><a class="btn btn-sm btn-info" href="{{route('frontend.events.show', [$event->id])}}">View Details</a></td>
+                                <td>{{Carbon::parse($booking->created_at)->format('m/d/Y h:i A')}}</td>
+                                <td><a href="{{route('frontend.bookings.show', [$booking->id])}}" class="btn btn-sm btn-info">View Details</a></td>
                             </tr>
                             @empty
                             <td colspan="6">
