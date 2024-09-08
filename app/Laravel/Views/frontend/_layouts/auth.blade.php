@@ -4,7 +4,7 @@
         @include('frontend._components.styles')
         @yield('page-styles')
     </head>
-    <body>
+    <body style="background: linear-gradient(90deg, #efd5ff 0%, #515ada 100%);">
         <main class="d-flex w-100">
             <div class="container d-flex flex-column">
                 @yield('content')

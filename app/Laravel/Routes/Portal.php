@@ -56,6 +56,14 @@ Route::group(['prefix' => "portal", 'as' => "portal.", 'namespace' => "Portal", 
             Route::get('/update-status/{id?}', ['as' => "update_status", 'uses' => "MembersController@update_status", 'middleware' => "portal.permission:portal.members.update_status"]);
         });
 
+        Route::group(['prefix' => "bookings", 'as' => "bookings."], function(){
+            Route::get('/', ['as' => "index", 'uses' => "BookingsController@index", 'middleware' => "portal.permission:portal.bookings.index"]);
+            Route::get('/edit-status/{id?}/{status?}', ['as' => "edit_status", 'uses' => "BookingsController@edit_status", 'middleware' => "portal.permission:portal.bookings.update_status"]);
+            Route::post('/edit-status/{id?}/{status?}', ['uses' => "BookingsController@update_status", 'middleware' => "portal.permission:portal.bookings.update_status"]);
+            Route::get('/update-payment/{id?}', ['as' => "update_payment", 'uses' => "BookingsController@update_payment", 'middleware' => "portal.permission:portal.bookings.update_payment"]);
+            Route::get('/{id?}', ['as' => "show", 'uses' => "BookingsController@show", 'middleware' => "portal.permission:portal.bookings.view"]);
+        });
+
         Route::group(['prefix' => "cms", 'as' => "cms."], function(){
             Route::group(['prefix' => "roles", 'as' => "roles."], function(){
                 Route::get('/', ['as' => "index", 'uses' => "RolesController@index", 'middleware' => "portal.permission:portal.cms.roles.index"]);
@@ -112,8 +120,8 @@ Route::group(['prefix' => "portal", 'as' => "portal.", 'namespace' => "Portal", 
             });
 
             Route::group(['prefix' => "settings", 'as' => "settings."], function(){
-                Route::get('/', ['as' => "index", 'uses' => "SettingsController@index"]);
-                Route::post('/', ['uses' => "SettingsController@store"]);
+                Route::get('/', ['as' => "index", 'uses' => "SettingsController@index", 'middleware' => "portal.permission:portal.cms.settings.index"]);
+                Route::post('/', ['uses' => "SettingsController@store", 'middleware' => "portal.permission:portal.cms.settings.index"]);
             });
         });
 

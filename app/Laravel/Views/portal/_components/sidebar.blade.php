@@ -54,12 +54,14 @@
         </a>
     </li>
     @endif
-    <li class="nav-item">
-        <a class="nav-link" href="">
+    @if($auth->canAny(['portal.bookings.index'], 'portal'))
+    <li class="nav-item {{request()->segment(2) == "bookings" ? "active" : ""}}">
+        <a class="nav-link" href="{{route('portal.bookings.index')}}">
             <i class="fas fa-calendar-alt"></i>
             <span>Bookings</span>
         </a>
     </li>
+    @endif
     @if($auth->canAny(['portal.events.index'], 'portal'))
     <li class="nav-item {{request()->segment(2) == "events" ? "active" : ""}}">
         <a class="nav-link" href="{{route('portal.events.index')}}">
@@ -79,7 +81,7 @@
     <div class="sidebar-heading">
         System Settings
     </div>
-    @if($auth->canAny(['portal.cms.permissions.index', 'portal.cms.roles.index', 'portal.cms.category.index', 'portal.cms.sponsors.index', 'portal.cms.pages.index', 'portal.cms.faq.index'], 'portal'))
+    @if($auth->canAny(['portal.cms.permissions.index', 'portal.cms.roles.index', 'portal.cms.category.index', 'portal.cms.sponsors.index', 'portal.cms.pages.index', 'portal.cms.faq.index', 'portal.cms.settings.index'], 'portal'))
     <li class="nav-item {{request()->segment(2) == "cms" ? "active" : ""}}">
         <a class="nav-link {{request()->segment(2) == "cms" ? "" : "collapsed"}}" href="#" data-toggle="collapse" data-target="#collapseCMS" aria-expanded="true" aria-controls="collapseCMS">
             <i class="fas fa-book"></i>
@@ -105,7 +107,9 @@
                 @if($auth->canAny(['portal.cms.pages.index'], 'portal'))
                 <a class="collapse-item {{request()->segment(3) == "pages" ? "active" : ""}}" href="{{route('portal.cms.pages.index')}}">Pages</a>
                 @endif
+                @if($auth->canAny(['portal.cms.settings.index'], 'portal'))
                 <a class="collapse-item {{request()->segment(3) == "settings" ? "active" : ""}}" href="{{route('portal.cms.settings.index')}}">Settings</a>
+                @endif
             </div>
         </div>
     </li>

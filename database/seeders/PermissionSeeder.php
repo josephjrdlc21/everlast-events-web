@@ -77,6 +77,15 @@ class PermissionSeeder extends Seeder
             ['name' => "portal.cms.faq.update_status", 'description' => "Activate or Deactivate FAQ", 'module' => "cms.faq", 'module_name' => "CMS - FAQ", 'guard_name' => "portal"],
             ['name' => "portal.cms.faq.delete", 'description' => "Delete FAQ", 'module' => "cms.faq", 'module_name' => "CMS - FAQ", 'guard_name' => "portal"],
             ['name' => "portal.cms.faq.search", 'description' => "Search Record", 'module' => "cms.faq", 'module_name' => "CMS - FAQ", 'guard_name' => "portal"],
+
+            ['name' => "portal.bookings.index", 'description' => "List of Bookings", 'module' => "bookings", 'module_name' => "Bookings", 'guard_name' => "portal"],
+            ['name' => "portal.bookings.view", 'description' => "View Booking Details", 'module' => "bookings", 'module_name' => "Bookings", 'guard_name' => "portal"],
+            ['name' => "portal.bookings.update_status", 'description' => "Approved or Cancel Booking", 'module' => "bookings", 'module_name' => "Bookings", 'guard_name' => "portal"],
+            ['name' => "portal.bookings.update_payment", 'description' => "Mark Booking as Paid", 'module' => "bookings", 'module_name' => "Bookings", 'guard_name' => "portal"],
+            ['name' => "portal.bookings.search", 'description' => "Search Record", 'module' => "bookings", 'module_name' => "Bookings", 'guard_name' => "portal"],
+
+            ['name' => "portal.cms.settings.index", 'description' => "List of Settings", 'module' => "cms.settings", 'module_name' => "CMS - Settings", 'guard_name' => "portal"],
+            ['name' => "portal.cms.settings.search", 'description' => "Search Record", 'module' => "cms.settings", 'module_name' => "CMS - Settings", 'guard_name' => "portal"],
         ];
         
         foreach($permissions as $permission){

@@ -93,7 +93,7 @@
                             <a href="#">{{$event->code}}</a><br>{{$event->name}}
                             @endif
                         </td>
-                        <td>{{$event->category->title}}<br>{{$event->sponsor->name}}</td>
+                        <td>{{$event->category->title}}<br><small>{{$event->sponsor->name}}</small></td>
                         <td>
                             <small><span class="text-white badge bg-{{Carbon::parse($event->event_end)->lt(Carbon::now()) ? 'secondary' : 'success'}}">{{Carbon::parse($event->event_end)->lt(Carbon::now()) ? 'Unavailable' : 'Available'}}</span><br>
                             <span class="mt-1 badge badge-{{Helper::is_cancelled_badge_status($event->is_cancelled)}}">{{$event->is_cancelled ? 'Cancelled' : 'Start'}}</span><small>
