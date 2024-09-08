@@ -96,7 +96,8 @@ class BookingsController extends Controller{
                     $booking->status = "pending";
                     break;
             }
-
+            
+            $booking->admin_remarks = $request->input('remarks');
             $booking->save();
 
             DB::commit();

@@ -81,9 +81,11 @@
                     @endif
                 @endif
                 @if($auth->canAny(['portal.bookings.update_payment'], 'portal'))
-                <button data-url="{{route('portal.bookings.update_payment', [$booking->id])}}" class="btn btn-sm btn-info btn-payment" {{$booking->payment_status === 'paid' ? 'disabled' : ''}}>
-                    {{$booking->payment_status === 'unpaid' ? 'Check Payment' : 'Paid'}}
-                </button>
+                    @if($booking->status === "approved")
+                    <button data-url="{{route('portal.bookings.update_payment', [$booking->id])}}" class="btn btn-sm btn-info btn-payment" {{$booking->payment_status === 'paid' ? 'disabled' : ''}}>
+                        {{$booking->payment_status === 'unpaid' ? 'Confirm Payment' : 'Paid'}}
+                    </button>
+                    @endif
                 @endif
             </div>
         </div>
