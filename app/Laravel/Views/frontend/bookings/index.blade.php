@@ -59,6 +59,7 @@
                                 <th class="text-center">No.</th>
                                 <th>Code</th>
                                 <th>Event</th>
+                                <th class="text-right">Price</th>
                                 <th>Status</th>
                                 <th>Date Booked</th>
                                 <th>Action</th>
@@ -70,6 +71,7 @@
                                 <td class="text-center "><div class="mt-2 mb-2">{{$loop->index + $record->firstItem()}}</div></td>
                                 <td><a href="{{route('frontend.bookings.show', [$booking->id])}}">{{$booking->code}}</a></td>
                                 <td>{{$booking->event->name}}</td>
+                                <td class="text-right">₱ {{$booking->event->price}}</td>
                                 <td><span class="badge bg-{{Helper::booking_badge_status($booking->status)}}">{{$booking->status}}</span>
                                     <span class="badge bg-{{Helper::payment_badge_status($booking->payment_status)}}">{{$booking->payment_status}}</span>
                                 </td>
@@ -77,7 +79,7 @@
                                 <td><a href="{{route('frontend.bookings.show', [$booking->id])}}" class="btn btn-sm btn-info">View Details</a></td>
                             </tr>
                             @empty
-                            <td colspan="6">
+                            <td colspan="7">
                                 <p class="text-center">No record found yet.</p>
                             </td>
                             @endforelse

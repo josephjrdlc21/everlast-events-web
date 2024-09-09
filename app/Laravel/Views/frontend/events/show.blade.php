@@ -26,6 +26,7 @@
                         <p>Code: {{$event->code}}</p>
                         <p>Category: {{$event->category->title}}</p>
                         <p>Sponsor: {{$event->sponsor->name}}</p>
+                        <p>Price: ₱ {{$event->price}}</p>
                         <p>Status: 
                             <span class="badge bg-{{Carbon::parse($event->event_end)->lt(Carbon::now()) ? 'secondary' : 'success'}}">{{Carbon::parse($event->event_end)->lt(Carbon::now()) ? 'Unavailable' : 'Available'}}</span>
                             <span class="badge bg-{{Helper::is_cancelled_badge_status($event->is_cancelled)}}">{{$event->is_cancelled ? 'Cancelled' : 'Start'}}</span>

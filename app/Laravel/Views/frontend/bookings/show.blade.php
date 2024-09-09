@@ -33,6 +33,12 @@
                         <p>{{$booking->event->code}}</p>
                     </div>
                     <div class="col-md-6">
+                        <p><b>Price</b></p>
+                    </div>
+                    <div class="col-md-6">
+                        <p>₱ {{$booking->event->price}}</p>
+                    </div>
+                    <div class="col-md-6">
                         <p><b>Status</b></p>
                     </div>
                     <div class="col-md-6">

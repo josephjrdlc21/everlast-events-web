@@ -33,7 +33,8 @@ class EventRequest extends RequestManager
             'description' => 'required',
             'location' => 'required',
             'start_date' => 'required',
-            'end_date' => 'required'
+            'end_date' => 'required',
+            'price' => 'required'
         ];
 
         if($id > 0){

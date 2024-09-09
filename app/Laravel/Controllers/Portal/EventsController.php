@@ -98,6 +98,7 @@ class EventsController extends Controller{
             $event->sponsor_id = $request->input('category');
             $event->category_id = $request->input('sponsor');
             $event->location = $request->input('location');
+            $event->price = $request->input('price');
             $event->event_start = Carbon::parse($request->input('start_date'))->format("Y-m-d H:i:s");
             $event->event_end = Carbon::parse($request->input('end_date'))->format("Y-m-d H:i:s");
             $event->save();
@@ -160,6 +161,7 @@ class EventsController extends Controller{
             $event->sponsor_id = $request->input('category');
             $event->category_id = $request->input('sponsor');
             $event->location = $request->input('location');
+            $event->price = $request->input('price');
             $event->event_start = Carbon::parse($request->input('start_date'))->format("Y-m-d H:i:s");
             $event->event_end = Carbon::parse($request->input('end_date'))->format("Y-m-d H:i:s");
 

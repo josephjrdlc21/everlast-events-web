@@ -69,12 +69,21 @@
                         </div>
                     </div>
                     <div class="row">
-                        <div class="col-md-12">
+                        <div class="col-md-6">
                             <div class="form-group">
                                 <label for="input_location">Location</label>
                                 <input type="text" id="input_location" class="form-control" placeholder="Enter Location" name="location"  value="{{$event->location}}">
                                 @if($errors->first('location'))
                                 <small class="d-block mt-1 text-danger">{{$errors->first('location')}}</small>
+                                @endif
+                            </div>
+                        </div>
+                        <div class="col-md-6">
+                            <div class="form-group">
+                                <label for="input_price">Price</label>
+                                <input type="number" id="input_price" class="form-control" placeholder="0.00" step=".01" name="price"  value="{{$event->price}}">
+                                @if($errors->first('price'))
+                                <small class="d-block mt-1 text-danger">{{$errors->first('price')}}</small>
                                 @endif
                             </div>
                         </div>

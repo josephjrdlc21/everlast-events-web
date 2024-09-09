@@ -18,7 +18,7 @@
                         <div class="col-sm-12 col-lg-4">
                             <div class="form-group">
                                 <label for="input_keyword">Keyword</label>
-                                <input type="text" id="input_keyword" class="form-control" placeholder="eg. Events" name="keyword"  value="{{$keyword}}">
+                                <input type="text" id="input_keyword" class="form-control" placeholder="eg. Events Code, Name" name="keyword"  value="{{$keyword}}">
                             </div>
                         </div>
                         <div class="col-sm-12 col-lg-3">
@@ -64,7 +64,8 @@
                             <tr>
                                 <th class="text-center">No.</th>
                                 <th>Event</th>
-                                <th>Category/Sponsor</th>
+                                <th>Category</th>
+                                <th class="text-right">Price</th>
                                 <th>Status</th>
                                 <th>Date</th>
                                 <th>Action</th>
@@ -76,6 +77,7 @@
                                 <td class="text-center"><div class="mt-2 mb-2">{{$loop->index + $record->firstItem()}}</div></td>
                                 <td><a href="{{route('frontend.events.show', [$event->id])}}">{{$event->code}}</a><br><small>{{$event->name}}</small></td>
                                 <td>{{$event->category->title}}<br><small>{{$event->sponsor->name}}</small></td>
+                                <td class="text-right">₱ {{$event->price}}</td>
                                 <td>
                                     <small><span class="badge bg-{{Carbon::parse($event->event_end)->lt(Carbon::now()) ? 'secondary' : 'success'}}">{{Carbon::parse($event->event_end)->lt(Carbon::now()) ? 'Unavailable' : 'Available'}}</span><br>
                                     <span class="mt-1 badge bg-{{Helper::is_cancelled_badge_status($event->is_cancelled)}}">{{$event->is_cancelled ? 'Cancelled' : 'Start'}}</span></small>
@@ -84,7 +86,7 @@
                                 <td><a class="btn btn-sm btn-info" href="{{route('frontend.events.show', [$event->id])}}">View Details</a></td>
                             </tr>
                             @empty
-                            <td colspan="6">
+                            <td colspan="7">
                                 <p class="text-center">No record found yet.</p>
                             </td>
                             @endforelse
@@ -94,7 +96,9 @@
                 @if($record->total() > 0)
                 <div class="mt-4">
                     <div>Showing <strong>{{$record->firstItem()}}</strong> to <strong>{{$record->lastItem()}}</strong> of <strong>{{$record->total()}}</strong> entries</div>
-                    @if($record->total() >= 10)<div id="pagination">{!!$record->appends(request()->query())->render()!!}</div>@endif
+                    @if($record->total() >= 10)
+                    <div id="pagination">{!!$record->appends(request()->query())->render()!!}</div>
+                    @endif
                 </div>
                 @endif
             </div>

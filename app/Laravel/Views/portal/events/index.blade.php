@@ -76,10 +76,10 @@
                 <thead>
                     <tr>
                         <th class="border-top-0">Event</th>
-                        <th class="border-top-0">Category/Sponsor</th>
-                        <th class="border-top-0">Cancelled</th>
+                        <th class="border-top-0">Category</th>
+                        <th class="border-top-0 text-right">Price</th>
+                        <th class="border-top-0">Status</th>
                         <th class="border-top-0">Start At</th>
-                        <th class="border-top-0">Date Created</th>
                         <th class="border-top-0"></th>
                     </tr>
                 </thead>
@@ -88,18 +88,18 @@
                     <tr>
                         <td>
                             @if($auth->canAny(['portal.events.view'], 'portal'))
-                            <a href="{{route('portal.events.show', [$event->id])}}">{{$event->code}}</a><br>{{$event->name}}
+                            <a href="{{route('portal.events.show', [$event->id])}}">{{$event->code}}</a><br><small>{{$event->name}}</small>
                             @else
-                            <a href="#">{{$event->code}}</a><br>{{$event->name}}
+                            <a href="#">{{$event->code}}</a><br><small>{{$event->name}}</small>
                             @endif
                         </td>
                         <td>{{$event->category->title}}<br><small>{{$event->sponsor->name}}</small></td>
+                        <td class="text-right">₱ {{$event->price}}</td>
                         <td>
                             <small><span class="text-white badge bg-{{Carbon::parse($event->event_end)->lt(Carbon::now()) ? 'secondary' : 'success'}}">{{Carbon::parse($event->event_end)->lt(Carbon::now()) ? 'Unavailable' : 'Available'}}</span><br>
                             <span class="mt-1 badge badge-{{Helper::is_cancelled_badge_status($event->is_cancelled)}}">{{$event->is_cancelled ? 'Cancelled' : 'Start'}}</span><small>
                         </td>
                         <td>{{Carbon::parse($event->event_start)->format('m/d/Y')}} - {{Carbon::parse($event->event_end)->format('m/d/Y')}}<br><small>{{$event->location}}</small></td>                        
-                        <td>{{Carbon::parse($event->created_at)->format('m/d/Y')}}<br><small>{{ Carbon::parse($event->created_at)->format('g:i A')}}</small></td>
                         <td>
                             <div class="dropdown">
                                 <button class="btn btn-sm btn-info dropdown-toggle" type="button" id="dropdownMenuButton" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">Action</button>

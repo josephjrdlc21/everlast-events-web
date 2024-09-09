@@ -156,4 +156,8 @@
         border-color: transparent transparent transparent #3b7ddd;
         margin-left: 4px;
     }
+
+    .text-right{
+        text-align: right;
+    }
 </style>
