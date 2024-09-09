@@ -1,9 +1,9 @@
 <?php
 
-namespace App\Laravel\Controllers\Portal;
+namespace App\Laravel\Controllers\Frontend;
 
 use App\Laravel\Requests\PageRequest;
-use App\Laravel\Requests\Portal\AccountChangePasswordRequest;
+use App\Laravel\Requests\Frontend\ChangePasswordRequest;
 
 use DB;
 
@@ -23,25 +23,25 @@ class ProfileController extends Controller{
         if(!$this->data['auth']){
 			session()->flash('notification-status',"failed");
 			session()->flash('notification-msg',"Record not found.");
-			return redirect()->route('portal.index');
+			return redirect()->route('frontend.index');
 		}
 
-		return view('portal.profile.index',$this->data);
+		return view('frontend.profile.index',$this->data);
     }
 
     public function edit_password(PageRequest $request){
         $this->data['page_title'] .= " - Change Password";
 
-		return view('portal.profile.change-password',$this->data);
+		return view('frontend.profile.change-password',$this->data);
 	}
 
-    public function update_password(AccountChangePasswordRequest $request){
+    public function update_password(ChangePasswordRequest $request){
 		$user = $this->data['auth'];
 
         if(!$user){
             session()->flash('notification-status','warning');
             session()->flash('notification-msg',"Record not found.");
-            return redirect()->route('portal.index');
+            return redirect()->route('frontend.index');
         }
 
         DB::beginTransaction();
@@ -53,7 +53,7 @@ class ProfileController extends Controller{
 
 			session()->flash('notification-status',"success");
 			session()->flash('notification-msg',"Your password has been changed.");
-			return redirect()->route('portal.index');
+			return redirect()->route('frontend.index');
 		}catch(\Exception $e){
 			DB::rollBack();
 

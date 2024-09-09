@@ -32,5 +32,11 @@ Route::group(['as' => "frontend.", 'namespace' => "Frontend", 'middleware' => ["
             Route::get('/{id?}', ['as' => "create", 'uses' => "BookingsController@create"]);
             Route::post('/{id?}', ['uses' => "BookingsController@store"]);
         });
+
+        Route::group(['prefix' => "profile", 'as' => "profile."], function(){
+            Route::get('/', ['as' => "index", 'uses' => "ProfileController@index"]);
+            Route::get('/password', ['as' => "edit_password", 'uses' => "ProfileController@edit_password"]);
+            Route::post('/password', ['uses' => "ProfileController@update_password"]);
+        });
     });
 });

@@ -46,6 +46,12 @@
                     <div class="col-md-6">
                         <span class="badge badge-{{Helper::badge_status($auth->status)}}">{{Str::upper($auth->status)}}</span>
                     </div>
+                    <div class="col-md-6">
+                        <p><b>Contact</b></p>
+                    </div>
+                    <div class="col-md-6">
+                        <p>{{$auth->contact_number}}</p>
+                    </div>
                 </div>
                 <hr>
                 <a href="{{route('portal.index')}}" class="btn btn-sm btn-danger">Cancel</a>
