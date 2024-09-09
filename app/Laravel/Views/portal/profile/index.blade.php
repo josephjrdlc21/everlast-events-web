@@ -16,11 +16,9 @@
             </div>
             <div class="card-body">
                 <div class="row mt-4">
-                    <div class="col-md-6">
-                        <p><b>Name</b></p>
-                    </div>
-                    <div class="col-md-6">
-                        <p>{{$auth->name}}</p>
+                    <div class="col-md-12 text-center mb-2">
+                        <img src="{{$auth->directory && $auth->filename ? "{$auth->directory}/{$auth->filename}" : asset('assets/images/profile/blank-profile.png')}}" alt="Profile Pic" class="img-fluid rounded-circle mb-2" width="128" height="128">
+                        <h5>{{$auth->name}}</h5><hr>
                     </div>
                     <div class="col-md-6">
                         <p><b>Role</b></p>
@@ -29,16 +27,16 @@
                         <p>{{Helper::capitalize_text($auth->roles->pluck('name')->implode(','))}}</p>
                     </div>
                     <div class="col-md-6">
-                        <p><b>Name</b></p>
-                    </div>
-                    <div class="col-md-6">
-                        <p>{{$auth->name}}</p>
-                    </div>
-                    <div class="col-md-6">
                         <p><b>Email</b></p>
                     </div>
                     <div class="col-md-6">
                         <p>{{$auth->email}}</p>
+                    </div>
+                    <div class="col-md-6">
+                        <p><b>Contact</b></p>
+                    </div>
+                    <div class="col-md-6">
+                        <p>{{$auth->contact_number ?? 'N/A'}}</p>
                     </div>
                     <div class="col-md-6">
                         <p><b>Status</b></p>
@@ -46,16 +44,11 @@
                     <div class="col-md-6">
                         <span class="badge badge-{{Helper::badge_status($auth->status)}}">{{Str::upper($auth->status)}}</span>
                     </div>
-                    <div class="col-md-6">
-                        <p><b>Contact</b></p>
-                    </div>
-                    <div class="col-md-6">
-                        <p>{{$auth->contact_number}}</p>
-                    </div>
                 </div>
                 <hr>
                 <a href="{{route('portal.index')}}" class="btn btn-sm btn-danger">Cancel</a>
                 <a href="{{route('portal.profile.edit_password')}}" class="btn btn-sm btn-secondary">Change Password</a>
+                <a href="{{route('portal.profile.edit_profile')}}" class="btn btn-sm btn-info">Change Profile</a>
             </div>
         </div>
     </div>

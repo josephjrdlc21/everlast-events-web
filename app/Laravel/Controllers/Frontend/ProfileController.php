@@ -3,9 +3,9 @@
 namespace App\Laravel\Controllers\Frontend;
 
 use App\Laravel\Requests\PageRequest;
-use App\Laravel\Requests\Frontend\ChangePasswordRequest;
+use App\Laravel\Requests\Frontend\{ChangePasswordRequest,ProfileRequest};
 
-use DB;
+use DB,ImageUploader,ImageRemover;
 
 class ProfileController extends Controller{
     protected $data;
@@ -64,6 +64,50 @@ class ProfileController extends Controller{
 
         session()->flash('notification-status', "warning");
         session()->flash('notification-msg', "Unable to change password.");
+        return redirect()->back();
+    }
+
+    public function edit_profile(PageRequest $request){
+        $this->data['page_title'] .= " - Change Profile Picture";
+
+		return view('frontend.profile.change-profile',$this->data);
+    }
+
+    public function update_profile(ProfileRequest $request){
+        $user = $this->data['auth'];
+
+        if(!$user){
+            session()->flash('notification-status','warning');
+            session()->flash('notification-msg',"Record not found.");
+            return redirect()->route('frontend.index');
+        }
+
+        DB::beginTransaction();
+        try{
+            if($request->hasFile('profile_image')){
+                ImageRemover::remove($user->path);
+
+                $upload_logo = ImageUploader::upload($request->file('profile_image'), "uploads/avatar/{$user->id}");
+
+                $user->path = $upload_logo['path'];
+                $user->directory = $upload_logo['directory'];
+                $user->filename = $upload_logo['filename'];
+                $user->source = $upload_logo['source'];
+            }
+            $user->save();
+
+            DB::commit();
+
+            session()->flash('notification-status', "success");
+            session()->flash('notification-msg', "Profile picture has been modified.");
+            return redirect()->route('frontend.profile.index');
+        }catch(\Exception $e){
+            DB::rollback();
+            
+            session()->flash('notification-status', "failed");
+            session()->flash('notification-msg', "Server Error: Code #{$e->getLine()}");
+        }
+
         return redirect()->back();
     }
 }

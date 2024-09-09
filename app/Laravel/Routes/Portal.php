@@ -129,6 +129,8 @@ Route::group(['prefix' => "portal", 'as' => "portal.", 'namespace' => "Portal", 
             Route::get('/', ['as' => "index", 'uses' => "ProfileController@index"]);
             Route::get('/password', ['as' => "edit_password", 'uses' => "ProfileController@edit_password"]);
             Route::post('/password', ['uses' => "ProfileController@update_password"]);
+            Route::get('/profile', ['as' => "edit_profile", 'uses' => "ProfileController@edit_profile"]);
+            Route::post('/profile', ['uses' => "ProfileController@update_profile"]);
         });
     });
 });

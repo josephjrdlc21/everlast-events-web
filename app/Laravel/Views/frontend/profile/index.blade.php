@@ -10,16 +10,14 @@
         @include('frontend._components.notification')
         <div class="card">
             <div class="card-header">
-                Information
+                Profile Details
             </div>
             <div class="card-body">
                 <div class="row">
-                    <div class="col-md-6">
-                        <p><b>Name</b></p>
-                    </div>
-                    <div class="col-md-6">
-                        <p>{{$auth->name}}</p>
-                    </div>
+                    <div class="col-md-12 text-center mb-2">
+                        <img src="{{$auth->directory && $auth->filename ? "{$auth->directory}/{$auth->filename}" : asset('assets/images/profile/blank-profile.png')}}" alt="Profile Pic" class="img-fluid rounded-circle mb-2" width="128" height="128">
+                        <h5>{{$auth->name}}</h5>
+                    </div><hr>
                     <div class="col-md-6">
                         <p><b>Email</b></p>
                     </div>
@@ -37,11 +35,11 @@
                     </div>
                     <div class="col-md-6">
                         <p>{{$auth->contact_number}}</p>
-                    </div>
+                    </div><hr>
                 </div>
-                <hr>
                 <a href="{{route('frontend.index')}}" class="btn btn-sm btn-danger">Cancel</a>
                 <a href="{{route('frontend.profile.edit_password')}}" class="btn btn-sm btn-secondary">Change Password</a>
+                <a href="{{route('frontend.profile.edit_profile')}}" class="btn btn-sm btn-info">Change Profile</a>
             </div>
         </div>
     </div>
