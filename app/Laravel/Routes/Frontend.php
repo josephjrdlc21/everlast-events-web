@@ -27,6 +27,7 @@ Route::group(['as' => "frontend.", 'namespace' => "Frontend", 'middleware' => ["
 
         Route::group(['prefix' => "bookings", 'as' => "bookings."], function(){
             Route::get('/', ['as' => "index", 'uses' => "BookingsController@index"]);
+            Route::get('/export-pdf/{id?}', ['as' => "export_pdf", 'uses' => "BookingsController@export_pdf"]);
             Route::get('/show/{id?}', ['as' => "show", 'uses' => "BookingsController@show"]);
             Route::get('/update-status/{id?}', ['as' => "update_status", 'uses' => "BookingsController@update_status"]);
             Route::get('/{id?}', ['as' => "create", 'uses' => "BookingsController@create"]);

@@ -74,7 +74,7 @@
                 </div>
                 <hr>
                 <a href="{{route('frontend.bookings.index')}}" class="btn btn-sm btn-secondary">Close</a>
-                <a href="" class="btn btn-sm btn-info">Print Receipt</a>
+                <a href="{{route('frontend.bookings.export_pdf', [$booking->id])}}" class="btn btn-sm btn-info">Print Receipt</a>
                 @if($booking->status != "approved")
                 <button class="btn btn-sm btn-danger btn-cancel" data-url="{{route('frontend.bookings.update_status', [$booking->id])}}" 
                     {{$booking->status === 'cancelled' ? 'disabled' : ''}}>{{$booking->status === 'cancelled' ? 'Booking Cancelled' : 'Cancel Booking'}}

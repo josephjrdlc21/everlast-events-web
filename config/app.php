@@ -169,6 +169,8 @@ return [
         // App\Providers\BroadcastServiceProvider::class,
         App\Providers\EventServiceProvider::class,
         App\Providers\RouteServiceProvider::class,
+
+        Barryvdh\Snappy\ServiceProvider::class,
     ])->toArray(),
 
     /*
@@ -192,6 +194,8 @@ return [
         'ImageRemover' => App\Laravel\Services\ImageRemover::class,
         'FileUploader' => App\Laravel\Services\FileUploader::class,
         'Carbon' => Carbon\Carbon::class,
+        'SnappyPDF' => Barryvdh\Snappy\Facades\SnappyPdf::class,
+        'SnappyImage' => Barryvdh\Snappy\Facades\SnappyImage::class,
     ])->toArray(),
 
 ];

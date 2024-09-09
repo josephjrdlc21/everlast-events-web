@@ -7,7 +7,7 @@ use App\Laravel\Models\{Event,Booking};
 use App\Laravel\Requests\PageRequest;
 use App\Laravel\Requests\Frontend\BookingRequest;
 
-use Str,Carbon,DB;
+use Str,Carbon,DB,SnappyPDF;
 
 class BookingsController extends Controller{
     protected $data;
@@ -139,5 +139,22 @@ class BookingsController extends Controller{
             session()->flash('notification-msg', "Server Error: Code #{$e->getLine()}");
         }
         return redirect()->back();
+    }
+
+    public function export_pdf(PageRequest $request,$id = null){
+        $this->data['booking'] = Booking::find($id);
+
+        if(!$this->data['booking']){
+            session()->flash('notification-status', "failed");
+            session()->flash('notification-msg', "Record not found.");
+            return redirect()->route('frontend.bookings.index');
+        }
+
+        $pdf = SnappyPDF::loadView('frontend.pdf.receipt', $this->data)
+            ->setPaper('a4')
+            ->setOrientation('portrait')
+            ->setOption('enable-local-file-access', true);
+
+        return $pdf->download("booking-receipt.pdf");
     }
 }

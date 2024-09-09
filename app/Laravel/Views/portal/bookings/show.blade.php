@@ -76,7 +76,6 @@
                 </div>
                 <hr>
                 <a href="{{route('portal.bookings.index')}}" class="btn btn-sm btn-secondary">Close</a>
-                <a href="" class="btn btn-sm btn-warning">Print Receipt</a>
                 @if($auth->canAny(['portal.bookings.update_status'], 'portal'))
                     @if($booking->status === "pending")
                     <a href="{{route('portal.bookings.edit_status', ['id' => $booking->id, 'status' => 'approved'])}}" class="btn btn-sm btn-success">Approve Booking</a>
