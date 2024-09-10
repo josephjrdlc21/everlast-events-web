@@ -161,4 +161,8 @@
     .text-right{
         text-align: right;
     }
+
+    .date-picker {
+        cursor: pointer;
+    }
 </style>

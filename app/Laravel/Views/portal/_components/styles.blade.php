@@ -62,4 +62,12 @@
 	input[type=number] {
 		-moz-appearance: textfield;
 	}
+
+    .date-picker {
+        cursor: pointer;
+    }
+
+    .date-picker-time {
+        cursor: pointer;
+    }
 </style>
