@@ -64,6 +64,11 @@ Route::group(['prefix' => "portal", 'as' => "portal.", 'namespace' => "Portal", 
             Route::get('/{id?}', ['as' => "show", 'uses' => "BookingsController@show", 'middleware' => "portal.permission:portal.bookings.view"]);
         });
 
+        Route::group(['prefix' => "transactions", 'as' => "transactions."], function(){
+            Route::get('/', ['as' => "index", 'uses' => "TransactionsController@index"]);
+            Route::get('/export', ['as' => "export", 'uses' => "TransactionsController@export"]);
+        });
+
         Route::group(['prefix' => "cms", 'as' => "cms."], function(){
             Route::group(['prefix' => "roles", 'as' => "roles."], function(){
                 Route::get('/', ['as' => "index", 'uses' => "RolesController@index", 'middleware' => "portal.permission:portal.cms.roles.index"]);

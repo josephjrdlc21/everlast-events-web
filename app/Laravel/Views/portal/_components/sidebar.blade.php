@@ -70,8 +70,8 @@
         </a>
     </li>
     @endif
-    <li class="nav-item">
-        <a class="nav-link" href="">
+    <li class="nav-item {{request()->segment(2) == "transactions" ? "active" : ""}}">
+        <a class="nav-link" href="{{route('portal.transactions.index')}}">
             <i class="fas fa-clipboard"></i>
             <span>Transaction Report</span>
         </a>

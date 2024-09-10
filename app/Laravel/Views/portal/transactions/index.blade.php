@@ -2,7 +2,7 @@
 
 @section('breadcrumb')
 <div class="mb-4">
-    <h1 class="h3 mb-0 text-gray-800">Bookings</h1>
+    <h1 class="h3 mb-0 text-gray-800">Transactions</h1>
 </div>
 @stop
 
@@ -39,56 +39,44 @@
                 </div>
             </div> 
             <button type="submit" class="btn btn-sm btn-primary">Apply Filter</button>
-            <a href="{{route('portal.bookings.index')}}" class="btn btn-sm btn-secondary">Reset Filter</a>
+            <a href="{{route('portal.transactions.index')}}" class="btn btn-sm btn-secondary">Reset Filter</a>
         </form>
     </div>
 </div>
 <div class="card shadow mb-4 border-bottom-secondary">
     <div class="card-header py-3 d-sm-flex align-items-center justify-content-between">
         <h6 class="m-0 font-weight-bold text-primary">Record Data</h6>
+        <div>
+            <a href="{{route('portal.transactions.export')}}?keyword={{$keyword}}&start_date={{$start_date}}&end_date={{$end_date}}&type=pdf" class="btn btn-sm btn-danger">Export to PDF</a>
+            <a href="#" class="btn btn-sm btn-success">Export to Excel</a>
+        </div>
     </div>
     <div class="card-body">
         <div class="table-responsive">
             <table class="table table-hover mb-0">
                 <thead>
                     <tr>
+                        <th class="border-top-0">Code</th>
                         <th class="border-top-0">Event</th>
                         <th class="border-top-0">Customer</th>
                         <th class="border-top-0">Processor</th>
                         <th class="border-top-0 text-right">Price</th>
                         <th class="border-top-0">Status</th>
-                        <th class="border-top-0">Date Booked</th>
-                        <th class="border-top-0"></th>
+                        <th class="border-top-0">Date Created</th>
                     </tr>
                 </thead>
                 <tbody>
-                    @forelse($record as $index => $booking)
+                    @forelse($record as $index => $transaction)
                     <tr>
-                        <td>
-                            @if($auth->canAny(['portal.bookings.view'], 'portal'))
-                            <a href="{{route('portal.bookings.show', [$booking->id])}}">{{$booking->code}}</a>
-                            @else
-                            <a href="#">{{$booking->code}}</a>
-                            @endif
-                            <br><small>{{$booking->event->name}}</small>
+                        <td>{{$transaction->code}}</td>
+                        <td>{{$transaction->event->name}}</td>
+                        <td>{{$transaction->user->name}}</td>
+                        <td>{{$transaction->processor->name}}</td>
+                        <td class="text-right">₱ {{$transaction->event->price}}</td>
+                        <td><span class="badge bg-{{Helper::booking_badge_status($transaction->status)}} text-white">{{$transaction->status}}</span>
+                            <span class="badge bg-{{Helper::payment_badge_status($transaction->payment_status)}} text-white">{{$transaction->payment_status}}</span>
                         </td>
-                        <td>{{$booking->user->name}}</td>
-                        <td>{{$booking->processor->name}}</td>
-                        <td class="text-right">₱ {{$booking->event->price}}</td>
-                        <td><span class="badge bg-{{Helper::booking_badge_status($booking->status)}} text-white">{{$booking->status}}</span><br>
-                            <span class="mt-1 badge bg-{{Helper::payment_badge_status($booking->payment_status)}} text-white">{{$booking->payment_status}}</span>
-                        </td>
-                        <td>{{Carbon::parse($booking->created_at)->format('m/d/Y h:i A')}}</td>
-                        <td>
-                            <div class="dropdown">
-                                <button class="btn btn-sm btn-info dropdown-toggle" type="button" id="dropdownMenuButton" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">Action</button>
-                                <div class="dropdown-menu animated--fade-in" aria-labelledby="dropdownMenuButton" style="">
-                                    @if($auth->canAny(['portal.bookings.view'], 'portal'))
-                                    <a class="dropdown-item" href="{{route('portal.bookings.show', [$booking->id])}}">View Details</a>
-                                    @endif
-                                </div>
-                            </div>
-                        </td>
+                        <td>{{Carbon::parse($transaction->created_at)->format('m/d/Y h:i A')}}</td>
                     </tr>
                     @empty
                     <td colspan="7">

@@ -39,6 +39,12 @@ class BookingsController extends Controller{
                     ->whereRaw("LOWER(code) LIKE '%{$this->data['keyword']}%'")
                     ->orWhereHas('event', function ($q) {
                         $q->whereRaw("LOWER(name) LIKE '%{$this->data['keyword']}%'");
+                    })
+                    ->orWhereHas('user', function ($q) {
+                        $q->whereRaw("LOWER(name) LIKE '%{$this->data['keyword']}%'");
+                    })
+                    ->orWhereHas('processor', function ($q) {
+                        $q->whereRaw("LOWER(name) LIKE '%{$this->data['keyword']}%'");
                     });
             }
         })
@@ -98,6 +104,7 @@ class BookingsController extends Controller{
             }
             
             $booking->admin_remarks = $request->input('remarks');
+            $booking->processor_id = $this->data['auth']->id;
             $booking->save();
 
             DB::commit();

@@ -83,7 +83,7 @@
             <tbody>
                 <tr class="border-none">
                     <td class="text-center border-none">
-                        <p class="lh1 fs14 text-center"><b>Booking Receipt</b></p>
+                        <p class="lh1 fs14 text-center"><b>Transactions</b></p>
                         <p class="lh1 fs14 text-center"><b>{{Carbon::now()->format('F d, Y g:i A')}}</b></p>
                     </td>
                 </tr>
@@ -92,39 +92,33 @@
         <table width="100%" cellpadding="1" cellspacing="0">
             <thead>
                 <tr>
-                    <th class="text-center text-uppercase fs14">Fields</th>
-                    <th class="text-center text-uppercase fs14">Names</th>
+                    <th class="text-center text-uppercase fs14">Booking ID</th>
+                    <th class="text-center text-uppercase fs14">Event</th>
+                    <th class="text-center text-uppercase fs14">Customer</th>
+                    <th class="text-center text-uppercase fs14">Processor</th>
+                    <th class="text-center text-right text-uppercase fs14">Price</th>
+                    <th class="text-center text-uppercase fs14">Status</th>
+                    <th class="text-center text-uppercase fs14">Payment</th>
+                    <th class="text-center text-uppercase fs14">Date Booked</th>
                 </tr>
             </thead>
             <tbody>
-                <tr>
-                    <td>Name</td>
-                    <td>{{$booking->user->name}}</td>
-                </tr>
-                <tr>
-                    <td>Booking ID</td>
-                    <td>{{$booking->code}}</td>
-                </tr>
-                <tr>
-                    <td>Event Code</td>
-                    <td>{{$booking->event->code}}</td>
-                </tr>
-                <tr>
-                    <td>Event</td>
-                    <td>{{$booking->event->name}}</td>
-                </tr>
-                <tr>
-                    <td>Price</td>
-                    <td>₱ {{$booking->event->price}}</td>
-                </tr>
-                <tr>
-                    <td>Status</td>
-                    <td>{{$booking->status}}</td>
-                </tr>
-                <tr>
-                    <td>Payment</td>
-                    <td>{{$booking->payment_status}}</td>
-                </tr>
+                @forelse($record as $index => $transaction)
+                    <tr>
+                        <td>{{$transaction->code ?? ''}}</td>
+                        <td>{{$transaction->event->name ?? ''}}</td>
+                        <td>{{$transaction->user->name ?? ''}}</td>
+                        <td>{{$transaction->processor->name ?? ''}}</td>
+                        <td class="text-right">₱ {{$transaction->event->price ?? ''}}</td>
+                        <td>{{$transaction->status ?? ''}}</td>
+                        <td>{{$transaction->payment_status ?? ''}}</td>
+                        <td>{{Carbon::parse($transaction->created_at)->format('m/d/Y h:i A') ?? ''}}</td>
+                    </tr>
+                    @empty
+                    <td colspan="8">
+                        <p class="text-center">No record found.</p>
+                    </td>
+                @endforelse
             </tbody>
         </table>
     </body>
