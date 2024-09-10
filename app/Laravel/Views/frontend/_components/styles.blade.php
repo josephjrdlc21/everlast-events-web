@@ -2,6 +2,7 @@
 <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;600&amp;display=swap" rel="stylesheet">
 <link href="{{asset('frontend/assets/css/app.css')}}" rel="stylesheet">
 
+<link href="{{asset('assets/libs/daterangepicker/daterangepicker.css')}}" rel="stylesheet">
 <link href="{{asset('frontend/assets/libs/sweetalert2/package/dist/sweetalert2.min.css')}}" rel="stylesheet" type="text/css">
 
 <style type="text/css">

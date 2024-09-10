@@ -26,13 +26,13 @@
                         <div class="col-md-6">
                             <div class="form-group">
                                 <label for="input_from">From</label>
-                                <input type="date" class="form-control" name="start_date" value="{{$start_date}}">
+                                <input type="text" class="form-control date-picker" placeholder="YYYY-MM-DD" name="start_date" value="{{$start_date}}">
                             </div>
                         </div>
                         <div class="col-md-6">
                             <div class="form-group">
                                 <label for="input_from">To</label>
-                                <input type="date" class="form-control" name="end_date" value="{{$end_date}}">
+                                <input type="text" class="form-control date-picker" placeholder="YYYY-MM-DD" name="end_date" value="{{$end_date}}">
                             </div>
                         </div>
                     </div>
@@ -87,4 +87,18 @@
         @endif
     </div>
 </div>
+@stop
+
+@section('page-scripts')
+<script type="text/javascript">
+    $(function() {
+        $('.date-picker').daterangepicker({
+            singleDatePicker: true,
+            showDropdowns: true,
+            locale: {
+                format: 'YYYY-MM-DD'
+            }
+        });
+    });
+</script>
 @stop

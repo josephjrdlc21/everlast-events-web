@@ -3,6 +3,7 @@
 
 <link href="{{asset('assets/css/sb-admin-2.min.css')}}" rel="stylesheet">
 <link href="{{asset('assets/libs/sweetalert2/package/dist/sweetalert2.min.css')}}" rel="stylesheet" type="text/css">
+<link href="{{asset('assets/libs/daterangepicker/daterangepicker.css')}}" rel="stylesheet">
 
 <style type="text/css">
     /* Chart.js */

@@ -58,6 +58,26 @@
                         </div>
                     </div>
                     <div class="row">
+                        <div class="col-md-6">
+                            <div class="form-group">
+                                <label for="input_start">Event Start</label>
+                                <input type="text" class="form-control date-picker-time" placeholder="YYYY-MM-DD HH:mm" name="start_date" value="{{Carbon::parse($event->event_start)->format('Y-m-d\TH:i')}}">
+                                @if($errors->first('start_date'))
+                                <small class="d-block mt-1 text-danger">{{$errors->first('start_date')}}</small>
+                                @endif
+                            </div>
+                        </div>
+                        <div class="col-md-6">
+                            <div class="form-group">
+                                <label for="input_end">Event End</label>
+                                <input type="text" class="form-control date-picker-time" placeholder="YYYY-MM-DD HH:mm" name="end_date" value="{{Carbon::parse($event->event_end)->format('Y-m-d\TH:i')}}">
+                                @if($errors->first('end_date'))
+                                <small class="d-block mt-1 text-danger">{{$errors->first('end_date')}}</small>
+                                @endif
+                            </div>
+                        </div>
+                    </div>
+                    <div class="row">
                         <div class="col-md-12">
                             <div class="form-group">
                                 <label for="input_description">Description</label>
@@ -88,26 +108,6 @@
                             </div>
                         </div>
                     </div>
-                    <div class="row">
-                        <div class="col-md-6">
-                            <div class="form-group">
-                                <label for="input_start">Event Start</label>
-                                <input type="datetime-local" class="form-control" name="start_date" value="{{Carbon::parse($event->event_start)->format('Y-m-d\TH:i')}}">
-                                @if($errors->first('start_date'))
-                                <small class="d-block mt-1 text-danger">{{$errors->first('start_date')}}</small>
-                                @endif
-                            </div>
-                        </div>
-                        <div class="col-md-6">
-                            <div class="form-group">
-                                <label for="input_end">Event End</label>
-                                <input type="datetime-local" class="form-control" name="end_date" value="{{Carbon::parse($event->event_end)->format('Y-m-d\TH:i')}}">
-                                @if($errors->first('end_date'))
-                                <small class="d-block mt-1 text-danger">{{$errors->first('end_date')}}</small>
-                                @endif
-                            </div>
-                        </div>
-                    </div>
                     <hr>
                     <a href="{{route('portal.events.index')}}" class="btn btn-sm btn-danger">Cancel</a>
                     <button type="submit" class="btn btn-sm btn-info">Save</button>
@@ -116,4 +116,20 @@
         </div>
     </div>
 </div>
+@stop
+
+@section('page-scripts')
+<script type="text/javascript">
+    $(function() {
+        $('.date-picker-time').daterangepicker({
+            singleDatePicker: true,
+            showDropdowns: true,
+            timePicker: true,
+            timePicker24Hour: false,
+            locale: {
+                format: 'YYYY-MM-DD h:mm A'
+            }
+        });
+    });
+</script>
 @stop

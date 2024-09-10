@@ -32,13 +32,13 @@
                         <div class="col-md-6">
                             <div class="form-group">
                                 <label for="input_from">From</label>
-                                <input type="date" class="form-control" name="start_date" value="{{$start_date}}">
+                                <input type="text" class="form-control date-picker" placeholder="YYYY-MM-DD" name="start_date" value="{{$start_date}}">
                             </div>
                         </div>
                         <div class="col-md-6">
                             <div class="form-group">
                                 <label for="input_from">To</label>
-                                <input type="date" class="form-control" name="end_date" value="{{$end_date}}">
+                                <input type="text" class="form-control date-picker" placeholder="YYYY-MM-DD" name="end_date" value="{{$end_date}}">
                             </div>
                         </div>
                     </div>
@@ -82,7 +82,7 @@
                         </td>
                         <td>{{Helper::capitalize_text($user->roles->pluck('name')->implode(','))}}</td>
                         <td>{{$user->created_at->format("m/d/Y h:i A")}}</td>
-                        <td><span class="badge badge-{{Helper::badge_status($user->status)}}">{{ Str::upper($user->status)}}</span></td>
+                        <td><span class="badge badge-{{Helper::badge_status($user->status)}}">{{Str::upper($user->status)}}</span></td>
                         <td>{{$user->last_login_at ? Carbon::parse($user->last_login_at)->format("m/d/Y h:i A") : "Not Logged In Yet"}}</td>
                         <td>
                             <div class="dropdown">
@@ -124,6 +124,16 @@
 
 @section('page-scripts')
 <script type="text/javascript">
+    $(function() {
+        $('.date-picker').daterangepicker({
+            singleDatePicker: true,
+            showDropdowns: true,
+            locale: {
+                format: 'YYYY-MM-DD'
+            }
+        });
+    });
+
 	$(".btn-activation").on('click', function(){
 		var url = $(this).data('url');
         var status = $(this).data('status');

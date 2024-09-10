@@ -9,6 +9,9 @@
 <script src="{{asset('assets/libs/sweetalert2/package/dist/sweetalert2.min.js')}}"></script>
 <script src="{{asset('assets/libs/sweetalert2/package/dist/sweetalert2.all.min.js')}}"></script>
 
+<script src="{{asset('assets/libs/moment/min/moment.min.js')}}"></script>
+<script src="{{asset('assets/libs/daterangepicker/daterangepicker.js')}}"></script>
+
 {{-- CK Editor --}}
 <script src="{{ asset('assets/libs/ckeditor5/build/ckeditor.js') }}"></script>
 
@@ -36,7 +39,7 @@
         }
     })
     .catch(error => {
-        console.error(error);
+        //console.error(error);
     });
 </script>
 {{-- End CK Editor --}}
