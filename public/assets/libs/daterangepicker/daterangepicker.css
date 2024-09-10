@@ -230,6 +230,7 @@
   height: auto;
   margin: 0;
   cursor: default;
+  border: none;
 }
 
 .daterangepicker select.monthselect {
