@@ -70,4 +70,14 @@
     .date-picker-time {
         cursor: pointer;
     }
+
+    .auth-background {
+        position: relative;
+    }
+
+    .auth-svg {
+        position: absolute;
+        bottom: 0;
+        top: 0;
+    }
 </style>

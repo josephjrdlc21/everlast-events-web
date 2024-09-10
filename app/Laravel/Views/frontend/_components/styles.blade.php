@@ -165,4 +165,13 @@
     .date-picker {
         cursor: pointer;
     }
+
+    .auth-background {
+        position: relative;
+    }
+
+    .auth-svg {
+        position: absolute;
+        bottom: 0;
+    }
 </style>
