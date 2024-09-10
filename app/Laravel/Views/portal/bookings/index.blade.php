@@ -86,7 +86,7 @@
                         </td>
                     </tr>
                     @empty
-                    <td colspan="7">
+                    <td colspan="6">
                         <p class="text-center">No record found yet.</p>
                     </td>
                     @endforelse
