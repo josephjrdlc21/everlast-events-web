@@ -7,7 +7,6 @@
             {{$settings->brand_name ?? 'Brand Name'}}
         </div>
     </a>
-
     <hr class="sidebar-divider">
     <div class="sidebar-heading">
         Quick Access
@@ -18,7 +17,6 @@
             <span>Dashboard</span>
         </a>
     </li>
-
     <hr class="sidebar-divider">
     <div class="sidebar-heading">
         Menus
@@ -70,13 +68,14 @@
         </a>
     </li>
     @endif
+    @if($auth->canAny(['portal.transactions.index'], 'portal'))
     <li class="nav-item {{request()->segment(2) == "transactions" ? "active" : ""}}">
         <a class="nav-link" href="{{route('portal.transactions.index')}}">
             <i class="fas fa-clipboard"></i>
             <span>Transaction Report</span>
         </a>
     </li>
-
+    @endif
     <hr class="sidebar-divider">
     <div class="sidebar-heading">
         System Settings
@@ -120,7 +119,6 @@
             <span>Audit Trail</span>
         </a>
     </li>
-
     <hr class="sidebar-divider d-none d-md-block">
     <div class="text-center d-none d-md-inline">
         <button class="rounded-circle border-0" id="sidebarToggle"></button>

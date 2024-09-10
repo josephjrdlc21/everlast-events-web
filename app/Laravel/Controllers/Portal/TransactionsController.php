@@ -6,7 +6,9 @@ use App\Laravel\Models\Booking as Transaction;
 
 use App\Laravel\Requests\PageRequest;
 
-use Carbon,DB,Str,SnappyPDF;
+use Rap2hpoutre\FastExcel\FastExcel;
+
+use Carbon,DB,Str,SnappyPDF,Helper;
 
 class TransactionsController extends Controller{
     protected $data;
@@ -108,6 +110,20 @@ class TransactionsController extends Controller{
                     return $pdf->download("transactions.pdf");
 
             break;
+
+            case "excel":
+                return (new FastExcel($this->data['record']))->download('transaction.csv', function ($transaction) {
+                    return [
+                        'Booking ID' => $transaction->code ?? '',
+                        'Event' => $transaction->event->name ?? '',
+                        'Customer' => $transaction->user->name ?? '',
+                        'Processor' => $transaction->processor->name ?? '',
+                        'Price' => $transaction->event->price ?? '',
+                        'Status' => Helper::capitalize_text($transaction->status) ?? '',
+                        'Payment' => Helper::capitalize_text($transaction->payment_status) ?? '',
+                        'Date Booked' => Carbon::parse($transaction->created_at)->format('m/d/Y h:i A') ?? ''
+                    ];
+                });
         
             break;
         }

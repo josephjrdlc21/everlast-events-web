@@ -196,6 +196,7 @@ return [
         'Carbon' => Carbon\Carbon::class,
         'SnappyPDF' => Barryvdh\Snappy\Facades\SnappyPdf::class,
         'SnappyImage' => Barryvdh\Snappy\Facades\SnappyImage::class,
+        'FastExcel' => Rap2hpoutre\FastExcel\Facades\FastExcel::class,
     ])->toArray(),
 
 ];

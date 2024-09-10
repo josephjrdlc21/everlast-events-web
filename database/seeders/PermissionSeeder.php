@@ -86,6 +86,10 @@ class PermissionSeeder extends Seeder
 
             ['name' => "portal.cms.settings.index", 'description' => "List of Settings", 'module' => "cms.settings", 'module_name' => "CMS - Settings", 'guard_name' => "portal"],
             ['name' => "portal.cms.settings.search", 'description' => "Search Record", 'module' => "cms.settings", 'module_name' => "CMS - Settings", 'guard_name' => "portal"],
+
+            ['name' => "portal.transactions.index", 'description' => "List of Transactions", 'module' => "transactions", 'module_name' => "Transactions", 'guard_name' => "portal"],
+            ['name' => "portal.transactions.export", 'description' => "Export Transactions", 'module' => "transactions", 'module_name' => "Transactions", 'guard_name' => "portal"],
+            ['name' => "portal.transactions.search", 'description' => "Search Record", 'module' => "transactions", 'module_name' => "Transactions", 'guard_name' => "portal"],
         ];
         
         foreach($permissions as $permission){
