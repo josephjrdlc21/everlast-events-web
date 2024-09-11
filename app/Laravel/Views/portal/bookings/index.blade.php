@@ -72,8 +72,8 @@
                             @endif
                             <br><small>{{$booking->event->name}}</small>
                         </td>
-                        <td>{{$booking->user->name}}</td>
-                        <td>{{$booking->processor->name}}</td>
+                        <td>{{$booking->user->name ?? 'N/A'}}</td>
+                        <td>{{$booking->processor->name ?? 'N/A'}}</td>
                         <td class="text-right">₱ {{$booking->event->price}}</td>
                         <td><span class="badge bg-{{Helper::booking_badge_status($booking->status)}} text-white">{{$booking->status}}</span><br>
                             <span class="mt-1 badge bg-{{Helper::payment_badge_status($booking->payment_status)}} text-white">{{$booking->payment_status}}</span>
