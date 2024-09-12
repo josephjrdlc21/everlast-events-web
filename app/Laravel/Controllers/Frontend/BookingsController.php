@@ -53,6 +53,7 @@ class BookingsController extends Controller{
                 }
             });
         })
+        ->where('user_id', $this->data['auth']->id)
         ->orderBy('created_at','DESC')
         ->paginate($this->per_page);
 
@@ -102,7 +103,7 @@ class BookingsController extends Controller{
 
     public function show(PageRequest $request,$id = null){
         $this->data['page_title'] .= " - Information";
-        $this->data['booking'] = Booking::find($id);
+        $this->data['booking'] = Booking::where('id', $id)->where('user_id', $this->data['auth']->id)->first();
 
         if(!$this->data['booking']){
             session()->flash('notification-status', "failed");
@@ -114,7 +115,7 @@ class BookingsController extends Controller{
     }
 
     public function update_status(PageRequest $request,$id = null){
-        $booking = Booking::find($id);
+        $booking = Booking::where('id', $id)->where('user_id', $this->data['auth']->id)->first();
 
         if(!$booking){
             session()->flash('notification-status', "failed");
@@ -142,7 +143,7 @@ class BookingsController extends Controller{
     }
 
     public function export_pdf(PageRequest $request,$id = null){
-        $this->data['booking'] = Booking::find($id);
+        $this->data['booking'] = Booking::where('id', $id)->where('user_id', $this->data['auth']->id)->first();
 
         if(!$this->data['booking']){
             session()->flash('notification-status', "failed");
