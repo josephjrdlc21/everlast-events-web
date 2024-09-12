@@ -2,7 +2,7 @@
 
 namespace App\Laravel\Controllers\Portal;
 
-use App\Laravel\Models\{Event,Booking,User,Category,UserKYC};
+use App\Laravel\Models\{Event,Booking,User,UserKYC};
 
 use App\Laravel\Requests\PageRequest;
 
@@ -23,7 +23,7 @@ class MainController extends Controller{
         $this->data['total_registrations'] = UserKYC::all()->count();
         $this->data['total_accounts'] = User::where('status', 'active')->count();
         $this->data['total_events'] = Event::all()->count();
-        $this->data['total_category'] = Category::all()->count();
+        $this->data['total_bookings'] = Booking::all()->count();
 
         $this->data['pie_chart_data'] = [
             "pending" => Booking::where('status', 'pending')->count(),
