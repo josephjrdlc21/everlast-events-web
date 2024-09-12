@@ -39,6 +39,7 @@
             </div>
         </div>
     </body>
+    @yield('page-chart-scripts')
     @include('portal._components.scripts')
     @yield('page-scripts')
 </html>

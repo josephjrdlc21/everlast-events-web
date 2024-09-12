@@ -5,6 +5,7 @@
 <script src="{{asset('assets/libs/chart.js/Chart.min.js')}}"></script>
 <script src="{{asset('assets/js/demo/chart-area-demo.js')}}"></script>
 <script src="{{asset('assets/js/demo/chart-pie-demo.js')}}"></script>
+<script src="{{asset('assets/js/demo/chart-bar-demo.js')}}"></script>
 
 <script src="{{asset('assets/libs/sweetalert2/package/dist/sweetalert2.min.js')}}"></script>
 <script src="{{asset('assets/libs/sweetalert2/package/dist/sweetalert2.all.min.js')}}"></script>

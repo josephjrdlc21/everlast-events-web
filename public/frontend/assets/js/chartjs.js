@@ -1,4 +1,5 @@
 document.addEventListener("DOMContentLoaded", function() {
+    console.log(lineChartData);
     var ctx = document.getElementById("chartjs-dashboard-line").getContext("2d");
     var gradient = ctx.createLinearGradient(0, 0, 0, 225);
     gradient.addColorStop(0, "rgba(215, 227, 244, 1)");
@@ -9,23 +10,23 @@ document.addEventListener("DOMContentLoaded", function() {
         data: {
             labels: ["Jan", "Feb", "Mar", "Apr", "May", "Jun", "Jul", "Aug", "Sep", "Oct", "Nov", "Dec"],
             datasets: [{
-                label: "Sales ($)",
+                label: "Expenses ",
                 fill: true,
                 backgroundColor: gradient,
                 borderColor: window.theme.primary,
                 data: [
-                    2115,
-                    1562,
-                    1584,
-                    1892,
-                    1587,
-                    1923,
-                    2566,
-                    2448,
-                    2805,
-                    3438,
-                    2917,
-                    3327
+                    lineChartData['01'] ?? 0,
+                    lineChartData['02'] ?? 0,
+                    lineChartData['03'] ?? 0,
+                    lineChartData['04'] ?? 0,
+                    lineChartData['05'] ?? 0,
+                    lineChartData['06'] ?? 0,
+                    lineChartData['07'] ?? 0,
+                    lineChartData['08'] ?? 0,
+                    lineChartData['09'] ?? 0,
+                    lineChartData['10'] ?? 0,
+                    lineChartData['11'] ?? 0,
+                    lineChartData['12'] ?? 0 
                 ]
             }]
         },
