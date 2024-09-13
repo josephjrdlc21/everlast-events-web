@@ -72,7 +72,7 @@
                         <td>{{$audit_trail->user->name}}<br><small>{{Helper::capitalize_text($audit_trail->user->roles->pluck('name')->implode(',')) ?? ''}}</small></td>
                         <td>{{$audit_trail->ip}}</td>
                         <td>{{$audit_trail->remarks}}</td>
-                        <td>{{$audit_trail->created_at->format("m/d/Y")}}<br><small>{{$audit_trail->created_at->format("h:i A")}}</small></td>
+                        <td>{{$audit_trail->created_at->format("m/d/Y h:i A")}}<br><small class="text-white">x</small></td>
                     </tr>
                     @empty
                     <td colspan="5">
