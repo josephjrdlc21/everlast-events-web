@@ -93,6 +93,7 @@
             <thead>
                 <tr>
                     <th class="text-center text-uppercase fs14">Name</th>
+                    <th class="text-center text-uppercase fs14">Role</th>
                     <th class="text-center text-uppercase fs14">IP Address</th>
                     <th class="text-center text-uppercase fs14">Remarks</th>
                     <th class="text-center text-uppercase fs14">Date</th>
@@ -102,12 +103,13 @@
                 @forelse($record as $index => $audit_trail)
                     <tr>
                         <td>{{$audit_trail->user->name ?? ''}}</td>
+                        <td>{{Helper::capitalize_text($audit_trail->user->roles->pluck('name')->implode(',')) ?? ''}}</td>
                         <td>{{$audit_trail->ip ?? ''}}</td>
                         <td>{{$audit_trail->remarks ?? ''}}</td>
                         <td>{{Carbon::parse($audit_trail->created_at)->format('m/d/Y h:i A') ?? ''}}</td>
                     </tr>
                     @empty
-                    <td colspan="4">
+                    <td colspan="5">
                         <p class="text-center">No record found.</p>
                     </td>
                 @endforelse

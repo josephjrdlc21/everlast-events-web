@@ -97,6 +97,7 @@ class AuditTrailController extends Controller{
                 return (new FastExcel($this->data['record']))->download('audit-trail.csv', function ($audit_trail) {
                     return [
                         'Name' => $audit_trail->user->name ?? '',
+                        'Role' => Helper::capitalize_text($audit_trail->user->roles->pluck('name')->implode(',')) ?? '',
                         'IP Address' => $audit_trail->ip ?? '',
                         'Remarks' => $audit_trail->remarks ?? '',
                         'Date' => Carbon::parse($audit_trail->created_at)->format('m/d/Y h:i A') ?? ''
