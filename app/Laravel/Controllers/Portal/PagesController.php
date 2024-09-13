@@ -2,7 +2,7 @@
 
 namespace App\Laravel\Controllers\Portal;
 
-use App\Laravel\Models\Page;
+use App\Laravel\Models\{Page,AuditTrail};
 
 use App\Laravel\Requests\PageRequest;
 use App\Laravel\Requests\Portal\WebPageRequest;
@@ -74,6 +74,14 @@ class PagesController extends Controller{
             $page->type = $request->input('type');
             $page->save();
 
+            $audit_trail = new AuditTrail;
+			$audit_trail->user_id = $this->data['auth']->id;
+			$audit_trail->process = "CREATE_NEW_PAGE";
+			$audit_trail->ip = $this->data['ip'];
+			$audit_trail->remarks = "{$this->data['auth']->name} has created a new page.";
+			$audit_trail->type = "USER_ACTION";
+			$audit_trail->save();
+
             DB::commit();
 
             session()->flash('notification-status', "success");
@@ -122,6 +130,14 @@ class PagesController extends Controller{
             $page->type = $request->input('type');
             $page->save();
 
+            $audit_trail = new AuditTrail;
+			$audit_trail->user_id = $this->data['auth']->id;
+			$audit_trail->process = "UPDATE_PAGE";
+			$audit_trail->ip = $this->data['ip'];
+			$audit_trail->remarks = "{$this->data['auth']->name} has updated page.";
+			$audit_trail->type = "USER_ACTION";
+			$audit_trail->save();
+
             DB::commit();
 
             session()->flash('notification-status', "success");
@@ -162,6 +178,14 @@ class PagesController extends Controller{
         }
 
         if($page->delete()){
+            $audit_trail = new AuditTrail;
+			$audit_trail->user_id = $this->data['auth']->id;
+			$audit_trail->process = "DELETE_PAGE";
+			$audit_trail->ip = $this->data['ip'];
+			$audit_trail->remarks = "{$this->data['auth']->name} has deleted a page.";
+			$audit_trail->type = "USER_ACTION";
+			$audit_trail->save();
+
             session()->flash('notification-status', 'success');
             session()->flash('notification-msg', "Page has been deleted.");
             return redirect()->back();

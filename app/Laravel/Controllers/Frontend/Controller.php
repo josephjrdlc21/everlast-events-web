@@ -6,6 +6,8 @@ use App\Laravel\Controllers\Controller as BaseController;
 
 use App\Laravel\Models\Setting;
 
+use Illuminate\Support\Facades\Request;
+
 use Route;
 
 class Controller extends BaseController{
@@ -16,6 +18,7 @@ class Controller extends BaseController{
 		self::set_current_route();
 		self::set_loggedin_user();
 		self::set_settings();
+		self::get_client_ip();
 	}
 
 	public function get_data(){
@@ -38,5 +41,13 @@ class Controller extends BaseController{
 
 	public function set_settings(){
 		$this->data['settings'] = Setting::orderBy('created_at', 'DESC')->first();
+	}
+
+	public function get_client_ip(){
+		$this->data['ip'] = Request::header('X-Forward-For');
+		
+		if (!$this->data['ip']) {
+			$this->data['ip'] = Request::getClientIp();
+		}
 	}
 }

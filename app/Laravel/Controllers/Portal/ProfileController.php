@@ -2,6 +2,8 @@
 
 namespace App\Laravel\Controllers\Portal;
 
+use App\Laravel\Models\AuditTrail;
+
 use App\Laravel\Requests\PageRequest;
 use App\Laravel\Requests\Portal\{AccountChangePasswordRequest,ProfileRequest};
 
@@ -49,6 +51,14 @@ class ProfileController extends Controller{
             $user->password = bcrypt($request->input('password'));
             $user->save();
 
+            $audit_trail = new AuditTrail;
+			$audit_trail->user_id = $this->data['auth']->id;
+			$audit_trail->process = "UPDATE_PASSWORD";
+			$audit_trail->ip = $this->data['ip'];
+			$audit_trail->remarks = "{$this->data['auth']->name} has updated own password.";
+			$audit_trail->type = "USER_ACTION";
+			$audit_trail->save();
+
 			DB::commit();
 
 			session()->flash('notification-status',"success");
@@ -95,6 +105,14 @@ class ProfileController extends Controller{
                 $user->source = $upload_logo['source'];
             }
             $user->save();
+
+            $audit_trail = new AuditTrail;
+			$audit_trail->user_id = $this->data['auth']->id;
+			$audit_trail->process = "UPDATE_PROFILE";
+			$audit_trail->ip = $this->data['ip'];
+			$audit_trail->remarks = "{$this->data['auth']->name} has updated own profile.";
+			$audit_trail->type = "USER_ACTION";
+			$audit_trail->save();
 
             DB::commit();
 

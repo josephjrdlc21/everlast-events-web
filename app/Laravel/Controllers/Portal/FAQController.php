@@ -2,7 +2,7 @@
 
 namespace App\Laravel\Controllers\Portal;
 
-use App\Laravel\Models\FAQ;
+use App\Laravel\Models\{FAQ,AuditTrail};
 
 use App\Laravel\Requests\PageRequest;
 use App\Laravel\Requests\Portal\FAQRequest;
@@ -80,6 +80,14 @@ class FAQController extends Controller{
             $faq->status = $request->input('status');
             $faq->save();
 
+            $audit_trail = new AuditTrail;
+			$audit_trail->user_id = $this->data['auth']->id;
+			$audit_trail->process = "CREATE_FAQ";
+			$audit_trail->ip = $this->data['ip'];
+			$audit_trail->remarks = "{$this->data['auth']->name} has created a new FAQ.";
+			$audit_trail->type = "USER_ACTION";
+			$audit_trail->save();
+
             DB::commit();
 
             session()->flash('notification-status', "success");
@@ -128,6 +136,14 @@ class FAQController extends Controller{
             $faq->status = $request->input('status');
             $faq->save();
 
+            $audit_trail = new AuditTrail;
+			$audit_trail->user_id = $this->data['auth']->id;
+			$audit_trail->process = "UPDATE_FAQ";
+			$audit_trail->ip = $this->data['ip'];
+			$audit_trail->remarks = "{$this->data['auth']->name} has updated FAQ.";
+			$audit_trail->type = "USER_ACTION";
+			$audit_trail->save();
+
             DB::commit();
 
             session()->flash('notification-status', "success");
@@ -159,6 +175,14 @@ class FAQController extends Controller{
         try{
             $faq->status = $faq->status === 'active' ? 'inactive' : 'active';
             $faq->save();
+            
+            $audit_trail = new AuditTrail;
+			$audit_trail->user_id = $this->data['auth']->id;
+			$audit_trail->process = "UPDATE_FAQ_STATUS";
+			$audit_trail->ip = $this->data['ip'];
+			$audit_trail->remarks = "{$this->data['auth']->name} has updated status to {$faq->status}.";
+			$audit_trail->type = "USER_ACTION";
+			$audit_trail->save();
                
             DB::commit();
 
@@ -201,6 +225,14 @@ class FAQController extends Controller{
         }
 
         if($faq->delete()){
+            $audit_trail = new AuditTrail;
+			$audit_trail->user_id = $this->data['auth']->id;
+			$audit_trail->process = "DELETE_FAQ";
+			$audit_trail->ip = $this->data['ip'];
+			$audit_trail->remarks = "{$this->data['auth']->name} has deleted FAQ.";
+			$audit_trail->type = "USER_ACTION";
+			$audit_trail->save();
+
             session()->flash('notification-status', 'success');
             session()->flash('notification-msg', "FAQ has been deleted.");
             return redirect()->back();

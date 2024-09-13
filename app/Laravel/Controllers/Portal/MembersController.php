@@ -2,7 +2,7 @@
 
 namespace App\Laravel\Controllers\Portal;
 
-use App\Laravel\Models\User;
+use App\Laravel\Models\{User,AuditTrail};
 
 use App\Laravel\Requests\PageRequest;
 use App\Laravel\Requests\Portal\MemberResetPasswordRequest;
@@ -92,7 +92,15 @@ class MembersController extends Controller{
         DB::beginTransaction();
         try{
             $member->password = bcrypt($request->input('password'));
-            $member->save();   
+            $member->save();
+            
+            $audit_trail = new AuditTrail;
+			$audit_trail->user_id = $this->data['auth']->id;
+			$audit_trail->process = "UPDATE_MEMBER_PASSWORD";
+			$audit_trail->ip = $this->data['ip'];
+			$audit_trail->remarks = "{$this->data['auth']->name} has updated member password.";
+			$audit_trail->type = "USER_ACTION";
+			$audit_trail->save();
                 
             DB::commit();
 
@@ -125,6 +133,14 @@ class MembersController extends Controller{
         try{
             $member->status = $member->status === 'active' ? 'inactive' : 'active';
             $member->save();
+
+            $audit_trail = new AuditTrail;
+			$audit_trail->user_id = $this->data['auth']->id;
+			$audit_trail->process = "UPDATE_MEMBER_STATUS";
+			$audit_trail->ip = $this->data['ip'];
+			$audit_trail->remarks = "{$this->data['auth']->name} has updated member status to {$member->status}.";
+			$audit_trail->type = "USER_ACTION";
+			$audit_trail->save();
                
             DB::commit();
 

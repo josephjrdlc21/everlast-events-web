@@ -113,8 +113,8 @@
         </div>
     </li>
     @endif
-    <li class="nav-item">
-        <a class="nav-link" href="">
+    <li class="nav-item {{request()->segment(2) == "audit-trail" ? "active" : ""}}">
+        <a class="nav-link" href="{{route('portal.audit_trail.index')}}">
             <i class="fas fa-clock"></i>
             <span>Audit Trail</span>
         </a>

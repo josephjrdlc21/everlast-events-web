@@ -2,7 +2,7 @@
 
 namespace App\Laravel\Controllers\Portal;
 
-use App\Laravel\Models\{UserKYC,User};
+use App\Laravel\Models\{UserKYC,User,AuditTrail};
 
 use App\Laravel\Requests\PageRequest;
 
@@ -163,6 +163,14 @@ class UsersKYCController extends Controller{
                 $user->password = $registrant->password;
                 $user->save();
             }
+
+            $audit_trail = new AuditTrail;
+			$audit_trail->user_id = $this->data['auth']->id;
+			$audit_trail->process = "UPDATE_REGISTRANT_STATUS";
+			$audit_trail->ip = $this->data['ip'];
+			$audit_trail->remarks = "{$this->data['auth']->name} has updated registrant status to {$registrant->status}.";
+			$audit_trail->type = "USER_ACTION";
+			$audit_trail->save();
                
             DB::commit();
 

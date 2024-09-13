@@ -2,7 +2,7 @@
 
 namespace App\Laravel\Controllers\Portal;
 
-use App\Laravel\Models\Booking;
+use App\Laravel\Models\{Booking,AuditTrail};
 
 use App\Laravel\Requests\PageRequest;
 use App\Laravel\Requests\Portal\BookingRequest;
@@ -107,6 +107,14 @@ class BookingsController extends Controller{
             $booking->processor_id = $this->data['auth']->id;
             $booking->save();
 
+            $audit_trail = new AuditTrail;
+			$audit_trail->user_id = $this->data['auth']->id;
+			$audit_trail->process = "UPDATE_BOOKING_STATUS";
+			$audit_trail->ip = $this->data['ip'];
+			$audit_trail->remarks = "{$this->data['auth']->name} has updated booking status to {$booking->status}.";
+			$audit_trail->type = "USER_ACTION";
+			$audit_trail->save();
+
             DB::commit();
 
             session()->flash('notification-status', "success");
@@ -138,6 +146,14 @@ class BookingsController extends Controller{
         try{
             $booking->payment_status = $booking->payment_status === 'unpaid' ? 'paid' : 'unpaid';
             $booking->save();
+
+            $audit_trail = new AuditTrail;
+			$audit_trail->user_id = $this->data['auth']->id;
+			$audit_trail->process = "UPDATE_PAYMENT_STATUS";
+			$audit_trail->ip = $this->data['ip'];
+			$audit_trail->remarks = "{$this->data['auth']->name} has updated payment status to {$booking->payment_status}.";
+			$audit_trail->type = "USER_ACTION";
+			$audit_trail->save();
                
             DB::commit();
 

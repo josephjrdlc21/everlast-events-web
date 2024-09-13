@@ -2,7 +2,7 @@
 
 namespace App\Laravel\Controllers\Portal;
 
-use App\Laravel\Models\Sponsor;
+use App\Laravel\Models\{Sponsor,AuditTrail};
 
 use App\Laravel\Requests\PageRequest;
 use App\Laravel\Requests\Portal\SponsorRequest;
@@ -80,6 +80,14 @@ class SponsorsController extends Controller{
                 $sponsor->save();
             }
 
+            $audit_trail = new AuditTrail;
+			$audit_trail->user_id = $this->data['auth']->id;
+			$audit_trail->process = "CREATE_SPONSOR";
+			$audit_trail->ip = $this->data['ip'];
+			$audit_trail->remarks = "{$this->data['auth']->name} has created a new sponsor.";
+			$audit_trail->type = "USER_ACTION";
+			$audit_trail->save();
+
             DB::commit();
 
             session()->flash('notification-status', 'success');
@@ -137,6 +145,14 @@ class SponsorsController extends Controller{
             }
             $sponsor->save();
 
+            $audit_trail = new AuditTrail;
+			$audit_trail->user_id = $this->data['auth']->id;
+			$audit_trail->process = "UPDATE_SPONSOR";
+			$audit_trail->ip = $this->data['ip'];
+			$audit_trail->remarks = "{$this->data['auth']->name} has updated a sponsor.";
+			$audit_trail->type = "USER_ACTION";
+			$audit_trail->save();
+
             DB::commit();
 
             session()->flash('notification-status', 'success');
@@ -178,6 +194,14 @@ class SponsorsController extends Controller{
         }
 
         if($sponsor->delete()){
+            $audit_trail = new AuditTrail;
+			$audit_trail->user_id = $this->data['auth']->id;
+			$audit_trail->process = "DELETE_SPONSOR";
+			$audit_trail->ip = $this->data['ip'];
+			$audit_trail->remarks = "{$this->data['auth']->name} has deleted a sponsor.";
+			$audit_trail->type = "USER_ACTION";
+			$audit_trail->save();
+
             session()->flash('notification-status', 'success');
             session()->flash('notification-msg', "Sponsor has been deleted.");
             return redirect()->back();

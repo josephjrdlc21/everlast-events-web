@@ -2,7 +2,7 @@
 
 namespace App\Laravel\Controllers\Portal;
 
-use App\Laravel\Models\{Event,Category,Sponsor};
+use App\Laravel\Models\{Event,Category,Sponsor,AuditTrail};
 
 use App\Laravel\Requests\PageRequest;
 use App\Laravel\Requests\Portal\EventRequest;
@@ -114,6 +114,14 @@ class EventsController extends Controller{
                 $event->save();
             }
 
+            $audit_trail = new AuditTrail;
+			$audit_trail->user_id = $this->data['auth']->id;
+			$audit_trail->process = "CREATE_EVENT";
+			$audit_trail->ip = $this->data['ip'];
+			$audit_trail->remarks = "{$this->data['auth']->name} has created a new event.";
+			$audit_trail->type = "USER_ACTION";
+			$audit_trail->save();
+
             DB::commit();
 
             session()->flash('notification-status', "success");
@@ -178,6 +186,14 @@ class EventsController extends Controller{
             }
             $event->save();
 
+            $audit_trail = new AuditTrail;
+			$audit_trail->user_id = $this->data['auth']->id;
+			$audit_trail->process = "UPDATE_EVENT";
+			$audit_trail->ip = $this->data['ip'];
+			$audit_trail->remarks = "{$this->data['auth']->name} has updated event.";
+			$audit_trail->type = "USER_ACTION";
+			$audit_trail->save();
+
             DB::commit();
 
             session()->flash('notification-status', "success");
@@ -209,6 +225,15 @@ class EventsController extends Controller{
         try{
             $event->is_cancelled = $event->is_cancelled === true ? false : true;
             $event->save();
+            $status = $event->is_cancelled === true ? 'cancelled' : 'start';
+
+            $audit_trail = new AuditTrail;
+			$audit_trail->user_id = $this->data['auth']->id;
+			$audit_trail->process = "UPDATE_EVENT_STATUS";
+			$audit_trail->ip = $this->data['ip'];
+			$audit_trail->remarks = "{$this->data['auth']->name} has updated event status to {$status}.";
+			$audit_trail->type = "USER_ACTION";
+			$audit_trail->save();
 
             DB::commit();
 

@@ -80,4 +80,8 @@
         bottom: 0;
         top: 0;
     }
+
+    .auth-border{
+        border-radius: 10rem !important;
+    }
 </style>

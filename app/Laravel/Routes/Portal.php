@@ -69,6 +69,10 @@ Route::group(['prefix' => "portal", 'as' => "portal.", 'namespace' => "Portal", 
             Route::get('/export', ['as' => "export", 'uses' => "TransactionsController@export", 'middleware' => "portal.permission:portal.transactions.export"]);
         });
 
+        Route::group(['prefix' => "audit-trail", 'as' => "audit_trail."], function(){
+            Route::get('/', ['as' => "index", 'uses' => "AuditTrailController@index"]);
+        });
+
         Route::group(['prefix' => "cms", 'as' => "cms."], function(){
             Route::group(['prefix' => "roles", 'as' => "roles."], function(){
                 Route::get('/', ['as' => "index", 'uses' => "RolesController@index", 'middleware' => "portal.permission:portal.cms.roles.index"]);

@@ -2,7 +2,7 @@
 
 namespace App\Laravel\Controllers\Portal;
 
-use App\Laravel\Models\{User,Role};
+use App\Laravel\Models\{User,Role,AuditTrail};
 
 use App\Laravel\Requests\PageRequest;
 use App\Laravel\Requests\Portal\{UserRequest,UserResetPasswordRequest};
@@ -94,6 +94,14 @@ class UsersController extends Controller{
 
             $role = Role::where('name', $request->input('role'))->where('guard_name','portal')->first();
             $user->assignRole($role);
+
+            $audit_trail = new AuditTrail;
+			$audit_trail->user_id = $this->data['auth']->id;
+			$audit_trail->process = "CREATE_USER";
+			$audit_trail->ip = $this->data['ip'];
+			$audit_trail->remarks = "{$this->data['auth']->name} has created a new user.";
+			$audit_trail->type = "USER_ACTION";
+			$audit_trail->save();
                
             DB::commit();
 
@@ -149,6 +157,14 @@ class UsersController extends Controller{
 
             $role = Role::where('name', $request->input('role'))->where('guard_name','portal')->first();
             $user->syncRoles($role);
+
+            $audit_trail = new AuditTrail;
+			$audit_trail->user_id = $this->data['auth']->id;
+			$audit_trail->process = "UPDATE_USER";
+			$audit_trail->ip = $this->data['ip'];
+			$audit_trail->remarks = "{$this->data['auth']->name} has updated a user.";
+			$audit_trail->type = "USER_ACTION";
+			$audit_trail->save();
                 
             DB::commit();
 
@@ -193,7 +209,15 @@ class UsersController extends Controller{
         DB::beginTransaction();
         try{
             $user->password = bcrypt($request->input('password'));
-            $user->save();   
+            $user->save();
+            
+            $audit_trail = new AuditTrail;
+			$audit_trail->user_id = $this->data['auth']->id;
+			$audit_trail->process = "UPDATE_USER_PASSWORD";
+			$audit_trail->ip = $this->data['ip'];
+			$audit_trail->remarks = "{$this->data['auth']->name} has updated user password.";
+			$audit_trail->type = "USER_ACTION";
+			$audit_trail->save();
                 
             DB::commit();
 
@@ -232,6 +256,14 @@ class UsersController extends Controller{
         try{
             $user->status = $user->status === 'active' ? 'inactive' : 'active';
             $user->save();
+
+            $audit_trail = new AuditTrail;
+			$audit_trail->user_id = $this->data['auth']->id;
+			$audit_trail->process = "UPDATE_USER_STATUS";
+			$audit_trail->ip = $this->data['ip'];
+			$audit_trail->remarks = "{$this->data['auth']->name} has updated user status to {$user->status}.";
+			$audit_trail->type = "USER_ACTION";
+			$audit_trail->save();
                
             DB::commit();
 

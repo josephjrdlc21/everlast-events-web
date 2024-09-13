@@ -2,7 +2,7 @@
 
 namespace App\Laravel\Controllers\Frontend;
 
-use App\Laravel\Models\{Event,Booking};
+use App\Laravel\Models\{Event,Booking,AuditTrail};
 
 use App\Laravel\Requests\PageRequest;
 use App\Laravel\Requests\Frontend\BookingRequest;
@@ -83,6 +83,14 @@ class BookingsController extends Controller{
             $booking->client_remarks = $request->input('remarks');
             $booking->save();
 
+            $audit_trail = new AuditTrail;
+            $audit_trail->user_id = $this->data['auth']->id;
+            $audit_trail->process = "CREATE_BOOKING";
+            $audit_trail->ip = $this->data['ip'];
+            $audit_trail->remarks = "{$this->data['auth']->name} has created a booking.";
+            $audit_trail->type = "USER_ACTION";
+            $audit_trail->save();
+
             DB::commit();
 
             session()->flash('notification-status', "success");
@@ -127,6 +135,14 @@ class BookingsController extends Controller{
         try{
             $booking->status = 'cancelled';
             $booking->save();
+
+            $audit_trail = new AuditTrail;
+            $audit_trail->user_id = $this->data['auth']->id;
+            $audit_trail->process = "UPDATE_BOOKING_STATUS";
+            $audit_trail->ip = $this->data['ip'];
+            $audit_trail->remarks = "{$this->data['auth']->name} has updated booking status to {$booking->status}.";
+            $audit_trail->type = "USER_ACTION";
+            $audit_trail->save();
         
             DB::commit();
 

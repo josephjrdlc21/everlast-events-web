@@ -2,7 +2,7 @@
 
 namespace App\Laravel\Controllers\Portal;
 
-use App\Laravel\Models\{Role,Permission};
+use App\Laravel\Models\{Role,Permission,AuditTrail};
 
 use App\Laravel\Requests\PageRequest;
 use App\Laravel\Requests\Portal\RoleRequest;
@@ -82,6 +82,14 @@ class RolesController extends Controller{
 
             $role->permissions()->sync($request->input('permissions'));
 
+            $audit_trail = new AuditTrail;
+			$audit_trail->user_id = $this->data['auth']->id;
+			$audit_trail->process = "CREATE_ROLE";
+			$audit_trail->ip = $this->data['ip'];
+			$audit_trail->remarks = "{$this->data['auth']->name} has created a new role.";
+			$audit_trail->type = "USER_ACTION";
+			$audit_trail->save();
+
             DB::commit();
 
             session()->flash('notification-status', "success");
@@ -131,6 +139,14 @@ class RolesController extends Controller{
             $role->save();
 
             $role->permissions()->sync($request->input('permissions'));
+
+            $audit_trail = new AuditTrail;
+			$audit_trail->user_id = $this->data['auth']->id;
+			$audit_trail->process = "UPDATE_ROLE";
+			$audit_trail->ip = $this->data['ip'];
+			$audit_trail->remarks = "{$this->data['auth']->name} has updated a role.";
+			$audit_trail->type = "USER_ACTION";
+			$audit_trail->save();
 
             DB::commit();
 

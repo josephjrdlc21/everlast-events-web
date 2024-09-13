@@ -26,6 +26,7 @@ class RegistrationRequest extends RequestManager
         $id = $this->id ?? 0;
 
         $rules = [
+            'role' => 'required',
             'firstname' => 'required|regex:/^[a-zA-Z0-9.\-\s]+$/|min:2',
             'lastname' => 'required|regex:/^[a-zA-Z0-9.\-\s]+$/|min:2',
             'middlename' => 'nullable|regex:/^[a-zA-Z0-9.\-\s]*$/|min:2',

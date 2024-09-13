@@ -2,7 +2,7 @@
 
 namespace App\Laravel\Controllers\Portal;
 
-use App\Laravel\Models\Category;
+use App\Laravel\Models\{Category,AuditTrail};
 
 use App\Laravel\Requests\PageRequest;
 use App\Laravel\Requests\Portal\CategoryRequest;
@@ -79,6 +79,14 @@ class CategoryController extends Controller{
             $category->status = $request->input('status');
             $category->save();
 
+            $audit_trail = new AuditTrail;
+			$audit_trail->user_id = $this->data['auth']->id;
+			$audit_trail->process = "CREATE_CATEGORY";
+			$audit_trail->ip = $this->data['ip'];
+			$audit_trail->remarks = "{$this->data['auth']->name} has created a new event category.";
+			$audit_trail->type = "USER_ACTION";
+			$audit_trail->save();
+
             DB::commit();
 
             session()->flash('notification-status', "success");
@@ -126,6 +134,14 @@ class CategoryController extends Controller{
             $category->status = $request->input('status');
             $category->save();
 
+            $audit_trail = new AuditTrail;
+			$audit_trail->user_id = $this->data['auth']->id;
+			$audit_trail->process = "UPDATE_CATEGORY";
+			$audit_trail->ip = $this->data['ip'];
+			$audit_trail->remarks = "{$this->data['auth']->name} has updated event category.";
+			$audit_trail->type = "USER_ACTION";
+			$audit_trail->save();
+
             DB::commit();
 
             session()->flash('notification-status', "success");
@@ -157,6 +173,14 @@ class CategoryController extends Controller{
         try{
             $category->status = $category->status === 'active' ? 'inactive' : 'active';
             $category->save();
+
+            $audit_trail = new AuditTrail;
+			$audit_trail->user_id = $this->data['auth']->id;
+			$audit_trail->process = "UPDATE_CATEGORY_STATUS";
+			$audit_trail->ip = $this->data['ip'];
+			$audit_trail->remarks = "{$this->data['auth']->name} has updated event category status to {$category->status}.";
+			$audit_trail->type = "USER_ACTION";
+			$audit_trail->save();
                
             DB::commit();
 
@@ -199,6 +223,14 @@ class CategoryController extends Controller{
         }
 
         if($category->delete()){
+            $audit_trail = new AuditTrail;
+			$audit_trail->user_id = $this->data['auth']->id;
+			$audit_trail->process = "DELETE_CATEGORY";
+			$audit_trail->ip = $this->data['ip'];
+			$audit_trail->remarks = "{$this->data['auth']->name} has deleted event category.";
+			$audit_trail->type = "USER_ACTION";
+			$audit_trail->save();
+
             session()->flash('notification-status', 'success');
             session()->flash('notification-msg', "Category has been deleted.");
             return redirect()->back();

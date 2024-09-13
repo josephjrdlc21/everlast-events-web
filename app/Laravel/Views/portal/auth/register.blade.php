@@ -17,6 +17,14 @@
                             @include('portal._components.notification')
                             {!!csrf_field()!!}
                             <div class="form-group row">
+                                <div class="col-sm-12 mb-3 mb-sm-0">
+                                    {!! html()->select('role', $roles, old('role'), ['id' => "input_role"])->class('form-control auth-border') !!}
+                                    @if($errors->first('role'))
+                                    <small class="d-block mt-1 text-danger">{{$errors->first('role')}}</small>
+                                    @endif
+                                </div>
+                            </div>
+                            <div class="form-group row">
                                 <div class="col-sm-6 mb-3 mb-sm-0">
                                     <input type="text" class="form-control form-control-user" id="input_firstname" placeholder="First Name" name="firstname" value="{{old('firstname')}}">
                                     @if($errors->first('firstname'))

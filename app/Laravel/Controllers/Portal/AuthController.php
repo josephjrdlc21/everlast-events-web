@@ -2,7 +2,7 @@
 
 namespace App\Laravel\Controllers\Portal;
 
-use App\Laravel\Models\{User,PasswordReset};
+use App\Laravel\Models\{User,Role,PasswordReset,AuditTrail};
 
 use App\Laravel\Requests\PageRequest;
 use App\Laravel\Requests\Portal\{RegistrationRequest,ForgotPasswordRequest,PasswordRequest};
@@ -18,6 +18,7 @@ class AuthController extends Controller{
     public function __construct(){
         parent::__construct();
 		array_merge($this->data?:[], parent::get_data());
+        $this->data['roles'] = ['' => "-- Select Role --"] + Role::where('status','active')->pluck('name', 'name')->toArray();
         $this->data['page_title'] .= " - Portal";
         $this->guard = "portal";
     }
@@ -45,6 +46,9 @@ class AuthController extends Controller{
             $user->contact_number = Helper::format_phone($request->input('contact'));
             $user->password = bcrypt($password);
             $user->save();
+
+            $role = Role::where('name', $request->input('role'))->where('guard_name','portal')->first();
+            $user->assignRole($role);
 
 			DB::commit();
 
@@ -94,6 +98,14 @@ class AuthController extends Controller{
 
 			$account->last_login_at = now();
 			$account->save();
+
+            $audit_trail = new AuditTrail;
+			$audit_trail->user_id = $account->id;
+			$audit_trail->process = "LOGIN_PORTAL_USER";
+			$audit_trail->ip = $this->data['ip'];
+			$audit_trail->remarks = "{$account->name} has logged in.";
+			$audit_trail->type = "USER_ACTION";
+			$audit_trail->save();
 
 			if($uri AND session()->has($uri)){
 				session()->flash('notification-status',"success");
@@ -210,6 +222,14 @@ class AuthController extends Controller{
 
     public function logout(PageRequest $request){
 		auth($this->guard)->logout();
+
+        $audit_trail = new AuditTrail;
+        $audit_trail->user_id = $this->data['auth']->id;
+        $audit_trail->process = "LOGOUT_PORTAL_USER";
+        $audit_trail->ip = $this->data['ip'];
+        $audit_trail->remarks = "{$this->data['auth']->name} has logged out.";
+        $audit_trail->type = "USER_ACTION";
+        $audit_trail->save();
 		
 		session()->flash('notification-status', "success");
 		session()->flash('notification-msg', "Logged out successfully.");

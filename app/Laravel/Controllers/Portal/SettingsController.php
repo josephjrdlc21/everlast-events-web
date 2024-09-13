@@ -2,7 +2,7 @@
 
 namespace App\Laravel\Controllers\Portal;
 
-use App\Laravel\Models\Setting;
+use App\Laravel\Models\{Setting,AuditTrail};
 
 use App\Laravel\Requests\PageRequest;
 use App\Laravel\Requests\Portal\SettingRequest;
@@ -49,6 +49,14 @@ class SettingsController extends Controller{
                 $setting->source = $upload_logo['source'];
                 $setting->save();
             }
+
+            $audit_trail = new AuditTrail;
+			$audit_trail->user_id = $this->data['auth']->id;
+			$audit_trail->process = "UPDATE_SETTING";
+			$audit_trail->ip = $this->data['ip'];
+			$audit_trail->remarks = "{$this->data['auth']->name} has updated system settings.";
+			$audit_trail->type = "USER_ACTION";
+			$audit_trail->save();
     
             DB::commit();
 
