@@ -90,6 +90,10 @@ class PermissionSeeder extends Seeder
             ['name' => "portal.transactions.index", 'description' => "List of Transactions", 'module' => "transactions", 'module_name' => "Transactions", 'guard_name' => "portal"],
             ['name' => "portal.transactions.export", 'description' => "Export Transactions", 'module' => "transactions", 'module_name' => "Transactions", 'guard_name' => "portal"],
             ['name' => "portal.transactions.search", 'description' => "Search Record", 'module' => "transactions", 'module_name' => "Transactions", 'guard_name' => "portal"],
+
+            ['name' => "portal.audit_trail.index", 'description' => "List of Audit Trail", 'module' => "audit_trail", 'module_name' => "Audit Trail", 'guard_name' => "portal"],
+            ['name' => "portal.audit_trail.export", 'description' => "Export Audit Trail", 'module' => "audit_trail", 'module_name' => "Audit Trail", 'guard_name' => "portal"],
+            ['name' => "portal.audit_trail.search", 'description' => "Search Record", 'module' => "audit_trail", 'module_name' => "Audit Trail", 'guard_name' => "portal"],
         ];
         
         foreach($permissions as $permission){

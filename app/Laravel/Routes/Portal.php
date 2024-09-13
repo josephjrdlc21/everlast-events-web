@@ -70,7 +70,8 @@ Route::group(['prefix' => "portal", 'as' => "portal.", 'namespace' => "Portal", 
         });
 
         Route::group(['prefix' => "audit-trail", 'as' => "audit_trail."], function(){
-            Route::get('/', ['as' => "index", 'uses' => "AuditTrailController@index"]);
+            Route::get('/', ['as' => "index", 'uses' => "AuditTrailController@index", 'middleware' => "portal.permission:portal.audit_trail.index"]);
+            Route::get('/export', ['as' => "export", 'uses' => "AuditTrailController@export", 'middleware' => "portal.permission:portal.audit_trail.export"]);
         });
 
         Route::group(['prefix' => "cms", 'as' => "cms."], function(){

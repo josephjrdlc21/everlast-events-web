@@ -113,12 +113,14 @@
         </div>
     </li>
     @endif
+    @if($auth->canAny(['portal.audit_trail.index'], 'portal'))
     <li class="nav-item {{request()->segment(2) == "audit-trail" ? "active" : ""}}">
         <a class="nav-link" href="{{route('portal.audit_trail.index')}}">
             <i class="fas fa-clock"></i>
             <span>Audit Trail</span>
         </a>
     </li>
+    @endif
     <hr class="sidebar-divider d-none d-md-block">
     <div class="text-center d-none d-md-inline">
         <button class="rounded-circle border-0" id="sidebarToggle"></button>

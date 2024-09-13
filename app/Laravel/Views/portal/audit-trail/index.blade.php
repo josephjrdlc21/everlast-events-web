@@ -46,6 +46,12 @@
 <div class="card shadow mb-4 border-bottom-secondary">
     <div class="card-header py-3 d-sm-flex align-items-center justify-content-between">
         <h6 class="m-0 font-weight-bold text-primary">Record Data</h6>
+        @if($auth->canAny(['portal.audit_trail.export'], 'portal'))
+        <div>
+            <a href="{{route('portal.audit_trail.export')}}?keyword={{$keyword}}&start_date={{$start_date}}&end_date={{$end_date}}&type=pdf" class="btn btn-sm btn-danger">Export to PDF</a>
+            <a href="{{route('portal.audit_trail.export')}}?keyword={{$keyword}}&start_date={{$start_date}}&end_date={{$end_date}}&type=excel" class="btn btn-sm btn-success">Export to Excel</a>
+        </div>
+        @endif
     </div>
     <div class="card-body">
         <div class="table-responsive">

@@ -63,7 +63,6 @@
                         <th class="border-top-0">Customer</th>
                         <th class="border-top-0">Processor</th>
                         <th class="border-top-0 text-right">Price</th>
-                        <th class="border-top-0">Status</th>
                         <th class="border-top-0">Date Created</th>
                     </tr>
                 </thead>
@@ -73,15 +72,12 @@
                         <td>{{$transaction->code}}</td>
                         <td>{{$transaction->event->name}}</td>
                         <td>{{$transaction->user->name}}</td>
-                        <td>{{$transaction->processor->name}}</td>
+                        <td>{{$transaction->processor->name ?? 'N/A'}}</td>
                         <td class="text-right">₱ {{$transaction->event->price}}</td>
-                        <td><span class="badge bg-{{Helper::booking_badge_status($transaction->status)}} text-white">{{$transaction->status}}</span>
-                            <span class="badge bg-{{Helper::payment_badge_status($transaction->payment_status)}} text-white">{{$transaction->payment_status}}</span>
-                        </td>
                         <td>{{Carbon::parse($transaction->created_at)->format('m/d/Y h:i A')}}</td>
                     </tr>
                     @empty
-                    <td colspan="7">
+                    <td colspan="6">
                         <p class="text-center">No record found yet.</p>
                     </td>
                     @endforelse
