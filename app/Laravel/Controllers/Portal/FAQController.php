@@ -180,7 +180,7 @@ class FAQController extends Controller{
 			$audit_trail->user_id = $this->data['auth']->id;
 			$audit_trail->process = "UPDATE_FAQ_STATUS";
 			$audit_trail->ip = $this->data['ip'];
-			$audit_trail->remarks = "{$this->data['auth']->name} has updated status to {$faq->status}.";
+			$audit_trail->remarks = "{$this->data['auth']->name} has updated FAQ status to {$faq->status}.";
 			$audit_trail->type = "USER_ACTION";
 			$audit_trail->save();
                
