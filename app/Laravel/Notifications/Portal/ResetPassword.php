@@ -30,6 +30,6 @@ class ResetPassword extends Mailable
     public function build()
     {
         return $this->view('emails.portal.reset-password')
-            ->with(['email' => $this->data['email'], 'token' => $this->data['token']]);
+            ->with(['email' => $this->data['email'], 'token' => $this->data['token'], 'setting' => $this->data['setting']]);
     }
 }

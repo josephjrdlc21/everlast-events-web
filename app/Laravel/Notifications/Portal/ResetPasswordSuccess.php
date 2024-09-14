@@ -30,6 +30,7 @@ class ResetPasswordSuccess extends Mailable
     public function build()
     {
         return $this->view('emails.portal.reset-password-success')
-            ->with(['email' => $this->data['email'], 'date_time' => $this->data['date_time']]);
+            ->with(['email' => $this->data['email'], 'date_time' => $this->data['date_time'], 
+                'setting' => $this->data['setting']]);
     }
 }

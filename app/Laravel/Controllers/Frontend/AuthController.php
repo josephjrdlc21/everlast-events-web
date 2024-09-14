@@ -142,7 +142,11 @@ class AuthController extends Controller{
             PasswordReset::where('email', $email)->delete();
 
             if(env('MAIL_SERVICE', false)){
-                $data = ['email' => $email, 'token' => $token];
+                $data = [
+                    'email' => $email, 
+                    'token' => $token,
+                    'setting' => "{$this->data['settings']->brand_name}"
+                ];
                 Mail::to($email)->send(new ResetPassword($data));
             }
 
@@ -198,7 +202,11 @@ class AuthController extends Controller{
         $user->save();
 
         if (env('MAIL_SERVICE', false)) {
-            $data = ['email' => $password_reset->email, 'date_time' => $current_date_time->format('m/d/Y h:i A')];
+            $data = [
+                'email' => $password_reset->email, 
+                'date_time' => $current_date_time->format('m/d/Y h:i A'),
+                'setting' => "{$this->data['settings']->brand_name}"
+            ];
             Mail::to($password_reset->email)->send(new ResetPasswordSuccess($data));
         }
 
