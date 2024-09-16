@@ -13,7 +13,8 @@
                     </tr>
                     <tr>
                         <td>
-                            <h4 class="mb-3">Reset Password Success</h4>
+                            <h4>Hello!</h4><br>
+                            <p>You have successfully reset your password.</p><br>
                             <table>
                                 <tr>
                                     <td>
@@ -31,13 +32,8 @@
                                         <p>{{$date_time}}</p>
                                     </td>
                                 </tr>
-                                <tr>
-                                    <td>
-                                        <p class="mb-3">You have successfully reset your password.</p>
-                                    </td>
-                                </tr>
                             </table>
-                            <p>Regards,<br> Support Team</p>
+                            <br><p>Regards,<br> Support Team</p>
                         </td>
                     </tr>
                     <tr>

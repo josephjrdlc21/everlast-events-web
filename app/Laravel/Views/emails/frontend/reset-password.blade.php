@@ -13,7 +13,8 @@
                     </tr>
                     <tr>
                         <td>
-                            <h4 class="mb-3">Reset Password</h4>
+                            <h4>Hello!</h4><br>
+                            <p>You are receiving this email because we received a password reset request for your account.</p><br>
                             <table>
                                 <tr>
                                     <td>
@@ -21,7 +22,7 @@
                                     </td>
                                 </tr>
                             </table>
-                            <p>Regards,<br> Support Team</p>
+                            <br><p>Regards,<br> Support Team</p>
                         </td>
                     </tr>
                     <tr>

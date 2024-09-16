@@ -13,15 +13,16 @@
                     </tr>
                     <tr>
                         <td>
-                            <h4 class="mb-3">Reset Password</h4>
+                            <h4>Hello!</h4><br>
+                            <p>You are receiving this email because we received a password reset request for your account.</p><br>
                             <table>
                                 <tr>
-                                    <td>
-                                        <a href="{{route('portal.auth.reset_password', [$token])}}" class="btn-primary mb-3">Click to Reset Password</a>
+                                    <td class="text-center">
+                                        <a href="{{route('portal.auth.reset_password', [$token])}}" class="btn-primary mb-3">Reset Password</a>
                                     </td>
                                 </tr>
                             </table>
-                            <p>Regards,<br> Support Team</p>
+                            <br><p>Regards,<br> Support Team</p>
                         </td>
                     </tr>
                     <tr>
