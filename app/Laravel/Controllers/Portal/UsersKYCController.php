@@ -6,7 +6,9 @@ use App\Laravel\Models\{UserKYC,User,AuditTrail};
 
 use App\Laravel\Requests\PageRequest;
 
-use Carbon,DB;
+use App\Laravel\Notifications\Portal\UserRegistrationChangeStatus;
+
+use Carbon,DB,Mail;
 
 class UsersKYCController extends Controller{
     protected $data;
@@ -171,6 +173,16 @@ class UsersKYCController extends Controller{
 			$audit_trail->remarks = "{$this->data['auth']->name} has updated registrant status to {$registrant->status}.";
 			$audit_trail->type = "USER_ACTION";
 			$audit_trail->save();
+
+            if(env('MAIL_SERVICE', false)){
+                $data = [
+                    'email' => $registrant->email,
+                    'status' => $registrant->status ?? '',
+                    'date_time' => $registrant->created_at->format('m/d/Y h:i A'),
+                    'setting' => "{$this->data['settings']->brand_name}"
+                ];
+                Mail::to($registrant->email)->send(new UserRegistrationChangeStatus($data));
+            }
                
             DB::commit();
 
