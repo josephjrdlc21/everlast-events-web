@@ -7,7 +7,9 @@ use App\Laravel\Models\{User,AuditTrail};
 use App\Laravel\Requests\PageRequest;
 use App\Laravel\Requests\Portal\MemberResetPasswordRequest;
 
-use Str,Carbon,DB;
+use App\Laravel\Notifications\Portal\{MemberResetPasswordSuccess,MemberChangeStatus};
+
+use Str,Carbon,DB,Mail;
 
 class MembersController extends Controller{
     protected $data;
@@ -101,6 +103,16 @@ class MembersController extends Controller{
 			$audit_trail->remarks = "{$this->data['auth']->name} has updated member password.";
 			$audit_trail->type = "USER_ACTION";
 			$audit_trail->save();
+
+            if(env('MAIL_SERVICE', false)){
+                $data = [
+                    'email' => $member->email,
+                    'password' => $request->input('password'),
+                    'date_time' => $member->updated_at->format('m/d/Y h:i A'),
+                    'setting' => "{$this->data['settings']->brand_name}"
+                ];
+                Mail::to($member->email)->send(new MemberResetPasswordSuccess($data));
+            }
                 
             DB::commit();
 
@@ -141,6 +153,16 @@ class MembersController extends Controller{
 			$audit_trail->remarks = "{$this->data['auth']->name} has updated member status to {$member->status}.";
 			$audit_trail->type = "USER_ACTION";
 			$audit_trail->save();
+
+            if(env('MAIL_SERVICE', false)){
+                $data = [
+                    'email' => $member->email,
+                    'status' => $member->status,
+                    'date_time' => $member->updated_at->format('m/d/Y h:i A'),
+                    'setting' => "{$this->data['settings']->brand_name}"
+                ];
+                Mail::to($member->email)->send(new MemberChangeStatus($data));
+            }
                
             DB::commit();
 

@@ -198,25 +198,37 @@ class AuthController extends Controller{
             return redirect()->route('frontend.auth.forgot_password');
         }
 
-        $user->password = bcrypt($request->input('password'));
-        $user->save();
+        DB::beginTransaction();
+        try{
+            $user->password = bcrypt($request->input('password'));
+            $user->save();
 
-        if (env('MAIL_SERVICE', false)) {
-            $data = [
-                'email' => $password_reset->email, 
-                'date_time' => $current_date_time->format('m/d/Y h:i A'),
-                'setting' => "{$this->data['settings']->brand_name}"
-            ];
-            Mail::to($password_reset->email)->send(new ResetPasswordSuccess($data));
+            if (env('MAIL_SERVICE', false)) {
+                $data = [
+                    'email' => $password_reset->email, 
+                    'date_time' => $current_date_time->format('m/d/Y h:i A'),
+                    'setting' => "{$this->data['settings']->brand_name}"
+                ];
+                Mail::to($password_reset->email)->send(new ResetPasswordSuccess($data));
+            }
+
+            PasswordReset::where('email', $user->email)->delete();
+
+            DB::commit();
+
+            session()->flash('notification-status', "success");
+            session()->flash('notification-msg', "New password successfully stored. Login to the platform using your updated credentials.");
+
+            auth($this->guard)->login($user);
+            return redirect()->route('frontend.index');
+        }catch(\Exception $e){
+            DB::rollback();
+
+            session()->flash('notification-status', "failed");
+            session()->flash('notification-msg', "Server Error: Code #{$e->getLine()}");
         }
-
-        PasswordReset::where('email', $user->email)->delete();
-
-        session()->flash('notification-status', "success");
-        session()->flash('notification-msg', "New password successfully stored. Login to the platform using your updated credentials.");
-
-        auth($this->guard)->login($user);
-        return redirect()->route('frontend.index');
+        
+        return redirect()->back();
     }
 
     public function logout(PageRequest $request){

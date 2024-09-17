@@ -7,7 +7,9 @@ use App\Laravel\Models\{User,Role,AuditTrail};
 use App\Laravel\Requests\PageRequest;
 use App\Laravel\Requests\Portal\{UserRequest,UserResetPasswordRequest};
 
-use Carbon,DB,Str,Helper;
+use App\Laravel\Notifications\Portal\{AccountCreatedSucess,AccountResetPasswordSuccess,AccountChangeStatus};
+
+use Carbon,DB,Str,Helper,Mail;
 
 class UsersController extends Controller{
     protected $data;
@@ -102,6 +104,16 @@ class UsersController extends Controller{
 			$audit_trail->remarks = "{$this->data['auth']->name} has created a new user.";
 			$audit_trail->type = "USER_ACTION";
 			$audit_trail->save();
+
+            if(env('MAIL_SERVICE', false)){
+                $data = [
+                    'email' => $user->email,
+                    'password' => $password,
+                    'date_time' => $user->created_at->format('m/d/Y h:i A'),
+                    'setting' => "{$this->data['settings']->brand_name}"
+                ];
+                Mail::to($user->email)->send(new AccountCreatedSucess($data));
+            }
                
             DB::commit();
 
@@ -218,6 +230,16 @@ class UsersController extends Controller{
 			$audit_trail->remarks = "{$this->data['auth']->name} has updated user password.";
 			$audit_trail->type = "USER_ACTION";
 			$audit_trail->save();
+
+            if(env('MAIL_SERVICE', false)){
+                $data = [
+                    'email' => $user->email,
+                    'password' => $request->input('password'),
+                    'date_time' => $user->updated_at->format('m/d/Y h:i A'),
+                    'setting' => "{$this->data['settings']->brand_name}"
+                ];
+                Mail::to($user->email)->send(new AccountResetPasswordSuccess($data));
+            }
                 
             DB::commit();
 
@@ -264,6 +286,16 @@ class UsersController extends Controller{
 			$audit_trail->remarks = "{$this->data['auth']->name} has updated user status to {$user->status}.";
 			$audit_trail->type = "USER_ACTION";
 			$audit_trail->save();
+
+            if(env('MAIL_SERVICE', false)){
+                $data = [
+                    'email' => $user->email,
+                    'status' => $user->status,
+                    'date_time' => $user->updated_at->format('m/d/Y h:i A'),
+                    'setting' => "{$this->data['settings']->brand_name}"
+                ];
+                Mail::to($user->email)->send(new AccountChangeStatus($data));
+            }
                
             DB::commit();
 
