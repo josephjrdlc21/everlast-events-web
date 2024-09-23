@@ -80,7 +80,7 @@ class RolesController extends Controller{
             $role->status = Str::lower($request->input('status'));
             $role->save();
 
-            $role->permissions()->sync($request->input('permissions'));
+            $role->syncPermissions($request->input('permissions'));
 
             $audit_trail = new AuditTrail;
 			$audit_trail->user_id = $this->data['auth']->id;
@@ -137,8 +137,8 @@ class RolesController extends Controller{
             $role->name = Str::lower($request->input('role'));
             $role->status = Str::lower($request->input('status'));
             $role->save();
-
-            $role->permissions()->sync($request->input('permissions'));
+            
+            $role->syncPermissions($request->input('permissions'));
 
             $audit_trail = new AuditTrail;
 			$audit_trail->user_id = $this->data['auth']->id;
